@@ -1,6 +1,7 @@
 package com.sook.cs.letitgo.shared;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,7 +11,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import com.sook.cs.letitgo.R;
 
-public class Login_2_1_1_searchAddress extends AppCompatActivity {
+public class Login_2_1_1_searchAddress extends Activity {
 
     private WebView webView;
     private Handler handler;

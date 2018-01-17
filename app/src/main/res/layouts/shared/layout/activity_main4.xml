@@ -12,8 +12,8 @@ tools:context="com.sook.cs.letitgo.shared.Login_2_1_1_searchAddress">
     <WebView
 
         android:id="@+id/webView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_width="350dp"
+        android:layout_height="450dp" />
 
 </LinearLayout>
 

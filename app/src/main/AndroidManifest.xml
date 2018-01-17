@@ -75,7 +75,8 @@
 
         <activity
             android:name="com.sook.cs.letitgo.shared.Login_2_1_1_searchAddress"
-            android:label="주소 찾기" />
+            android:label="주소 찾기"
+            android:theme="@android:style/Theme.Dialog"/>
         <activity android:name="com.sook.cs.letitgo.shared.Login_finish"></activity>
 
         <meta-data
