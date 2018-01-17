@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.sook.cs.letitgo.Store">
+
+    <data>
+
+        <variable
+            name="store"
+            type="com.sook.cs.letitgo.Store" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/sImg"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:imageUrl="@{store.getsImgUrl}"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp">
+
+            <TextView
+                android:id="@+id/sName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="@{store.getsName}"
+                android:textStyle="bold"
+                tools:text="가게명" />
+
+            <TextView
+                android:id="@+id/tv_branch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/sName"
+                android:text="@{store.getsBranch}"
+                tools:text="지점명" />
+
+            <TextView
+                android:id="@+id/tv_locate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/sName"
+                android:layout_marginTop="10dp"
+                android:text="@{store.getsLocation}"
+                tools:text="위치" />
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

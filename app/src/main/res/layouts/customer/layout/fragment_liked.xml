@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.sook.cs.letitgo.customer.customer_liked">
+
+    <data>
+
+        <variable
+            name="fragment"
+            type="com.sook.cs.letitgo.customer.customer_liked" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_likedStore"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="@{fragment::likedClick}"
+                android:tag="1"
+                android:text="매장" />
+
+            <Button
+                android:id="@+id/btn_likedMenu"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="@{fragment::likedClick}"
+                android:tag="2"
+                android:text="메뉴" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/fragment_container2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5" />
+
+    </LinearLayout>
+</layout>

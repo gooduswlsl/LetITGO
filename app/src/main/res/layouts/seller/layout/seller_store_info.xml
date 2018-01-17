@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="매장이름"
+        android:textSize="20sp"/>
+
+    <ImageView
+        android:id="@+id/store_picture"
+        android:layout_marginTop="20dp"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/noimage"/>
+
+    <TextView
+        android:id="@+id/store_name"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="매장명(지점)"/>
+
+    <TextView
+        android:id="@+id/store_tel"
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="전화번호: 02-1234-5678"/>
+    <TextView
+        android:id="@+id/store_homepage"
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="홈페이지: http://sookymung.ac.kr"/>
+    <TextView
+        android:id="@+id/store_location"
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="위치: 청파랜드"/>
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/map"
+        android:layout_marginTop="20dp"
+        android:layout_width="302dp"
+        android:layout_height="136dp"
+        android:layout_gravity="center_horizontal"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:layout_weight="0.27" />
+</LinearLayout>

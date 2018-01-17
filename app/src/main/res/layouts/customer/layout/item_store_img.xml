@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.sook.cs.letitgo.Store">
+
+    <data>
+
+        <variable
+            name="store"
+            type="com.sook.cs.letitgo.Store" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/sImg"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:imageUrl="@{store.getsImgUrl}" />
+
+        <TextView
+            android:id="@+id/sName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{store.getsName}"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            tools:text="가게명" />
+    </LinearLayout>
+</layout>

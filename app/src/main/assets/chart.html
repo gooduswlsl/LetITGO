@@ -1,0 +1,40 @@
+<html>
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Month', 'Sales', 'Expenses'],
+          ['1월',  1000,      400],
+          ['2월',  1170,      460],
+          ['3월',  660,       1120],
+          ['4월',  1030,      540],
+          ['5월',  1030,      540],
+          ['6월',  1030,      540],
+          ['7월',  1030,      540],
+          ['8월',  1030,      540],
+          ['9월',  1030,      540],
+          ['10월',  1030,      540],
+          ['11월',  1030,      540],
+          ['12월',  1030,      540]
+        ]);
+
+        var options = {
+          title: 'OO상점 매출 그래프',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+</head>
+<body>
+<div id="curve_chart" style="width: 700px; height: 300px"></div>
+</body>
+</html>
