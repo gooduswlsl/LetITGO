@@ -1,11 +1,9 @@
 package com.sook.cs.letitgo.customer;
 
 import android.content.Context;
-import android.content.Intent;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,16 +14,17 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.Store;
-import com.sook.cs.letitgo.databinding.ItemStoreImgBinding;
+import com.sook.cs.letitgo.databinding.ItemStoreBinding;
+
 
 import java.util.ArrayList;
 
-public class ListStoreAdapter extends RecyclerView.Adapter<MyViewHolder> implements View.OnClickListener {
-    ItemStoreImgBinding binding;
+public class Adapter_store_liked extends RecyclerView.Adapter<MyViewHolder> implements View.OnClickListener {
+    ItemStoreBinding binding;
     ArrayList<Store> storeArrayList;
     Context mContext;
 
-    public ListStoreAdapter(Context mContext, ArrayList<Store> storeArrayList) {
+    public Adapter_store_liked(Context mContext, ArrayList<Store> storeArrayList) {
         this.storeArrayList = storeArrayList;
         this.mContext = mContext;
     }
@@ -34,14 +33,14 @@ public class ListStoreAdapter extends RecyclerView.Adapter<MyViewHolder> impleme
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         ViewDataBinding binding;
-        binding = DataBindingUtil.inflate(layoutInflater, R.layout.item_store_img, parent, false);
-        return new MyViewHolder((ItemStoreImgBinding) binding);
+        binding = DataBindingUtil.inflate(layoutInflater, R.layout.item_store, parent, false);
+        return new MyViewHolder((ItemStoreBinding) binding);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {          // 항목을 뷰홀더에 바인딩
         Store store = storeArrayList.get(position);
-        holder.imgBinding.setStore(store);
+        holder.sbinding.setStore(store);
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(this);
     }
@@ -58,13 +57,8 @@ public class ListStoreAdapter extends RecyclerView.Adapter<MyViewHolder> impleme
 
     @Override
     public void onClick(View v) {
-        Log.d("Tag", String.valueOf(v.getTag()));
 
-        Intent it = new Intent(mContext, customer_store_dialog.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("store", storeArrayList.get((Integer) v.getTag()));
-        it.putExtras(bundle);
-        (mContext).startActivity(it);
+        Log.d("Tag", String.valueOf(v.getTag()));
 
 
     }

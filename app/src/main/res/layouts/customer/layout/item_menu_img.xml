@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.sook.cs.letitgo.Store">
+    tools:context="com.sook.cs.letitgo.Menu">
 
     <data>
 
         <variable
-            name="store"
-            type="com.sook.cs.letitgo.Store" />
+            name="menu"
+            type="com.sook.cs.letitgo.Menu" />
     </data>
 
     <LinearLayout
@@ -19,18 +19,18 @@
         android:padding="10dp">
 
         <ImageView
-            android:id="@+id/sImg"
+            android:id="@+id/img_mImg"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:imageUrl="@{store.getsImgUrl}" />
+            app:imageUrl="@{menu.getmImgUrl}" />
 
         <TextView
-            android:id="@+id/tv_sName"
+            android:id="@+id/tv_mName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{store.getsName}"
+            android:text="@{menu.getmName}"
             android:textSize="12sp"
             android:textStyle="bold"
-            tools:text="가게명" />
+            tools:text="메뉴명" />
     </LinearLayout>
 </layout>

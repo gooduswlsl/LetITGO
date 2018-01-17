@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.sook.cs.letitgo.Menu">
+
+    <data>
+
+        <variable
+            name="menu"
+            type="com.sook.cs.letitgo.Menu" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/mImg"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:imageUrl="@{menu.getmImgUrl}" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp">
+
+            <TextView
+                android:id="@+id/tv_mName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="@{menu.getmName}"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                tools:text="메뉴명" />
+
+            <TextView
+                android:id="@+id/tv_mPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_mName"
+                android:text="@{Integer.toString(menu.getmPrice)}"
+                android:textStyle="bold"
+                tools:text="가격" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/tv_mPrice"
+                android:text="원" />
+
+            <TextView
+                android:id="@+id/tv_sName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_mName"
+                android:layout_marginTop="10dp"
+                android:text="@{menu.getsName}"
+                tools:text="가게" />
+
+            <TextView
+                android:id="@+id/tv_sBranch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_mName"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/tv_sName"
+                android:text="@{menu.getsBranch}"
+                tools:text="지점" />
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

@@ -1,8 +1,11 @@
 package com.sook.cs.letitgo.customer;
 
+import android.content.Context;
+import android.content.Intent;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,40 +14,41 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.sook.cs.letitgo.Menu;
 import com.sook.cs.letitgo.R;
-import com.sook.cs.letitgo.Store;
-import com.sook.cs.letitgo.databinding.ItemStoreBinding;
-
+import com.sook.cs.letitgo.databinding.ItemMenuBinding;
 
 import java.util.ArrayList;
 
-public class LikedStoreAdapter extends RecyclerView.Adapter<MyViewHolder> implements View.OnClickListener {
-    ItemStoreBinding binding;
-    ArrayList<Store> storeArrayList;
+public class Adapter_menu_liked extends RecyclerView.Adapter<MyViewHolder> implements View.OnClickListener {
+    ItemMenuBinding binding;
+    ArrayList<Menu> menuArrayList;
+    Context mContext;
 
-    public LikedStoreAdapter(ArrayList<Store> storeArrayList) {
-        this.storeArrayList = storeArrayList;
+    public Adapter_menu_liked (Context mContext, ArrayList<Menu> menuArrayList) {
+        this.menuArrayList = menuArrayList;
+        this.mContext = mContext;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         ViewDataBinding binding;
-        binding = DataBindingUtil.inflate(layoutInflater, R.layout.item_store, parent, false);
-        return new MyViewHolder((ItemStoreBinding) binding);
+        binding = DataBindingUtil.inflate(layoutInflater, R.layout.item_menu, parent, false);
+        return new MyViewHolder((ItemMenuBinding) binding);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {          // 항목을 뷰홀더에 바인딩
-        Store store = storeArrayList.get(position);
-        holder.binding.setStore(store);
+        Menu menu = menuArrayList.get(position);
+        holder.mbinding.setMenu(menu);
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(this);
     }
 
     @Override
     public int getItemCount() {
-        return storeArrayList.size();
+        return menuArrayList.size();
     }
 
     @BindingAdapter({"bind:imageUrl"})
@@ -54,7 +58,12 @@ public class LikedStoreAdapter extends RecyclerView.Adapter<MyViewHolder> implem
 
     @Override
     public void onClick(View v) {
-
         Log.d("Tag", String.valueOf(v.getTag()));
+
+        Intent it = new Intent(mContext, customer_dialog_menu.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("menu", menuArrayList.get((Integer) v.getTag()));
+        it.putExtras(bundle);
+        (mContext).startActivity(it);
     }
 }

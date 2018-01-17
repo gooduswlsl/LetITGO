@@ -4,6 +4,8 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.databinding.FragmentMenuBinding;
+import com.sook.cs.letitgo.util.DataUtil;
 
 /**
  * Created by YEONJIN on 2018-01-08.
@@ -21,11 +24,18 @@ import com.sook.cs.letitgo.databinding.FragmentMenuBinding;
 
 public class customer_menu extends Fragment {
     FragmentMenuBinding binding;
+    private Adapter_menu_list recyclerAdapter;
+    private RecyclerView recyclerView;
 
     public customer_menu() {
 
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        recyclerAdapter = new Adapter_menu_list(getActivity(), DataUtil.getMenuArrayList());
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -44,6 +54,11 @@ public class customer_menu extends Fragment {
                 return true;
             }
         });
+        recyclerView = binding.recyclerviewMenu;
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 5);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(recyclerAdapter);
+
         return binding.getRoot();
     }
 

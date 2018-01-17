@@ -24,7 +24,7 @@ import com.sook.cs.letitgo.util.DataUtil;
 
 public class customer_store extends Fragment {
     FragmentStoreBinding binding;
-    private ListStoreAdapter recyclerAdapter;
+    private Adapter_store_list recyclerAdapter;
     private RecyclerView recyclerView;
 
     public customer_store() {
@@ -34,7 +34,7 @@ public class customer_store extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        recyclerAdapter = new ListStoreAdapter(getActivity(), DataUtil.getStoreArrayList());
+        recyclerAdapter = new Adapter_store_list(getActivity(), DataUtil.getStoreArrayList());
     }
 
 

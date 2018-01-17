@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.sook.cs.letitgo.Store">
+    tools:context="com.sook.cs.letitgo.Menu">
 
     <data>
 
         <variable
-            name="store"
-            type="com.sook.cs.letitgo.Store" />
+            name="menu"
+            type="com.sook.cs.letitgo.Menu" />
     </data>
 
     <LinearLayout
@@ -25,10 +25,10 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/img_sImg"
+                android:id="@+id/img_mImg"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                app:imageUrl="@{store.getsImgUrl}" />
+                app:imageUrl="@{menu.getmImgUrl}" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -36,47 +36,56 @@
                 android:layout_marginLeft="20dp">
 
                 <TextView
-                    android:id="@+id/tv_sName"
+                    android:id="@+id/tv_mName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:text="@{store.getsName}"
+                    android:text="@{menu.getmName}"
                     android:textStyle="bold"
+                    tools:text="메뉴명" />
+
+                <TextView
+                    android:id="@+id/tv_mPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/tv_mName"
+                    android:text="@{Integer.toString(menu.getmPrice)}"
+                    tools:text="가격" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/tv_mPrice"
+                    android:text="원" />
+
+                <TextView
+                    android:id="@+id/tv_sName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_mName"
+                    android:layout_marginTop="10dp"
+                    android:text="@{menu.getsName}"
                     tools:text="가게명" />
 
                 <TextView
-                    android:id="@+id/tv_branch"
+                    android:id="@+id/tv_sBranch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/tv_sName"
-                    android:text="@{store.getsBranch}"
-                    tools:text="지점명" />
-
-                <TextView
-                    android:id="@+id/tv_locate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_sName"
+                    android:layout_below="@id/tv_mName"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="10dp"
-                    android:text="@{store.getsLocation}"
-                    tools:text="위치" />
+                    android:layout_toRightOf="@id/tv_sName"
+                    android:text="@{menu.getsBranch}"
+                    tools:text="지점" />
             </RelativeLayout>
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_phone"
+            android:id="@+id/tv_mDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@{store.getsPhone}"
-            tools:text="폰" />
-
-        <TextView
-            android:id="@+id/tv_webpage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@{store.getsWebpage}"
-            tools:text="웹사이트" />
+            android:text="@{menu.getmDetail}"
+            tools:text="디테일" />
     </LinearLayout>
 </layout>

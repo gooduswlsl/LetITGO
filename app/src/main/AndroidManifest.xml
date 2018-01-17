@@ -22,11 +22,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.sook.cs.letitgo.customer.MainActivity">
-        </activity>
-        <activity android:name="com.sook.cs.letitgo.customer.customer_main" />
+        <activity android:name="com.sook.cs.letitgo.customer.MainActivity" />
         <activity
-            android:name="com.sook.cs.letitgo.customer.customer_store_dialog"
+            android:name="com.sook.cs.letitgo.customer.customer_main"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name="com.sook.cs.letitgo.customer.customer_dialog_store"
+            android:theme="@android:style/Theme.Dialog"></activity>
+        <activity
+            android:name="com.sook.cs.letitgo.customer.customer_dialog_menu"
             android:theme="@android:style/Theme.Dialog"></activity>
         "
         <!--
@@ -46,8 +50,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.sook.cs.letitgo.seller.Seller_main"
-            android:theme="@style/Toolbar"/>
+        <activity
+            android:name="com.sook.cs.letitgo.seller.Seller_main"
+            android:theme="@style/Toolbar" />
         <activity
             android:name="com.sook.cs.letitgo.shared.Login1"
             android:label="회원가입"></activity>
