@@ -6,11 +6,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Window;
 
-import com.sook.cs.letitgo.Menu;
+import com.sook.cs.letitgo.item.Menu;
 import com.sook.cs.letitgo.R;
-import com.sook.cs.letitgo.Store;
 import com.sook.cs.letitgo.databinding.DialogMenuBinding;
-import com.sook.cs.letitgo.databinding.DialogStoreBinding;
 
 public class customer_dialog_menu extends Activity {
     DialogMenuBinding binding;

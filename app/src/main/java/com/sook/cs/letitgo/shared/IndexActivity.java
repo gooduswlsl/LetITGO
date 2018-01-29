@@ -12,19 +12,17 @@ import android.widget.TextView;
 
 import com.sook.cs.letitgo.MyApp;
 import com.sook.cs.letitgo.R;
-import com.sook.cs.letitgo.Store;
+import com.sook.cs.letitgo.item.Member;
 import com.sook.cs.letitgo.lib.EtcLib;
 import com.sook.cs.letitgo.lib.RemoteLib;
-import com.sook.cs.letitgo.lib.StringLib;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
-import com.sook.cs.letitgo.seller.Login;
-import com.sook.cs.letitgo.seller.Seller_main;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 /**
  * 시작 액티비티이며 이 액티비티에서 사용자 정보를 조회해서
  * 메인 액티비티를 실행할 지, 프로필 액티비티를 실행할 지를 결정한다.
@@ -37,13 +35,14 @@ public class IndexActivity extends AppCompatActivity {
     /**
      * 레이아웃을 설정하고 인터넷에 연결되어 있는지를 확인한다.
      * 만약 인터넷에 연결되어 있지 않다면 showNoService() 메소드를 호출한다.
+     *
      * @param savedInstanceState 액티비티가 새로 생성되었을 경우, 이전 상태 값을 가지는 객체
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("ok", "index oncreate");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_index);
+        setContentView(R.layout.activity_first);
 
         context = this;
 
@@ -95,8 +94,6 @@ public class IndexActivity extends AppCompatActivity {
      */
     public void startTask() {
         String phone = EtcLib.getInstance().getPhoneNumber(this);
-        Log.d("ok", phone);
-
         selectMemberInfo(phone);
     }
 
@@ -105,31 +102,30 @@ public class IndexActivity extends AppCompatActivity {
      * 사용자 정보를 조회했다면 setMemberInfoItem() 메소드를 호출하고
      * 그렇지 않다면 goProfileActivity() 메소드를 호출한다.
      *
-     * @param phone 폰의 전화번호
+     * @param phone 전화번호
      */
+
     public void selectMemberInfo(String phone) {
         RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
 
-        Call<Store> call = remoteService.selectStoreInfo(phone);
-        call.enqueue(new Callback<Store>() {
+        Call<Member> call = remoteService.selectMemberInfo(phone);
+        Log.d("ok", "selectMemberinfo");
+        call.enqueue(new Callback<Member>() {
             @Override
-            public void onResponse(Call<Store> call, Response<Store> response) {
-                Store store = response.body();
+            public void onResponse(Call<Member> call, Response<Member> response) {
+                Member member = response.body();
 
                 if (response.isSuccessful()) {
-                    Log.d("ok", "index successfull");
-                    setStoreInfoItem(store);
+                    setMemberInfoItem(member);
                 } else {
-                    Log.d("ok", "index failure");
-                    goProfileActivity(store);
+                    Log.d("ok", "response fail");
+                    goProfileActivity(member);
                 }
             }
 
             @Override
-            public void onFailure(Call<Store> call, Throwable t) {
-                Log.d("failure","ok");
+            public void onFailure(Call<Member> call, Throwable t) {
             }
-
         });
     }
 
@@ -137,11 +133,10 @@ public class IndexActivity extends AppCompatActivity {
      * 전달받은 MemberInfoItem을 Application 객체에 저장한다.
      * 그리고 startMain() 메소드를 호출한다.
      *
-     * @param store 사용자 정보
+     * @param member 사용자 정보
      */
-    private void setStoreInfoItem(Store store) {
-        ((MyApp) getApplicationContext()).setStore(store);
-
+    private void setMemberInfoItem(Member member) {
+        ((MyApp) getApplicationContext()).setMember(member);
         startMain();
     }
 
@@ -149,7 +144,7 @@ public class IndexActivity extends AppCompatActivity {
      * MainActivity를 실행하고 현재 액티비티를 종료한다.
      */
     public void startMain() {
-        Intent intent = new Intent(IndexActivity.this, Seller_main.class);
+        Intent intent = new Intent(IndexActivity.this, GroupActivity.class);
         startActivity(intent);
 
         finish();
@@ -160,19 +155,21 @@ public class IndexActivity extends AppCompatActivity {
      * 전화번호를 서버에 저장하고 MainActivity를 실행한 후 ProfileActivity를 실행한다.
      * 그리고 현재 액티비티를 종료한다.
      *
-     * @param store 사용자 정보
+     * @param member 사용자 정보
      */
-    private void goProfileActivity(Store store) {
-        if (store == null || store.seq <= 0) {
-            Log.d("ok", "profile seq==0");
+    private void goProfileActivity(Member member) {
+        if (member == null) {
             insertMemberPhone();
+            Log.d("ok", "저장완료");
         }
-        Log.d("ok", "if바깥");
-        Intent intent = new Intent(IndexActivity.this, Seller_main.class);
-        startActivity(intent);
 
-        Intent intent2 = new Intent(this, ProfileActivity.class);
-        startActivity(intent2);
+        Intent intent = new Intent(IndexActivity.this, GroupActivity.class);
+        startActivity(intent);
+        Log.d("ok", "되어라");
+        //   Intent intent2 = new Intent(this, Seller_main.class);
+        // startActivity(intent2);
+
+        //Toast.makeText(this, "인서트", Toast.LENGTH_SHORT);
 
         finish();
     }
@@ -186,7 +183,7 @@ public class IndexActivity extends AppCompatActivity {
         RemoteService remoteService =
                 ServiceGenerator.createService(RemoteService.class);
 
-        Call<String> call = remoteService.insertStorePhone(phone);
+        Call<String> call = remoteService.insertMemberPhone(phone);
         Log.d("ok", phone);
         call.enqueue(new Callback<String>() {
             @Override

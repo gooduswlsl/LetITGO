@@ -1,44 +1,52 @@
-package com.sook.cs.letitgo;
+package com.sook.cs.letitgo.item;
 
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
-public class Store implements Serializable {
-    String sName;
-    String sBranch;
-    String sPhone;
-    String sWebpage;
-    String sLocation;
-    String sImgUrl;
-
-
+public class Store extends Member implements Serializable {
     public int seq;
     public String name;
     public String phone;
+    public String img;
+    public String site;
+    public String tel;
+    public String address;
+    public String webpage;
 
-
-    public String getsName() {
-        return sName;
+    public Store(){
+        super.phone = this.phone;
     }
 
-    public String getsBranch() {
-        return sBranch;
+    public int getSeq() {
+        return seq;
     }
 
-    public String getsPhone() {
-        return sPhone;
+    public String getName() {
+        return name;
     }
 
-    public String getsWebpage() {
-        return sWebpage;
+    public String getPhone() {
+        return phone;
     }
 
-    public String getsLocation() {
-        return sLocation;
+    public String getImg() {
+        return img;
     }
 
-    public String getsImgUrl() {
-        return sImgUrl;
+    public String getSite() {
+        return site;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getWebpage() {
+        return webpage;
     }
 
     @Override
@@ -47,6 +55,11 @@ public class Store implements Serializable {
                 "seq=" + seq +
                 ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
+                ", img='" + img + '\'' +
+                ", site='" + site + '\'' +
+                ", tel='" + tel + '\'' +
+                ", address='" + address + '\'' +
+                ", webpage='" + webpage + '\'' +
                 '}';
     }
 }

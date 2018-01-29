@@ -9,7 +9,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
@@ -19,9 +18,8 @@ import android.widget.TextView;
 
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.MyApp;
-import com.sook.cs.letitgo.Store;
+import com.sook.cs.letitgo.item.Store;
 import com.sook.cs.letitgo.lib.EtcLib;
-import com.sook.cs.letitgo.lib.StringLib;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
 
@@ -297,7 +295,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
 
-        Call<String> call = remoteService.insertStoreInfo(store);
+        Call<String> call = remoteService.insertMemberInfo(store);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {

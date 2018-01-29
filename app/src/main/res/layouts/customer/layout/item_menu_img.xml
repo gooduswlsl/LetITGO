@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.sook.cs.letitgo.Menu">
+    tools:context="com.sook.cs.letitgo.item.Menu">
 
     <data>
 
         <variable
             name="menu"
-            type="com.sook.cs.letitgo.Menu" />
+            type="com.sook.cs.letitgo.item.Menu" />
     </data>
 
     <LinearLayout

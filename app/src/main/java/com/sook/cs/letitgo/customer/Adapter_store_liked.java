@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.sook.cs.letitgo.R;
-import com.sook.cs.letitgo.Store;
+import com.sook.cs.letitgo.item.Store;
 import com.sook.cs.letitgo.databinding.ItemStoreBinding;
 
 

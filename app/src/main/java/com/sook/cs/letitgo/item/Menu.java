@@ -1,4 +1,4 @@
-package com.sook.cs.letitgo;
+package com.sook.cs.letitgo.item;
 
 import java.io.Serializable;
 
@@ -9,16 +9,7 @@ public class Menu implements Serializable {
     int mPrice;
     String mDetail;
     String sName;
-    String sBranch;
-
-    public Menu(String mName, String mImgUrl, int mPrice, String mDetail, String sName, String sBranch) {
-        this.mName = mName;
-        this.mImgUrl = mImgUrl;
-        this.mPrice = mPrice;
-        this.mDetail = mDetail;
-        this.sName = sName;
-        this.sBranch = sBranch;
-    }
+    String sSite;
 
     public String getmName() {
         return mName;
@@ -40,8 +31,21 @@ public class Menu implements Serializable {
         return sName;
     }
 
-    public String getsBranch() {
-        return sBranch;
+    public String getsSite() {
+        return sSite;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "mName='" + mName + '\'' +
+                ", mImgUrl='" + mImgUrl + '\'' +
+                ", mPrice=" + mPrice +
+                ", mDetail='" + mDetail + '\'' +
+                ", sName='" + sName + '\'' +
+                ", sSite='" + sSite + '\'' +
+                '}';
     }
 
 

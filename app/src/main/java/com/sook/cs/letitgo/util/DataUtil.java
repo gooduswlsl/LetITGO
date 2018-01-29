@@ -1,7 +1,7 @@
 package com.sook.cs.letitgo.util;
 
-import com.sook.cs.letitgo.Menu;
-import com.sook.cs.letitgo.Store;
+import com.sook.cs.letitgo.item.Menu;
+import com.sook.cs.letitgo.item.Store;
 
 import java.util.ArrayList;
 
@@ -29,15 +29,15 @@ public class DataUtil {
 
     public static ArrayList<Menu> getMenuArrayList() {
         ArrayList<Menu> menuList = new ArrayList<>();
-        menuList.add(new Menu("아메리카노", "http://www.rotiboy.kr/uploads/menu/Dio548fuq13CkrX6.png", 5000, "맛있어요", "할리스", "숙대점"));
-        menuList.add(new Menu("카페라떼", "http://www.dunkindonuts.co.kr/upload/product/big_824.png", 5500, "맛나요", "스타벅스", "죽전점"));
-        menuList.add(new Menu("고구마라떼", "http://www.rotiboy.kr/uploads/menu/Dio548fuq13CkrX6.png", 5000, "맛있어요", "커피니", "숙대점"));
-        menuList.add(new Menu("바닐라라떼", "http://www.dunkindonuts.co.kr/upload/product/big_824.png", 5500, "맛나요", "놀숲", "죽전점"));
-        menuList.add(new Menu("자몽티", "http://www.rotiboy.kr/uploads/menu/Dio548fuq13CkrX6.png", 5000, "맛있어요", "투썸", "서울역점"));
-        menuList.add(new Menu("녹차", "http://www.dunkindonuts.co.kr/upload/product/big_824.png", 5500, "맛나요", "커피빈", "죽전점"));
-        menuList.add(new Menu("제주녹차", "http://www.rotiboy.kr/uploads/menu/Dio548fuq13CkrX6.png", 5000, "맛있어요", "할리스", "숙대점"));
-        menuList.add(new Menu("한라봉차", "http://www.dunkindonuts.co.kr/upload/product/big_824.png", 5500, "맛나요", "엔젤리너스", "죽전점"));
-        menuList.add(new Menu("유자차", "http://www.rotiboy.kr/uploads/menu/Dio548fuq13CkrX6.png", 5000, "맛있어요", "스타벅스", "숙대점"));
+//        menuList.add(new Menu("아메리카노", "http://www.rotiboy.kr/uploads/menu/Dio548fuq13CkrX6.png", 5000, "맛있어요", "할리스", "숙대점"));
+//        menuList.add(new Menu("카페라떼", "http://www.dunkindonuts.co.kr/upload/product/big_824.png", 5500, "맛나요", "스타벅스", "죽전점"));
+//        menuList.add(new Menu("고구마라떼", "http://www.rotiboy.kr/uploads/menu/Dio548fuq13CkrX6.png", 5000, "맛있어요", "커피니", "숙대점"));
+//        menuList.add(new Menu("바닐라라떼", "http://www.dunkindonuts.co.kr/upload/product/big_824.png", 5500, "맛나요", "놀숲", "죽전점"));
+//        menuList.add(new Menu("자몽티", "http://www.rotiboy.kr/uploads/menu/Dio548fuq13CkrX6.png", 5000, "맛있어요", "투썸", "서울역점"));
+//        menuList.add(new Menu("녹차", "http://www.dunkindonuts.co.kr/upload/product/big_824.png", 5500, "맛나요", "커피빈", "죽전점"));
+//        menuList.add(new Menu("제주녹차", "http://www.rotiboy.kr/uploads/menu/Dio548fuq13CkrX6.png", 5000, "맛있어요", "할리스", "숙대점"));
+//        menuList.add(new Menu("한라봉차", "http://www.dunkindonuts.co.kr/upload/product/big_824.png", 5500, "맛나요", "엔젤리너스", "죽전점"));
+//        menuList.add(new Menu("유자차", "http://www.rotiboy.kr/uploads/menu/Dio548fuq13CkrX6.png", 5000, "맛있어요", "스타벅스", "숙대점"));
         return menuList;
     }
 }

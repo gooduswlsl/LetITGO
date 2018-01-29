@@ -67,6 +67,9 @@
             android:name="com.sook.cs.letitgo.shared.Login2_1_store_info"
             android:label="매장 정보" />
 
+        <activity
+            android:name="com.sook.cs.letitgo.shared.GroupActivity" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.sook.cs.letitgo.provider"

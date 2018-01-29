@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.sook.cs.letitgo.Menu;
+import com.sook.cs.letitgo.item.Menu;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.databinding.ItemMenuImgBinding;
 

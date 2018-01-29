@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.sook.cs.letitgo.Store">
+    tools:context="com.sook.cs.letitgo.item.Store">
 
     <data>
 
         <variable
             name="store"
-            type="com.sook.cs.letitgo.Store" />
+            type="com.sook.cs.letitgo.item.Store" />
     </data>
 
     <LinearLayout
@@ -22,7 +22,7 @@
             android:id="@+id/img_sImg"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:imageUrl="@{store.getsImgUrl}" />
+            app:imageUrl="@{store.getImg}" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:text="@{store.getsName}"
+                android:text="@{store.getName}"
                 android:textStyle="bold"
                 tools:text="가게명" />
 
@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/tv_sName"
-                android:text="@{store.getsBranch}"
+                android:text="@{store.getSite}"
                 tools:text="지점명" />
 
             <TextView
@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_sName"
                 android:layout_marginTop="10dp"
-                android:text="@{store.getsLocation}"
+                android:text="@{store.getAddress}"
                 tools:text="위치" />
         </RelativeLayout>
     </LinearLayout>
