@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.sook.cs.letitgo.R;
+import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.customer.customer_main;
 import com.sook.cs.letitgo.shared.Login1;
 

@@ -1,8 +1,9 @@
 package com.sook.cs.letitgo;
 
 import java.io.Serializable;
+
 @SuppressWarnings("serial")
-public class Store implements Serializable{
+public class Store implements Serializable {
     String sName;
     String sBranch;
     String sPhone;
@@ -10,14 +11,11 @@ public class Store implements Serializable{
     String sLocation;
     String sImgUrl;
 
-    public Store(String sName, String sBranch, String sPhone, String sWebpage, String sLocation, String sImgUrl) {
-        this.sName = sName;
-        this.sBranch = sBranch;
-        this.sPhone = sPhone;
-        this.sWebpage = sWebpage;
-        this.sLocation = sLocation;
-        this.sImgUrl = sImgUrl;
-    }
+
+    public int seq;
+    public String name;
+    public String phone;
+
 
     public String getsName() {
         return sName;
@@ -43,4 +41,12 @@ public class Store implements Serializable{
         return sImgUrl;
     }
 
+    @Override
+    public String toString() {
+        return "Store{" +
+                "seq=" + seq +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
+    }
 }
