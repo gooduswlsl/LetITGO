@@ -1,5 +1,7 @@
 package com.sook.cs.letitgo.item;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
@@ -9,7 +11,7 @@ public class Customer extends Member implements Serializable {
     public String phone;
     public String sextype;
     public String birthday;
-    public String img;
+    @SerializedName("img") public String img;
 
     public Customer(){
         super.phone = phone;

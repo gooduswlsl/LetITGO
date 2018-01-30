@@ -9,11 +9,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sook.cs.letitgo.MyApp;
 import com.sook.cs.letitgo.R;
+import com.sook.cs.letitgo.customer.customer_main;
 import com.sook.cs.letitgo.item.Member;
 import com.sook.cs.letitgo.lib.EtcLib;
+import com.sook.cs.letitgo.lib.MyToast;
 import com.sook.cs.letitgo.lib.RemoteLib;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
@@ -28,8 +31,7 @@ import retrofit2.Response;
  * 메인 액티비티를 실행할 지, 프로필 액티비티를 실행할 지를 결정한다.
  */
 public class IndexActivity extends AppCompatActivity {
-    private final String TAG = this.getClass().getSimpleName();
-
+    int count = 0;
     Context context;
 
     /**
@@ -54,16 +56,12 @@ public class IndexActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        count = 1;
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == 0) {
-            Log.d("ok", "판매자");
-            //판매자
-
-        } else if (resultCode == 1) {
-            Log.d("ok", "소비자");
-            //소비자
-        }
-
+        if (resultCode == 0)
+            insertSeller();
+        else if (resultCode == 1)
+            insertCustomer();
     }
 
     /**
@@ -78,7 +76,8 @@ public class IndexActivity extends AppCompatActivity {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startTask();
+                if (count != 1)
+                    startTask();
             }
         }, 1200);
     }
@@ -104,7 +103,6 @@ public class IndexActivity extends AppCompatActivity {
     /**
      * 현재 폰의 전화번호와 동일한 사용자 정보를 조회할 수 있도록
      * selectMemberInfo() 메소드를 호출한다.
-     * 그리고 setLastKnownLocation() 메소드를 호출해서 현재 위치 정보를 설정한다.
      */
     public void startTask() {
         String phone = EtcLib.getInstance().getPhoneNumber(this);
@@ -121,23 +119,27 @@ public class IndexActivity extends AppCompatActivity {
 
     public void selectMemberInfo(String phone) {
         RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
+        Log.d("ok", "selectmemberinfo");
 
         Call<Member> call = remoteService.selectMemberInfo(phone);
         call.enqueue(new Callback<Member>() {
             @Override
             public void onResponse(Call<Member> call, Response<Member> response) {
+                Log.d("ok", "onresponse");
                 Member member = response.body();
 
                 if (response.isSuccessful()) {
+                    Log.d("ok", "select successful");
                     setMemberInfoItem(member);
                 } else {
-                    Log.d("ok", "response fail");
+                    Log.d("ok", "select unsuccessful");
                     goProfileActivity(member);
                 }
             }
 
             @Override
             public void onFailure(Call<Member> call, Throwable t) {
+                Log.d("ok", "failure");
             }
         });
     }
@@ -150,6 +152,7 @@ public class IndexActivity extends AppCompatActivity {
      * @param member 사용자 정보
      */
     private void setMemberInfoItem(Member member) {
+        Log.d("ok", "번호있음");
         ((MyApp) getApplicationContext()).setMember(member);
         startMain();
     }
@@ -158,9 +161,9 @@ public class IndexActivity extends AppCompatActivity {
      * MainActivity를 실행하고 현재 액티비티를 종료한다.
      */
     public void startMain() {
-        Intent intent = new Intent(IndexActivity.this, GroupActivity.class);
-        startActivityForResult(intent, 0);
-        finish();
+        //  Intent intent = new Intent(IndexActivity.this, GroupActivity.class);
+        // startActivityForResult(intent, 0);
+        // finish();
     }
 
     /**
@@ -195,20 +198,54 @@ public class IndexActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Log.d("ok", "success insert id");
 
-                    Log.d(TAG, "success insert id " + response.body().toString());
                 } else {
                     Log.d("ok", "unsuccess insert id");
                     int statusCode = response.code();
 
                     ResponseBody errorBody = response.errorBody();
 
-                    Log.d(TAG, "fail " + statusCode + errorBody.toString());
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Log.d(TAG, "no internet connectivity");
+                Log.d("tag", "no internet connectivity");
+            }
+        });
+    }
+
+    private void insertCustomer() {
+        insertMemberGroup("customer");
+
+        Intent it = new Intent(IndexActivity.this, ProfileActivity.class);
+        startActivity(it);
+        Intent it2 = new Intent(this, customer_main.class);
+        startActivity(it2);
+        finish();
+    }
+
+    private void insertSeller() {
+        insertMemberGroup("seller");
+
+    }
+
+    private void insertMemberGroup(String group) {
+        Member member = new Member();
+        member.phone = EtcLib.getInstance().getPhoneNumber(this);
+        member.group = group;
+
+        RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
+        Call<String> call = remoteService.insertMemberInfo(member);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
             }
         });
     }

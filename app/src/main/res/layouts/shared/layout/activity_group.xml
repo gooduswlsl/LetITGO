@@ -5,16 +5,20 @@
     android:orientation="vertical">
 
     <Button
+        android:id="@+id/btn_seller"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Seller"
-        android:id="@+id/btn_seller"/>
+        android:onClick="buttonClick"
+        android:tag="0"
+        android:text="Seller" />
 
     <Button
+        android:id="@+id/btn_customer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Customer"
-        android:id="@+id/btn_customer"/>
+        android:onClick="buttonClick"
+        android:tag="1"
+        android:text="Customer" />
 
 
 </LinearLayout>

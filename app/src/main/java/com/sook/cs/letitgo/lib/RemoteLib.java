@@ -4,6 +4,10 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
+import android.util.Log;
+
+import com.sook.cs.letitgo.remote.RemoteService;
+import com.sook.cs.letitgo.remote.ServiceGenerator;
 
 import java.io.File;
 
@@ -54,5 +58,38 @@ public class RemoteLib {
         } catch (Exception e) {
             return false;
         }
+    }
+    /**
+     * 사용자 프로필 아이콘을 서버에 업로드한다.
+     * @param memberSeq 사용자 일련번호
+     * @param file 파일 객체
+     */
+    public void uploadMemberIcon(int memberSeq, File file) {
+        RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
+
+        RequestBody requestFile =
+                RequestBody.create(MediaType.parse("multipart/form-data"), file);
+
+        MultipartBody.Part body =
+                MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+
+        RequestBody memberSeqBody =
+                RequestBody.create(
+                        MediaType.parse("multipart/form-data"), "" + memberSeq);
+
+        Call<ResponseBody> call =
+                remoteService.uploadMemberIcon(memberSeqBody, body);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call,
+                                   Response<ResponseBody> response) {
+                Log.d("ok", "uploadMemberIcon success");
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("ok", "uploadMemberIcon fail");
+            }
+        });
     }
 }

@@ -22,7 +22,7 @@ import retrofit2.http.Path;
  * 서버에 호출할 메소드를 선언하는 인터페이스
  */
 public interface RemoteService {
-    String BASE_URL = "http://192.168.10.130:3000";
+    String BASE_URL = "http://220.71.95.85:3000";
     String MEMBER_ICON_URL = BASE_URL + "/member/";
     String IMAGE_URL = BASE_URL + "/img/";
 
@@ -36,5 +36,11 @@ public interface RemoteService {
     @FormUrlEncoded
     @POST("/member/phone")
     Call<String> insertMemberPhone(@Field("phone") String phone);
+
+    @Multipart
+    @POST("/member/icon_upload")
+    Call<ResponseBody> uploadMemberIcon(@Part("member_seq") RequestBody memberSeq,
+                                        @Part MultipartBody.Part file);
+
 
 }

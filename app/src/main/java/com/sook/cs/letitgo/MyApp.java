@@ -25,12 +25,12 @@ public class MyApp extends Application {
         StrictMode.setVmPolicy(builder.build());
     }
 
-    public Member getMember(){
-        if(member==null) member = new Member();
+    public Member getMember() {
+        if (member == null) member = new Member();
         return member;
     }
 
-    public void setMember(Member member){
+    public void setMember(Member member) {
         this.member = member;
     }
 
@@ -44,11 +44,17 @@ public class MyApp extends Application {
         this.store = store;
     }
 
+    public Customer getCustomer() {
+        if (customer == null) customer = new Customer();
+        return customer;
+    }
+
+
     public int getStoreSeq() {
         return store.seq;
     }
 
-    public void setCustomer(Customer customer){
+    public void setCustomer(Customer customer) {
         this.customer = customer;
     }
 

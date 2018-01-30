@@ -4,24 +4,30 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.MyApp;
-import com.sook.cs.letitgo.item.Store;
+import com.sook.cs.letitgo.R;
+import com.sook.cs.letitgo.item.Customer;
+import com.sook.cs.letitgo.item.Member;
 import com.sook.cs.letitgo.lib.EtcLib;
+import com.sook.cs.letitgo.lib.StringLib;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
+import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -44,10 +50,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     EditText birthEdit;
     EditText phoneEdit;
 
-    Store currentItem;
+    Customer customer;
 
     /**
      * 액티비티를 생성하고 화면을 구성한다.
+     *
      * @param savedInstanceState 액티비티가 새로 생성되었을 경우, 이전 상태 값을 가지는 객체
      */
     @Override
@@ -57,7 +64,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         context = this;
 
-        currentItem = ((MyApp) getApplicationContext()).getStore();
+        customer = ((MyApp) getApplication()).getCustomer();
 
 //        setToolbar();
         setView();
@@ -70,28 +77,28 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     protected void onResume() {
         super.onResume();
 
-//
-//        if (StringLib.getInstance().isBlank(currentItem.memberIconFilename)) {
-//            Picasso.with(this).load(R.drawable.ic_person).into(profileIconImage);
-//        } else {
-//            Picasso.with(this)
-//                    .load(RemoteService.MEMBER_ICON_URL + currentItem.memberIconFilename)
-//                    .into(profileIconImage);
-//        }
+        if (StringLib.getInstance().isBlank(customer.img)) {
+            Picasso.with(this).load(R.drawable.ic_person).into(profileIconImage);
+        } else {
+            Picasso.with(this)
+                    .load(RemoteService.MEMBER_ICON_URL + customer.img)
+                    .into(profileIconImage);
+        }
     }
 
     /**
      * 액티비티 툴바를 설정한다.
      */
-    private void setToolbar() {
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//    private void setToolbar() {
+//        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
-        final ActionBar actionBar = getSupportActionBar();
-
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-    }
+//        final ActionBar actionBar = getSupportActionBar();
+//
+//        if (actionBar != null) {
+//            actionBar.setDisplayHomeAsUpEnabled(true);
+//            actionBar.setTitle(R.string.profile_setting);
+//        }
+//    }
 
     /**
      * 액티비티 화면을 설정한다.
@@ -104,8 +111,25 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         profileIconChangeImage.setOnClickListener(this);
 
         nameEdit = (EditText) findViewById(R.id.profile_name);
-        nameEdit.setText(currentItem.name);
+        nameEdit.setText(customer.name);
 
+        sextypeEdit = (EditText) findViewById(R.id.profile_sextype);
+        sextypeEdit.setText(customer.sextype);
+        sextypeEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setSexTypeDialog();
+            }
+        });
+
+        birthEdit = (EditText) findViewById(R.id.profile_birth);
+        birthEdit.setText(customer.birthday);
+        birthEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setBirthdayDialog();
+            }
+        });
 
         String phoneNumber = EtcLib.getInstance().getPhoneNumber(context);
 
@@ -125,6 +149,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
      */
     private void setSexTypeDialog() {
         final String[] sexTypes = new String[2];
+        sexTypes[0] = getResources().getString(R.string.sex_man);
+        sexTypes[1] = getResources().getString(R.string.sex_woman);
 
         new AlertDialog.Builder(this)
                 .setItems(sexTypes, new DialogInterface.OnClickListener() {
@@ -173,19 +199,21 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     /**
      * 오른쪽 상단 메뉴를 구성한다.
      * 닫기 메뉴만이 설정되어 있는 menu_close.xml를 지정한다.
+     *
      * @param menu 메뉴 객체
      * @return 메뉴를 보여준다면 true, 보여주지 않는다면 false
      */
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_submit, menu);
-//        return true;
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.actionbar_profile, menu);
+        return true;
+    }
 
     /**
      * 왼쪽 화살표 메뉴(android.R.id.home)를 클릭했을 때와
      * 오른쪽 상단 닫기 메뉴를 클릭했을 때의 동작을 지정한다.
      * 여기서는 모든 버튼이 액티비티를 종료한다.
+     *
      * @param item 메뉴 아이템 객체
      * @return 메뉴를 처리했다면 true, 그렇지 않다면 false
      */
@@ -193,43 +221,38 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                save();
+//                close();
                 break;
 
+            case R.id.action_submit:
+                save();
+                break;
         }
 
         return true;
     }
 
-    private void close() {
-    }
-
     /**
      * 사용자가 입력한 정보를 MemberInfoItem 객체에 저장해서 반환한다.
+     *
      * @return 사용자 정보 객체
      */
-//    private MemberInfoItem getMemberInfoItem() {
-//        MemberInfoItem item = new MemberInfoItem();
-//        item.phone = EtcLib.getInstance().getPhoneNumber(context);
-//        item.name = nameEdit.getText().toString();
-//        item.sextype = sextypeEdit.getText().toString();
-//        item.birthday = birthEdit.getText().toString().replace(" ", "");
-//
-//        return item;
-//    }
-    private Store getStore(){
-        Store store = new Store();
-        store.phone= EtcLib.getInstance().getPhoneNumber(context);
-        store.name=nameEdit.getText().toString();
-        return store;
+    private Customer getMemberInfoItem() {
+        Customer customer = new Customer();
+        customer.phone = EtcLib.getInstance().getPhoneNumber(context);
+        customer.name = nameEdit.getText().toString();
+        customer.sextype = sextypeEdit.getText().toString();
+        customer.birthday = birthEdit.getText().toString().replace(" ", "");
+
+        return customer;
     }
 
-    /**
-     * 기존 사용자 정보와 새로 입력한 사용자 정보를 비교해서 변경되었는지를 파악한다.
-     * @param newItem 사용자 정보 객체
-     * @return 변경되었다면 true, 변경되지 않았다면 false
-     */
-//
+//    /**
+//     * 기존 사용자 정보와 새로 입력한 사용자 정보를 비교해서 변경되었는지를 파악한다.
+//     *
+//     * @param newItem 사용자 정보 객체
+//     * @return 변경되었다면 true, 변경되지 않았다면 false
+//     */
 //    private boolean isChanged(MemberInfoItem newItem) {
 //        if (newItem.name.trim().equals(currentItem.name)
 //                && newItem.sextype.trim().equals(currentItem.sextype)
@@ -240,18 +263,20 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 //            return true;
 //        }
 //    }
+
     /**
      * 사용자가 이름을 입력했는지를 확인한다.
+     *
      * @param newItem 사용자가 새로 입력한 정보 객체
      * @return 입력하지 않았다면 true, 입력했다면 false
      */
-//    private boolean isNoName(MemberInfoItem newItem) {
-//        if (StringLib.getInstance().isBlank(newItem.name)) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
+    private boolean isNoName(Customer newItem) {
+        if (StringLib.getInstance().isBlank(newItem.name)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /**
      * 화면이 닫히기 전에 변경 유무를 확인해서
@@ -287,33 +312,38 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
      * 사용자가 입력한 정보를 저장한다.
      */
     private void save() {
-        //final MemberInfoItem newItem = getMemberInfoItem();
-        final Store store = getStore();
+        final Customer newItem = getMemberInfoItem();
 
+//        if (!isChanged(newItem)) {
+//            MyToast.s(this, R.string.no_change);
+//            finish();
+//            return;
+//        }
 
-        Log.d(TAG, "insertItem " + store.toString());
+        // MyLog.d(TAG, "insertItem " + newItem.toString());
 
-        RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
+        RemoteService remoteService =
+                ServiceGenerator.createService(RemoteService.class);
 
-        Call<String> call = remoteService.insertMemberInfo(store);
+        Call<String> call = remoteService.insertMemberInfo(newItem);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful()) {
                     String seq = response.body();
                     try {
-                        currentItem.seq = Integer.parseInt(seq);
-                        if (currentItem.seq == 0) {
-                            // MyToast.s(context, R.string.member_insert_fail_message);
+                        customer.seq = Integer.parseInt(seq);
+                        if (customer.seq == 0) {
+                            Toast.makeText(context, R.string.member_insert_fail_message, Toast.LENGTH_SHORT);
                             return;
                         }
                     } catch (Exception e) {
-                        // MyToast.s(context, R.string.member_insert_fail_message);
+                        Toast.makeText(context, R.string.member_insert_fail_message, Toast.LENGTH_SHORT);
                         return;
                     }
-                    currentItem.name = store.name;
-                    // currentItem.sextype = newItem.sextype;
-                    // currentItem.birthday = newItem.birthday;
+                    customer.name = newItem.name;
+                    customer.sextype = newItem.sextype;
+                    customer.birthday = newItem.birthday;
                     finish();
                 }
             }
@@ -335,17 +365,21 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     /**
      * 프로필 아이콘이나 프로필 아이콘 변경 뷰를 클릭했을 때, 프로필 아이콘을 변경할 수 있도록
      * startProfileIconChange() 메소드를 호출한다.
+     *
      * @param v 클릭한 뷰 객체
      */
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.profile_icon || v.getId() == R.id.profile_icon_change) {
-          //  startProfileIconChange();
+            startProfileIconChange();
         }
     }
 
     /**
      * ProfileIconActivity를 실행해서 프로필 아이콘을 변경할 수 있게 한다.
      */
-
+    private void startProfileIconChange() {
+        Intent intent = new Intent(this, ProfileIconActivity.class);
+        startActivity(intent);
+    }
 }
