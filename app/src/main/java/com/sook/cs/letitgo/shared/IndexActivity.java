@@ -51,6 +51,21 @@ public class IndexActivity extends AppCompatActivity {
         }
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 0) {
+            Log.d("ok", "판매자");
+            //판매자
+
+        } else if (resultCode == 1) {
+            Log.d("ok", "소비자");
+            //소비자
+        }
+
+    }
+
     /**
      * 일정 시간(1.2초) 이후에 startTask() 메소드를 호출해서
      * 서버에서 사용자 정보를 조회한다.
@@ -128,9 +143,9 @@ public class IndexActivity extends AppCompatActivity {
     }
 
     /**
-     * 번호 정보가 존재할때!
+     * 번호 정보가 존재할 때!!
      * 전달받은 MemberInfoItem을 Application 객체에 저장한다.
-     * 그리고 startMain() 메소드를 호출한다.
+     * 그리고 startMain() 메소드를 호출한다.!
      *
      * @param member 사용자 정보
      */
@@ -144,12 +159,12 @@ public class IndexActivity extends AppCompatActivity {
      */
     public void startMain() {
         Intent intent = new Intent(IndexActivity.this, GroupActivity.class);
-        startActivity(intent);
-
+        startActivityForResult(intent, 0);
         finish();
     }
 
     /**
+     * 번호가 없을 때!!
      * 사용자 정보를 조회하지 못했다면 insertMemberPhone() 메소드를 통해
      * 전화번호를 서버에 저장하고 MainActivity를 실행한 후 ProfileActivity를 실행한다.
      * 그리고 현재 액티비티를 종료한다.
@@ -160,15 +175,8 @@ public class IndexActivity extends AppCompatActivity {
         if (member == null) {
             insertMemberPhone();
         }
-
         Intent intent = new Intent(IndexActivity.this, GroupActivity.class);
-        startActivity(intent);
-        //   Intent intent2 = new Intent(this, Seller_main.class);
-        // startActivity(intent2);
-
-        //Toast.makeText(this, "인서트", Toast.LENGTH_SHORT);
-
-        finish();
+        startActivityForResult(intent, 0);
     }
 
     /**
