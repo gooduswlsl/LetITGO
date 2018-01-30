@@ -40,9 +40,8 @@ public class IndexActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("ok", "index oncreate");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_first);
+        setContentView(R.layout.activity_index);
 
         context = this;
 
@@ -109,7 +108,6 @@ public class IndexActivity extends AppCompatActivity {
         RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
 
         Call<Member> call = remoteService.selectMemberInfo(phone);
-        Log.d("ok", "selectMemberinfo");
         call.enqueue(new Callback<Member>() {
             @Override
             public void onResponse(Call<Member> call, Response<Member> response) {
@@ -130,6 +128,7 @@ public class IndexActivity extends AppCompatActivity {
     }
 
     /**
+     * 번호 정보가 존재할때!
      * 전달받은 MemberInfoItem을 Application 객체에 저장한다.
      * 그리고 startMain() 메소드를 호출한다.
      *
@@ -160,12 +159,10 @@ public class IndexActivity extends AppCompatActivity {
     private void goProfileActivity(Member member) {
         if (member == null) {
             insertMemberPhone();
-            Log.d("ok", "저장완료");
         }
 
         Intent intent = new Intent(IndexActivity.this, GroupActivity.class);
         startActivity(intent);
-        Log.d("ok", "되어라");
         //   Intent intent2 = new Intent(this, Seller_main.class);
         // startActivity(intent2);
 
@@ -178,7 +175,6 @@ public class IndexActivity extends AppCompatActivity {
      * 폰의 전화번호를 서버에 저장한다.
      */
     private void insertMemberPhone() {
-        Log.d("ok", "insertMemberPhone");
         String phone = EtcLib.getInstance().getPhoneNumber(context);
         RemoteService remoteService =
                 ServiceGenerator.createService(RemoteService.class);
