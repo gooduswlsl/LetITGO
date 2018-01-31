@@ -39,15 +39,13 @@ public interface RemoteService {
     //소비자
     @POST("member/customer")
     Call<String> insertCustomerInfo(@Body Customer customer);
-
     @GET("member/customer/{customer_seq}")
     Call<Customer> selectCustomerInfo(@Path("customer_seq") int seq);
 
     //판매자
+    @POST("/member/seller")
+    Call<String> insertSellerInfo(@Body Seller seller);
     @GET("member/seller/{seller_seq}")
     Call<Seller> selecSellerInfo(@Path("seller_seq") int seq);
-
-    @POST("/seller/info")
-    Call<String> insertSellerInfo(@Body Seller seller);
 
 }
