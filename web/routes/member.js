@@ -8,7 +8,7 @@ router.get('/:phone', function(req, res, next) {
   var phone = req.params.phone;
 
   var sql_customer = "select * from customer where phone = ? limit 1;";
-  var sql_seller = "select seq from seller where phone = ? limit 1;";
+  var sql_seller = "select * from seller where phone = ? limit 1;";
 
   db.get().query(sql_customer, phone, function (err, rows, result, fields) {
 	if(rows.length > 0){
@@ -16,7 +16,7 @@ router.get('/:phone', function(req, res, next) {
 	}else{
 		db.get().query(sql_seller, phone, function (err, rows){
 			if(rows.length > 0){
-				res.status(200).send(''+rows[0].seq);
+				res.status(202).send(''+rows[0].seq);
 			}else
 				res.sendStatus(400);
 			if(err)

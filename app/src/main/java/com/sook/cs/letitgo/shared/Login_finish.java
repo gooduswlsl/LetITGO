@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.seller.Login;
+import com.sook.cs.letitgo.seller.Seller_main;
 
 public class Login_finish extends AppCompatActivity {
 
@@ -20,7 +21,7 @@ public class Login_finish extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Login.class);
+                Intent intent = new Intent(getApplicationContext(), Seller_main.class);
                 startActivity(intent);
             }
         });

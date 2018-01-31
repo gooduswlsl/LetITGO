@@ -44,10 +44,10 @@ public interface RemoteService {
     Call<Customer> selectCustomerInfo(@Path("customer_seq") int seq);
 
     //판매자
-    @GET("member/store/{store_seq}")
-    Call<Seller> selecStoreInfo(@Path("store_seq") int seq);
+    @GET("member/seller/{seller_seq}")
+    Call<Seller> selecSellerInfo(@Path("seller_seq") int seq);
 
-
-
+    @POST("/seller/info")
+    Call<String> insertSellerInfo(@Body Seller seller);
 
 }

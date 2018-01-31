@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context="com.sook.cs.letitgo.shared.Login2_1_store_info">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.sook.cs.letitgo.shared.Login2_1_store_info">
 
     <ImageView
         android:id="@+id/img_test"
@@ -36,25 +36,25 @@ tools:context="com.sook.cs.letitgo.shared.Login2_1_store_info">
         android:layout_marginEnd="8dp" />
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/nameEdit"
         android:layout_width="133dp"
         android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
-        tools:text="정재원"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintVertical_bias="0.094"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintHorizontal_bias="0.872"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.094"
+        tools:text="정재원" />
 
     <TextView
         android:id="@+id/textView4"
@@ -82,12 +82,14 @@ tools:context="com.sook.cs.letitgo.shared.Login2_1_store_info">
         android:layout_marginEnd="8dp" />
 
     <EditText
-        android:id="@+id/editText5"
+        android:id="@+id/telEdit"
         android:layout_width="133dp"
         android:layout_height="40dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPhonetic"
@@ -97,9 +99,39 @@ tools:context="com.sook.cs.letitgo.shared.Login2_1_store_info">
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.248"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        app:layout_constraintVertical_bias="0.248" />
+
+    <EditText
+        android:id="@+id/siteEdit"
+        android:layout_width="202dp"
+        android:layout_height="51dp"
+        android:hint="지점명"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.552"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.234" />
+
+    <EditText
+        android:id="@+id/webpageEdit"
+        android:layout_width="202dp"
+        android:layout_height="51dp"
+        android:hint="홈페이지"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.698"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.234" />
 
     <TextView
         android:id="@+id/textView9"
@@ -158,12 +190,14 @@ tools:context="com.sook.cs.letitgo.shared.Login2_1_store_info">
         android:layout_marginEnd="8dp" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/addressView"
         android:layout_width="198dp"
         android:layout_height="44dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:maxLines="2"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -171,9 +205,7 @@ tools:context="com.sook.cs.letitgo.shared.Login2_1_store_info">
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.436"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        app:layout_constraintVertical_bias="0.436" />
 
     <Button
         android:id="@+id/button7"
@@ -188,5 +220,12 @@ tools:context="com.sook.cs.letitgo.shared.Login2_1_store_info">
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp"
         app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="47dp"
+        tools:layout_editor_absoluteY="347dp" />
 
 </android.support.constraint.ConstraintLayout>

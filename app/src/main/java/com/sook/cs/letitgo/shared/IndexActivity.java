@@ -131,8 +131,10 @@ public class IndexActivity extends AppCompatActivity {
 
                     if (response.code() == 201) // 소비자
                         setCustomer(seq);
-                    else
-                        setStore(seq);
+                    else {
+                        //Log.d("ok", "store");
+                        setSeller(seq);
+                    }
                 } else {//번호없음
                     Log.d("ok", "select unsuccessful");
                     goProfileActivity();
@@ -169,9 +171,9 @@ public class IndexActivity extends AppCompatActivity {
         });
     }
 
-    private void setStore(int seq) {
+    private void setSeller(int seq) {
         RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
-        Call<Seller> call = remoteService.selecStoreInfo(seq);
+        Call<Seller> call = remoteService.selecSellerInfo(seq);
         call.enqueue(new Callback<Seller>() {
             @Override
             public void onResponse(Call<Seller> call, Response<Seller> response) {
@@ -215,7 +217,10 @@ public class IndexActivity extends AppCompatActivity {
 
     private void insertSeller() {
        Log.d("ok", "seller!!!!!!!");
-        //insertMemberGroup("seller");
+
+        Intent it = new Intent(IndexActivity.this, Login2_1_store_info.class);
+        startActivity(it);
+        finish();
 
     }
 }

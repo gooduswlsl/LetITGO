@@ -2,6 +2,7 @@ package com.sook.cs.letitgo.shared;
 
 import android.Manifest;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -19,13 +20,21 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sook.cs.letitgo.MyApp;
 import com.sook.cs.letitgo.R;
+import com.sook.cs.letitgo.item.Seller;
+import com.sook.cs.letitgo.lib.EtcLib;
+import com.sook.cs.letitgo.lib.MyToast;
+import com.sook.cs.letitgo.remote.RemoteService;
+import com.sook.cs.letitgo.remote.ServiceGenerator;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,10 +43,23 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.sook.cs.letitgo.R.id.addressView;
+
 public class Login2_1_store_info extends AppCompatActivity {
+    Context context;
+    Seller currentItem;
+
     private ImageView imgMain;
     private Button addressbtn;
     private TextView addressText;
+    private EditText nameEdit;
+    private EditText telEdit;
+    private EditText siteEdit;
+    private EditText webpageEdit;
 
     private static final int PICK_FROM_CAMERA = 1;
     private static final int PICK_FROM_ALBUM = 2;
@@ -52,10 +74,15 @@ public class Login2_1_store_info extends AppCompatActivity {
 
     private String mCurrentPhotoPath;
 
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        currentItem = ((MyApp) getApplication()).getSeller();
+        context = this;
+
+
         setContentView(R.layout.activity_main3);
         checkPermissions();
         initView();
@@ -64,12 +91,99 @@ public class Login2_1_store_info extends AppCompatActivity {
     private void initView(){
         imgMain = (ImageView) findViewById(R.id.img_test);
         addressbtn = (Button) findViewById(R.id.button4);
-        addressText = (TextView) findViewById(R.id.textView10);
+        addressText = (TextView) findViewById(addressView);
+        nameEdit = (EditText) findViewById(R.id.nameEdit);
+        telEdit = (EditText) findViewById(R.id.telEdit);
+        siteEdit = (EditText) findViewById(R.id.siteEdit);
+        webpageEdit = (EditText) findViewById(R.id.webpageEdit);
+    }
+
+    private void save() {
+        final Seller newItem = getSellerInfoItem();
+
+        Log.d("ok","save1");
+
+        RemoteService remoteService =
+                ServiceGenerator.createService(RemoteService.class);
+
+        Call<String> call = remoteService.insertSellerInfo(newItem);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    String seq = response.body();
+                    try {
+                        currentItem.seq = Integer.parseInt(seq);
+                        if (currentItem.seq == 0) {
+                            MyToast.s(context, R.string.member_insert_fail_message);
+                            return;
+                        }
+                    } catch (Exception e) {
+                        MyToast.s(context, R.string.member_insert_fail_message);
+                        return;
+                    }
+                    currentItem.name = newItem.name;
+                    currentItem.site = newItem.site;
+                    currentItem.tel = newItem.tel;
+                    currentItem.address = newItem.address;
+                    currentItem.webpage = newItem.webpage;
+
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+            }
+        });
     }
 
     public void nextbtn(View v){
+        Log.d("ok","nextbtn");
+        save();
         Intent intent = new Intent(getApplicationContext(),Login_finish.class);
         startActivity(intent);
+    }
+
+//    public void getGeo(View v){
+//        final Geocoder geocoder = new Geocoder(this);
+//        List<Address> list = null;
+//
+//        String address = addressText.getText().toString();
+//        Log.d("test",address);
+//
+//        try{
+//            list = geocoder.getFromLocationName(address,5);
+//        }catch(IOException e){
+//            e.printStackTrace();
+//            Log.d("test","주소를 좌표로 변환시 에러");
+//        }
+//
+//        if (list != null){
+//            if (list.size() == 0){
+//                Toast.makeText(getApplicationContext(),"해당되는 주소가 없습니다.",Toast.LENGTH_SHORT).show();
+//            }else {
+//                double latitude = list.get(0).getLatitude();
+//                double longitude = list.get(0).getLongitude();
+//                Toast.makeText(getApplicationContext(), latitude + "/" + longitude, Toast.LENGTH_LONG).show();
+//            }
+//        }
+//
+//    }
+
+
+
+    private Seller getSellerInfoItem(){
+        Seller item = new Seller();
+        // item.phone = EtcLib.getInstance().getPhoneNumber(context);
+        item.phone= EtcLib.getInstance().getPhoneNumber(context);
+        item.name = nameEdit.getText().toString();
+        item.site = siteEdit.getText().toString();
+        item.tel = telEdit.getText().toString();
+        item.address = addressText.getText().toString();
+        item.webpage = webpageEdit.getText().toString();
+
+        return item;
     }
 
     public void selectPicture(View v){
@@ -280,6 +394,8 @@ public class Login2_1_store_info extends AppCompatActivity {
             startActivityForResult(i, CROP_FROM_CAMERA);
         }
     }
+
+
 
 
 
