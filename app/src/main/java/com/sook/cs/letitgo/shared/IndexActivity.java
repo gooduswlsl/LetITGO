@@ -14,12 +14,15 @@ import android.widget.Toast;
 import com.sook.cs.letitgo.MyApp;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.customer.customer_main;
+import com.sook.cs.letitgo.item.Customer;
 import com.sook.cs.letitgo.item.Member;
+import com.sook.cs.letitgo.item.Store;
 import com.sook.cs.letitgo.lib.EtcLib;
 import com.sook.cs.letitgo.lib.MyToast;
 import com.sook.cs.letitgo.lib.RemoteLib;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
+import com.sook.cs.letitgo.seller.Seller_main;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -33,6 +36,7 @@ import retrofit2.Response;
 public class IndexActivity extends AppCompatActivity {
     int count = 0;
     Context context;
+    Member currentMember;
 
     /**
      * 레이아웃을 설정하고 인터넷에 연결되어 있는지를 확인한다.
@@ -121,50 +125,75 @@ public class IndexActivity extends AppCompatActivity {
         RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
         Log.d("ok", "selectmemberinfo");
 
-        Call<Member> call = remoteService.selectMemberInfo(phone);
-        call.enqueue(new Callback<Member>() {
+        Call<String> call = remoteService.selectMemberInfo(phone);
+        call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<Member> call, Response<Member> response) {
-                Log.d("ok", "onresponse");
-                Member member = response.body();
-
-                if (response.isSuccessful()) {
-                    Log.d("ok", "select successful");
-                    setMemberInfoItem(member);
+            public void onResponse(Call<String> call, Response<String> response) {
+                int seq = Integer.parseInt(response.body());
+                if (response.isSuccessful()) { //번호 있을 때
+                    if (response.code() == 201) // 소비자
+                        setCustomer(seq);
+                    else
+                        setStore(seq);
                 } else {
                     Log.d("ok", "select unsuccessful");
-                    goProfileActivity(member);
                 }
             }
 
             @Override
-            public void onFailure(Call<Member> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
                 Log.d("ok", "failure");
             }
         });
     }
 
-    /**
-     * 번호 정보가 존재할 때!!
-     * 전달받은 MemberInfoItem을 Application 객체에 저장한다.
-     * 그리고 startMain() 메소드를 호출한다.!
-     *
-     * @param member 사용자 정보
-     */
-    private void setMemberInfoItem(Member member) {
-        Log.d("ok", "번호있음");
-        ((MyApp) getApplicationContext()).setMember(member);
-        startMain();
+    private void setCustomer(int seq) {
+        RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
+        Call<Customer> call = remoteService.selectCustomerInfo(seq);
+        call.enqueue(new Callback<Customer>() {
+            @Override
+            public void onResponse(Call<Customer> call, Response<Customer> response) {
+                if (response.isSuccessful()) {
+                    ((MyApp) getApplicationContext()).setCustomer(response.body());
+
+                    Intent it = new Intent(IndexActivity.this, customer_main.class);
+                    startActivity(it);
+                } else {
+                    Log.d("ok", "set customer unsuccessful");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Customer> call, Throwable t) {
+                Log.d("ok", "failure");
+            }
+        });
     }
 
-    /**
-     * MainActivity를 실행하고 현재 액티비티를 종료한다.
-     */
-    public void startMain() {
-        //  Intent intent = new Intent(IndexActivity.this, GroupActivity.class);
-        // startActivityForResult(intent, 0);
-        // finish();
+    private void setStore(int seq) {
+        RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
+        Call<Store> call = remoteService.selecStoreInfo(seq);
+        call.enqueue(new Callback<Store>() {
+            @Override
+            public void onResponse(Call<Store> call, Response<Store> response) {
+                if (response.isSuccessful()) {
+                    ((MyApp) getApplicationContext()).setStore(response.body());
+                    Log.d("ok", "store success");
+
+                    Intent it = new Intent(IndexActivity.this, Seller_main.class);
+                    startActivity(it);
+                } else {
+                    Log.d("ok", "set store unsuccessful");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Store> call, Throwable t) {
+                Log.d("ok", "failure");
+            }
+        });
     }
+
 
     /**
      * 번호가 없을 때!!
@@ -190,37 +219,36 @@ public class IndexActivity extends AppCompatActivity {
         RemoteService remoteService =
                 ServiceGenerator.createService(RemoteService.class);
 
-        Call<String> call = remoteService.insertMemberPhone(phone);
+        // Call<String> call = remoteService.insertMemberPhone(phone);
         Log.d("ok", phone);
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (response.isSuccessful()) {
-                    Log.d("ok", "success insert id");
-
-                } else {
-                    Log.d("ok", "unsuccess insert id");
-                    int statusCode = response.code();
-
-                    ResponseBody errorBody = response.errorBody();
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Log.d("tag", "no internet connectivity");
-            }
-        });
+        //call.enqueue(new Callback<String>() {
+        ///  @Override
+//            public void onResponse(Call<String> call, Response<String> response) {
+//                if (response.isSuccessful()) {
+//                    Log.d("ok", "success insert id");
+//
+//                } else {
+//                    Log.d("ok", "unsuccess insert id");
+//                    int statusCode = response.code();
+//
+//                    ResponseBody errorBody = response.errorBody();
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<String> call, Throwable t) {
+//                Log.d("tag", "no internet connectivity");
+//            }
+//        });
     }
 
     private void insertCustomer() {
         insertMemberGroup("customer");
-
+        // ((MyApp)getApplicationContext()).setCustomer((Customer)currentMember);
         Intent it = new Intent(IndexActivity.this, ProfileActivity.class);
         startActivity(it);
-        Intent it2 = new Intent(this, customer_main.class);
-        startActivity(it2);
+
         finish();
     }
 
@@ -232,16 +260,13 @@ public class IndexActivity extends AppCompatActivity {
     private void insertMemberGroup(String group) {
         Member member = new Member();
         member.phone = EtcLib.getInstance().getPhoneNumber(this);
-        member.group = group;
 
         RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
         Call<String> call = remoteService.insertMemberInfo(member);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                if (response.isSuccessful()) {
-                    finish();
-                }
+                Log.d("ok", "insert Group");
             }
 
             @Override

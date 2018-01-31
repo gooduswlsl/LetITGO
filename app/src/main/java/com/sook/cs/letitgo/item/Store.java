@@ -3,7 +3,7 @@ package com.sook.cs.letitgo.item;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
-public class Store extends Member implements Serializable {
+public class Store implements Serializable {
     public int seq;
     public String name;
     public String phone;
@@ -12,10 +12,6 @@ public class Store extends Member implements Serializable {
     public String tel;
     public String address;
     public String webpage;
-
-    public Store(){
-        super.phone = this.phone;
-    }
 
     public int getSeq() {
         return seq;

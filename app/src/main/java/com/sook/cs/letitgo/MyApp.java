@@ -25,14 +25,14 @@ public class MyApp extends Application {
         StrictMode.setVmPolicy(builder.build());
     }
 
-    public Member getMember() {
-        if (member == null) member = new Member();
-        return member;
-    }
+//    public Member getMember() {
+//        if (member == null) member = new Member();
+//        return member;
+//    }
 
-    public void setMember(Member member) {
-        this.member = member;
-    }
+    //public void setMember(Member member) {
+     //  this.member = member;
+   //}
 
     public Store getStore() {
         if (store == null) store = new Store();
