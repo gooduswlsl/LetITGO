@@ -64,7 +64,7 @@ public class ProfileIconActivity extends AppCompatActivity implements View.OnCli
 
         customer = ((MyApp) getApplication()).getCustomer();
 
-        setToolbar();
+        setActionbar();
         setView();
         setProfileIcon();
     }
@@ -72,11 +72,8 @@ public class ProfileIconActivity extends AppCompatActivity implements View.OnCli
     /**
      * 액티비티 툴바를 설정한다.
      */
-    private void setToolbar() {
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+    private void setActionbar() {
         final ActionBar actionBar = getSupportActionBar();
-
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(R.string.profile_setting);

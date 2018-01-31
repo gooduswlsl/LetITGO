@@ -8,13 +8,13 @@ router.get('/:phone', function(req, res, next) {
   var phone = req.params.phone;
 
   var sql_customer = "select * from customer where phone = ? limit 1;";
-  var sql_seller = "select seq from seller where phone = ? limit 1;";
+  var sql_store = "select seq from store where phone = ? limit 1;";
 
   db.get().query(sql_customer, phone, function (err, rows, result, fields) {
 	if(rows.length > 0){
 		res.status(201).send(''+rows[0].seq);
 	}else{
-		db.get().query(sql_seller, phone, function (err, rows){
+		db.get().query(sql_store, phone, function (err, rows){
 			if(rows.length > 0){
 				res.status(200).send(''+rows[0].seq);
 			}else
@@ -44,10 +44,10 @@ router.get('/customer/:customer_seq', function(req, res, next){
 	});
 });
 
-//member/seller/:seller_seq
-router.get('/seller/:seller_seq', function(req, res, next){
-	var seq = req.params.seller_seq;
-	var sql_select = "select * from seller where seq = ? limit 1;";
+//member/store/:store_seq
+router.get('/store/:store_seq', function(req, res, next){
+	var seq = req.params.store_seq;
+	var sql_select = "select * from store where seq = ? limit 1;";
 	
 	db.get().query(sql_select, seq, function(err, rows){
 		if(rows.length > 0)

@@ -39,6 +39,9 @@ public interface RemoteService {
                                         @Part MultipartBody.Part file);
 
     //소비자
+    @POST("member/customer")
+    Call<String> insertCustomerInfo(@Body Customer customer);
+
     @GET("member/customer/{customer_seq}")
     Call<Customer> selectCustomerInfo(@Path("customer_seq") int seq);
 

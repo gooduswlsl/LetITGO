@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sook.cs.letitgo.MyApp;
 import com.sook.cs.letitgo.R;
@@ -18,13 +17,11 @@ import com.sook.cs.letitgo.item.Customer;
 import com.sook.cs.letitgo.item.Member;
 import com.sook.cs.letitgo.item.Store;
 import com.sook.cs.letitgo.lib.EtcLib;
-import com.sook.cs.letitgo.lib.MyToast;
 import com.sook.cs.letitgo.lib.RemoteLib;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
 import com.sook.cs.letitgo.seller.Seller_main;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -129,14 +126,16 @@ public class IndexActivity extends AppCompatActivity {
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                int seq = Integer.parseInt(response.body());
                 if (response.isSuccessful()) { //번호 있을 때
+                    int seq = Integer.parseInt(response.body());
+
                     if (response.code() == 201) // 소비자
                         setCustomer(seq);
                     else
                         setStore(seq);
-                } else {
+                } else {//번호없음
                     Log.d("ok", "select unsuccessful");
+                    goProfileActivity();
                 }
             }
 
@@ -201,77 +200,22 @@ public class IndexActivity extends AppCompatActivity {
      * 전화번호를 서버에 저장하고 MainActivity를 실행한 후 ProfileActivity를 실행한다.
      * 그리고 현재 액티비티를 종료한다.
      *
-     * @param member 사용자 정보
+     * @param
      */
-    private void goProfileActivity(Member member) {
-        if (member == null) {
-            insertMemberPhone();
-        }
+    private void goProfileActivity() {
         Intent intent = new Intent(IndexActivity.this, GroupActivity.class);
         startActivityForResult(intent, 0);
     }
 
-    /**
-     * 폰의 전화번호를 서버에 저장한다.
-     */
-    private void insertMemberPhone() {
-        String phone = EtcLib.getInstance().getPhoneNumber(context);
-        RemoteService remoteService =
-                ServiceGenerator.createService(RemoteService.class);
-
-        // Call<String> call = remoteService.insertMemberPhone(phone);
-        Log.d("ok", phone);
-        //call.enqueue(new Callback<String>() {
-        ///  @Override
-//            public void onResponse(Call<String> call, Response<String> response) {
-//                if (response.isSuccessful()) {
-//                    Log.d("ok", "success insert id");
-//
-//                } else {
-//                    Log.d("ok", "unsuccess insert id");
-//                    int statusCode = response.code();
-//
-//                    ResponseBody errorBody = response.errorBody();
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<String> call, Throwable t) {
-//                Log.d("tag", "no internet connectivity");
-//            }
-//        });
-    }
-
     private void insertCustomer() {
-        insertMemberGroup("customer");
-        // ((MyApp)getApplicationContext()).setCustomer((Customer)currentMember);
         Intent it = new Intent(IndexActivity.this, ProfileActivity.class);
         startActivity(it);
-
         finish();
     }
 
     private void insertSeller() {
-        insertMemberGroup("seller");
+       Log.d("ok", "seller!!!!!!!");
+        //insertMemberGroup("seller");
 
-    }
-
-    private void insertMemberGroup(String group) {
-        Member member = new Member();
-        member.phone = EtcLib.getInstance().getPhoneNumber(this);
-
-        RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
-        Call<String> call = remoteService.insertMemberInfo(member);
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                Log.d("ok", "insert Group");
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-            }
-        });
     }
 }
