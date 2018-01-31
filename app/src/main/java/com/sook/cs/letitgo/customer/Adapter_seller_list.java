@@ -1,9 +1,11 @@
 package com.sook.cs.letitgo.customer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,19 +15,18 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.sook.cs.letitgo.R;
-import com.sook.cs.letitgo.item.Store;
-import com.sook.cs.letitgo.databinding.ItemStoreBinding;
-
+import com.sook.cs.letitgo.item.Seller;
+import com.sook.cs.letitgo.databinding.ItemSellerImgBinding;
 
 import java.util.ArrayList;
 
-public class Adapter_store_liked extends RecyclerView.Adapter<MyViewHolder> implements View.OnClickListener {
-    ItemStoreBinding binding;
-    ArrayList<Store> storeArrayList;
+public class Adapter_seller_list extends RecyclerView.Adapter<MyViewHolder> implements View.OnClickListener {
+    ItemSellerImgBinding binding;
+    ArrayList<Seller> sellerArrayList;
     Context mContext;
 
-    public Adapter_store_liked(Context mContext, ArrayList<Store> storeArrayList) {
-        this.storeArrayList = storeArrayList;
+    public Adapter_seller_list(Context mContext, ArrayList<Seller> sellerArrayList) {
+        this.sellerArrayList = sellerArrayList;
         this.mContext = mContext;
     }
 
@@ -33,21 +34,21 @@ public class Adapter_store_liked extends RecyclerView.Adapter<MyViewHolder> impl
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         ViewDataBinding binding;
-        binding = DataBindingUtil.inflate(layoutInflater, R.layout.item_store, parent, false);
-        return new MyViewHolder((ItemStoreBinding) binding);
+        binding = DataBindingUtil.inflate(layoutInflater, R.layout.item_seller_img, parent, false);
+        return new MyViewHolder((ItemSellerImgBinding) binding);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {          // 항목을 뷰홀더에 바인딩
-        Store store = storeArrayList.get(position);
-        holder.sbinding.setStore(store);
+        Seller seller = sellerArrayList.get(position);
+        holder.simgBinding.setSeller(seller);
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(this);
     }
 
     @Override
     public int getItemCount() {
-        return storeArrayList.size();
+        return sellerArrayList.size();
     }
 
     @BindingAdapter({"bind:imageUrl"})
@@ -57,8 +58,13 @@ public class Adapter_store_liked extends RecyclerView.Adapter<MyViewHolder> impl
 
     @Override
     public void onClick(View v) {
-
         Log.d("Tag", String.valueOf(v.getTag()));
+
+        Intent it = new Intent(mContext, customer_dialog_store.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("store", sellerArrayList.get((Integer) v.getTag()));
+        it.putExtras(bundle);
+        (mContext).startActivity(it);
 
 
     }

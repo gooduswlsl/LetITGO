@@ -3,15 +3,13 @@ package com.sook.cs.letitgo.remote;
 
 import com.sook.cs.letitgo.item.Customer;
 import com.sook.cs.letitgo.item.Member;
-import com.sook.cs.letitgo.item.Store;
+import com.sook.cs.letitgo.item.Seller;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -47,7 +45,7 @@ public interface RemoteService {
 
     //판매자
     @GET("member/store/{store_seq}")
-    Call<Store> selecStoreInfo(@Path("store_seq") int seq);
+    Call<Seller> selecStoreInfo(@Path("store_seq") int seq);
 
 
 

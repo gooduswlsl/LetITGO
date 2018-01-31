@@ -15,7 +15,7 @@ import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.customer.customer_main;
 import com.sook.cs.letitgo.item.Customer;
 import com.sook.cs.letitgo.item.Member;
-import com.sook.cs.letitgo.item.Store;
+import com.sook.cs.letitgo.item.Seller;
 import com.sook.cs.letitgo.lib.EtcLib;
 import com.sook.cs.letitgo.lib.RemoteLib;
 import com.sook.cs.letitgo.remote.RemoteService;
@@ -171,23 +171,23 @@ public class IndexActivity extends AppCompatActivity {
 
     private void setStore(int seq) {
         RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
-        Call<Store> call = remoteService.selecStoreInfo(seq);
-        call.enqueue(new Callback<Store>() {
+        Call<Seller> call = remoteService.selecStoreInfo(seq);
+        call.enqueue(new Callback<Seller>() {
             @Override
-            public void onResponse(Call<Store> call, Response<Store> response) {
+            public void onResponse(Call<Seller> call, Response<Seller> response) {
                 if (response.isSuccessful()) {
-                    ((MyApp) getApplicationContext()).setStore(response.body());
-                    Log.d("ok", "store success");
+                    ((MyApp) getApplicationContext()).setSeller(response.body());
+                    Log.d("ok", "seller success");
 
                     Intent it = new Intent(IndexActivity.this, Seller_main.class);
                     startActivity(it);
                 } else {
-                    Log.d("ok", "set store unsuccessful");
+                    Log.d("ok", "set seller unsuccessful");
                 }
             }
 
             @Override
-            public void onFailure(Call<Store> call, Throwable t) {
+            public void onFailure(Call<Seller> call, Throwable t) {
                 Log.d("ok", "failure");
             }
         });

@@ -5,7 +5,7 @@ import android.os.StrictMode;
 
 import com.sook.cs.letitgo.item.Customer;
 import com.sook.cs.letitgo.item.Member;
-import com.sook.cs.letitgo.item.Store;
+import com.sook.cs.letitgo.item.Seller;
 
 
 /**
@@ -13,7 +13,7 @@ import com.sook.cs.letitgo.item.Store;
  */
 public class MyApp extends Application {
     private Member member;
-    private Store store;
+    private Seller seller;
     private Customer customer;
 
     @Override
@@ -34,14 +34,14 @@ public class MyApp extends Application {
      //  this.member = member;
    //}
 
-    public Store getStore() {
-        if (store == null) store = new Store();
+    public Seller getSeller() {
+        if (seller == null) seller = new Seller();
 
-        return store;
+        return seller;
     }
 
-    public void setStore(Store store) {
-        this.store = store;
+    public void setSeller(Seller seller) {
+        this.seller = seller;
     }
 
     public Customer getCustomer() {
@@ -51,7 +51,7 @@ public class MyApp extends Application {
 
 
     public int getStoreSeq() {
-        return store.seq;
+        return seller.seq;
     }
 
     public void setCustomer(Customer customer) {

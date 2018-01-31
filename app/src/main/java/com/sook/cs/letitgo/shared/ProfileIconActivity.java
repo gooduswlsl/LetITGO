@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,8 +17,7 @@ import android.widget.ImageView;
 import com.sook.cs.letitgo.MyApp;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.item.Customer;
-import com.sook.cs.letitgo.item.Member;
-import com.sook.cs.letitgo.item.Store;
+import com.sook.cs.letitgo.item.Seller;
 import com.sook.cs.letitgo.lib.FileLib;
 import com.sook.cs.letitgo.lib.RemoteLib;
 import com.sook.cs.letitgo.lib.StringLib;
@@ -45,7 +43,7 @@ public class ProfileIconActivity extends AppCompatActivity implements View.OnCli
 
    Customer customer;
    // CUstomer customer;
-    Store store;
+    Seller seller;
 
     File profileIconFile;
     String profileIconFilename;

@@ -1,30 +1,30 @@
 package com.sook.cs.letitgo.util;
 
 import com.sook.cs.letitgo.item.Menu;
-import com.sook.cs.letitgo.item.Store;
+import com.sook.cs.letitgo.item.Seller;
 
 import java.util.ArrayList;
 
 public class DataUtil {
 
-    public static ArrayList<Store> getStoreArrayList() {
-        ArrayList<Store> storeList = new ArrayList<>();
-//        storeList.add(new Store("할리스", "숙대점", "010-4536-9508", "www.naver.com", "서울특별시 용산구", "https://pbs.twimg.com/profile_images/1570768836/phpPj5DaU"));
-//        storeList.add(new Store("스타벅스", "죽전점", "010-4536-9508",
+    public static ArrayList<Seller> getStoreArrayList() {
+        ArrayList<Seller> sellerList = new ArrayList<>();
+//        sellerList.add(new Seller("할리스", "숙대점", "010-4536-9508", "www.naver.com", "서울특별시 용산구", "https://pbs.twimg.com/profile_images/1570768836/phpPj5DaU"));
+//        sellerList.add(new Seller("스타벅스", "죽전점", "010-4536-9508",
 //                "www.daum.net", "경기도 용인시 수지구", "http://logok.org/wp-content/uploads/2014/08/Starbucks-logo-2000px-png.png"));
-//        storeList.add(new Store("커피빈", "숙대점", "010-4536-9508", "www.naver.com", "서울특별시 용산구", "http://www.m-i.kr/news/photo/201505/165854_88460_2856.png"));
-//        storeList.add(new Store("스타벅스", "죽전점", "010-4536-9508",
+//        sellerList.add(new Seller("커피빈", "숙대점", "010-4536-9508", "www.naver.com", "서울특별시 용산구", "http://www.m-i.kr/news/photo/201505/165854_88460_2856.png"));
+//        sellerList.add(new Seller("스타벅스", "죽전점", "010-4536-9508",
 //                "www.daum.net", "경기도 용인시 수지구", "http://logok.org/wp-content/uploads/2014/08/Starbucks-logo-2000px-png.png"));
-//        storeList.add(new Store("투썸", "서울역점", "010-4536-9508", "www.naver.com", "서울특별시 용산구", "https://pbs.twimg.com/profile_images/1366417558/twosomenowon.png_400x400.png"));
-//        storeList.add(new Store("스타벅스", "죽전점", "010-4536-9508",
+//        sellerList.add(new Seller("투썸", "서울역점", "010-4536-9508", "www.naver.com", "서울특별시 용산구", "https://pbs.twimg.com/profile_images/1366417558/twosomenowon.png_400x400.png"));
+//        sellerList.add(new Seller("스타벅스", "죽전점", "010-4536-9508",
 //                "www.daum.net", "경기도 용인시 수지구", "http://logok.org/wp-content/uploads/2014/08/Starbucks-logo-2000px-png.png"));
-//        storeList.add(new Store("커피니", "숙대점", "010-4536-9508", "www.naver.com", "서울특별시 용산구", "https://pbs.twimg.com/profile_images/1570768836/phpPj5DaU"));
-//        storeList.add(new Store("놀숲", "죽전점", "010-4536-9508",
+//        sellerList.add(new Seller("커피니", "숙대점", "010-4536-9508", "www.naver.com", "서울특별시 용산구", "https://pbs.twimg.com/profile_images/1570768836/phpPj5DaU"));
+//        sellerList.add(new Seller("놀숲", "죽전점", "010-4536-9508",
 //                "www.daum.net", "경기도 용인시 수지구", "http://logok.org/wp-content/uploads/2014/08/Starbucks-logo-2000px-png.png"));
-//        storeList.add(new Store("할리스", "용산점", "010-4536-9508", "www.naver.com", "서울특별시 용산구", "https://pbs.twimg.com/profile_images/1570768836/phpPj5DaU"));
-//        storeList.add(new Store("쌀국수", "죽전점", "010-4536-9508",
+//        sellerList.add(new Seller("할리스", "용산점", "010-4536-9508", "www.naver.com", "서울특별시 용산구", "https://pbs.twimg.com/profile_images/1570768836/phpPj5DaU"));
+//        sellerList.add(new Seller("쌀국수", "죽전점", "010-4536-9508",
 //                "www.daum.net", "경기도 용인시 수지구", "http://logok.org/wp-content/uploads/2014/08/Starbucks-logo-2000px-png.png"));
-        return storeList;
+        return sellerList;
     }
 
     public static ArrayList<Menu> getMenuArrayList() {

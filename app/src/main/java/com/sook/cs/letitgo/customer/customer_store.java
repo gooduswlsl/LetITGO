@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sook.cs.letitgo.R;
-import com.sook.cs.letitgo.databinding.FragmentStoreBinding;
+import com.sook.cs.letitgo.databinding.FragmentSellerBinding;
 import com.sook.cs.letitgo.util.DataUtil;
 
 /**
@@ -23,8 +23,8 @@ import com.sook.cs.letitgo.util.DataUtil;
  */
 
 public class customer_store extends Fragment {
-    FragmentStoreBinding binding;
-    private Adapter_store_list recyclerAdapter;
+    FragmentSellerBinding binding;
+    private Adapter_seller_list recyclerAdapter;
     private RecyclerView recyclerView;
 
     public customer_store() {
@@ -34,14 +34,14 @@ public class customer_store extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        recyclerAdapter = new Adapter_store_list(getActivity(), DataUtil.getStoreArrayList());
+        recyclerAdapter = new Adapter_seller_list(getActivity(), DataUtil.getStoreArrayList());
     }
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_store, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_seller, container, false);
         binding.setFragment(this);
         binding.editSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override

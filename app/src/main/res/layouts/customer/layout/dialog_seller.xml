@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.sook.cs.letitgo.item.Store">
+    tools:context="com.sook.cs.letitgo.item.Seller">
 
     <data>
 
         <variable
-            name="store"
-            type="com.sook.cs.letitgo.item.Store" />
+            name="seller"
+            type="com.sook.cs.letitgo.item.Seller" />
     </data>
 
     <LinearLayout
@@ -28,7 +28,7 @@
                 android:id="@+id/img_sImg"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                app:imageUrl="@{store.getImg}" />
+                app:imageUrl="@{seller.getImg}" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -40,7 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:text="@{store.getName}"
+                    android:text="@{seller.getName}"
                     android:textStyle="bold"
                     tools:text="가게명" />
 
@@ -49,7 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/tv_sName"
-                    android:text="@{store.getSite}"
+                    android:text="@{seller.getSite}"
                     tools:text="지점명" />
 
                 <TextView
@@ -58,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_sName"
                     android:layout_marginTop="10dp"
-                    android:text="@{store.getAddress}"
+                    android:text="@{seller.getAddress}"
                     tools:text="위치" />
             </RelativeLayout>
         </LinearLayout>
@@ -68,7 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@{store.getPhone}"
+            android:text="@{seller.getPhone}"
             tools:text="폰" />
 
         <TextView
@@ -76,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@{store.getWebpage}"
+            android:text="@{seller.getWebpage}"
             tools:text="웹사이트" />
     </LinearLayout>
 </layout>

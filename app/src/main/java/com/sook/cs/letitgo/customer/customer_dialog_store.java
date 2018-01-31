@@ -7,11 +7,11 @@ import android.support.annotation.Nullable;
 import android.view.Window;
 
 import com.sook.cs.letitgo.R;
-import com.sook.cs.letitgo.item.Store;
-import com.sook.cs.letitgo.databinding.DialogStoreBinding;
+import com.sook.cs.letitgo.item.Seller;
+import com.sook.cs.letitgo.databinding.DialogSellerBinding;
 
 public class customer_dialog_store extends Activity {
-    DialogStoreBinding binding;
+    DialogSellerBinding binding;
 
     public customer_dialog_store() {
     }
@@ -21,10 +21,10 @@ public class customer_dialog_store extends Activity {
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        binding = DataBindingUtil.setContentView(this, R.layout.dialog_store);
+        binding = DataBindingUtil.setContentView(this, R.layout.dialog_seller);
 
-        Store store = (Store) getIntent().getSerializableExtra("store");
-        binding.setStore(store);
+        Seller seller = (Seller) getIntent().getSerializableExtra("seller");
+        binding.setSeller(seller);
 
     }
 

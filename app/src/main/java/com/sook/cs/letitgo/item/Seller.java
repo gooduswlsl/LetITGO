@@ -3,7 +3,7 @@ package com.sook.cs.letitgo.item;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
-public class Store implements Serializable {
+public class Seller implements Serializable {
     public int seq;
     public String name;
     public String phone;
@@ -47,7 +47,7 @@ public class Store implements Serializable {
 
     @Override
     public String toString() {
-        return "Store{" +
+        return "Seller{" +
                 "seq=" + seq +
                 ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
