@@ -1,11 +1,12 @@
 package com.sook.cs.letitgo.seller;
 
+import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +16,38 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.sook.cs.letitgo.R;
+import com.sook.cs.letitgo.item.Menu;
+import com.sook.cs.letitgo.remote.RemoteService;
+import com.sook.cs.letitgo.remote.ServiceGenerator;
+
+import java.util.ArrayList;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class seller_menu extends Fragment {
 
+    private static final int ADD_MENU = 1;
+    private static final int EDIT_MENU = 2;
+    private static final int DELETE_MENU = 3;
+
+    private final String TAG = this.getClass().getSimpleName();
+    Menu menu_item;
+
+    Context context;
+    int memberSeq;
+
+    ListViewAdapter adapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        context = this.getActivity();
+
+//        memberSeq = ((MyApp)getActivity().getApplication()). getSeller_seq();
+        memberSeq = 1;  //memberSeq=1라고 가정
         return inflater.inflate(R.layout.seller_menu, container, false);
     }
 
@@ -28,22 +55,23 @@ public class seller_menu extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        final ListViewAdapter adapter = new ListViewAdapter();
+        adapter = new ListViewAdapter();
 
-        // 리스트뷰 참조 및 Adapter달기
         ListView listview;
         listview = (ListView) getView().findViewById(R.id.listview);
         listview.setAdapter(adapter);
+        showMenuList(memberSeq);
+
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, final int position, long id) {
-                // item 가져오자
-                final ListViewItem item = (ListViewItem) parent.getItemAtPosition(position);
+                // 클릭한 item 가져오기
+                final Menu item = (Menu) parent.getItemAtPosition(position);
 
-                String titleStr = item.getTitle(); //listItem 내용 읽기
-                String descStr = item.getDesc();
-                String priceStr = item.getPrice();
-                Drawable iconDrawable = item.getIcon();
+                final String titleStr = item.getmName();
+                String descStr = item.getmDetail();
+                String priceStr = String.valueOf(item.getmPrice());
+//                Drawable iconDrawable = item.getIcon();
 
                 // TODO : use item data.
                 LayoutInflater inflater = getLayoutInflater(null);
@@ -57,12 +85,12 @@ public class seller_menu extends Fragment {
                 final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 
                 alert.setView(alertLayout);
-                alert.setCancelable(false); // disallow cancel of AlertDialog on click of back button and outside touch
+                alert.setCancelable(false);
 
                 name.setText(titleStr);
                 details.setText(descStr);
                 price.setText(priceStr);
-                image.setImageDrawable(iconDrawable);
+//                image.setImageDrawable(iconDrawable);
 
                 name.setFocusable(false);
                 name.setClickable(false);
@@ -76,6 +104,8 @@ public class seller_menu extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
+                        menu_item = new Menu();
+
                         final AlertDialog.Builder check_alert = new AlertDialog.Builder(getActivity());
                         check_alert.setMessage("삭제하시겠습니까?")
                                 .setPositiveButton("삭제", new DialogInterface.OnClickListener() {
@@ -83,6 +113,10 @@ public class seller_menu extends Fragment {
                                     public void onClick(DialogInterface dialog, int which) {
                                         adapter.deleteItem(position);
                                         adapter.notifyDataSetChanged();
+                                        menu_item.mName = titleStr;
+                                        menu_item.action = DELETE_MENU;
+                                        insertMenuInfo();
+
                                         Toast.makeText(getActivity().getApplicationContext(), "삭제되었습니다", Toast.LENGTH_SHORT).show();
                                     }
                                 })
@@ -122,13 +156,26 @@ public class seller_menu extends Fragment {
                     @Override
                     public void onClick(View v) {
                         if (wantToCloseDialog) {//다이얼로그 닫기
+                            menu_item = new Menu();
                             dialog.dismiss();
                             String ed_name = name.getText().toString();
                             String ed_details = details.getText().toString();
                             String ed_price = price.getText().toString();
-                            item.setTitle(ed_name);
-                            item.setDesc(ed_details);
-                            item.setPrice(ed_price);
+
+                            menu_item.mSeq=item.getmSeq();
+                            menu_item.mName = ed_name;
+                            menu_item.mDetail = ed_details;
+                            menu_item.mPrice = Integer.parseInt(ed_price);
+                            menu_item.action = EDIT_MENU;
+
+                            insertMenuInfo();
+
+                            item.setmName(ed_name);
+                            item.setmDetail(ed_details);
+                            item.setmPrice(Integer.parseInt(ed_price));
+
+                            adapter.notifyDataSetChanged();
+
                         } else { //다이얼로그 닫지 않고 EditText 수정 가능하게
                             name.setFocusableInTouchMode(true);
                             name.setClickable(true);
@@ -167,7 +214,7 @@ public class seller_menu extends Fragment {
                 final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
                 alert.setTitle("메뉴 추가하기");
                 alert.setView(alertLayout);
-                alert.setCancelable(false); // disallow cancel of AlertDialog on click of back button and outside touch
+                alert.setCancelable(false);
 
                 alert.setPositiveButton("추가하기", new DialogInterface.OnClickListener() {
                     @Override
@@ -189,48 +236,109 @@ public class seller_menu extends Fragment {
 
                     @Override
                     public void onClick(View v) {
+
+                        menu_item = new Menu();
+
                         //사진추가해야함.
                         String ed_name = name.getText().toString();
                         String ed_details = details.getText().toString();
                         String ed_price = price.getText().toString();
 
-                        if (ed_name.equals("") || ed_details.equals("") || ed_price.equals("")) { //입력 다 안했음.
+                        if (ed_name.equals("") || ed_details.equals("") || ed_price.equals("")) {
                             Toast.makeText(getActivity().getApplicationContext(), "입력들을 완성해주세요", Toast.LENGTH_SHORT).show();
-                        }
-                        else { //입력 완성시 다이얼로그 닫을 수 있게 허용.
+                        } else { //입력 완성시 다이얼로그 닫을 수 있게 허용.
                             wantToCloseDialog = true;
                             adapter.addItem(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.coffee),
                                     ed_name, ed_details, ed_price);
                             adapter.notifyDataSetChanged();
                         }
                         if (wantToCloseDialog) {//다이얼로그 닫기
+                            menu_item.mName = ed_name;
+                            menu_item.mDetail = ed_details;
+                            menu_item.mPrice = Integer.parseInt(ed_price);
+//                            menu_item.seller_seq = memberSeq;
+                            menu_item.seller_seq = 1; //라고 가정
+                            menu_item.action = ADD_MENU;
+                            insertMenuInfo();
                             dialog.dismiss();
                         }
                     }
                 });
-
             }
         });
+    }
 
-        adapter.addItem(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.coffee),
-                "아메리카노", "설명", "1000원");
+    // 메뉴 수정, 추가, 삭제시 서버에 저장
+    private void insertMenuInfo() {
+        Log.d(TAG, menu_item.toString());
 
-        adapter.addItem(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.coffee),
-                "카페라테", "설명", "2000원");
+        RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
+        Call<String> call = remoteService.insertMenuInfo(menu_item);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    int seq = 0;
+                    String seqString = response.body();
 
-        adapter.addItem(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.coffee),
-                "카페모카", "설명", "3000원");
+                    try {
+                        seq = Integer.parseInt(seqString);
+                    } catch (Exception e) {
+                        seq = 0;
+                    }
 
-        adapter.addItem(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.coffee),
-                "딸기스무디", "설명", "3000원");
+                    if (seq == 0) {
+                        //등록 실패
+                    } else {
+//                        infoItem.seq = seq;
+                    }
+                } else { // 등록 실패
+                    int statusCode = response.code();
+                    ResponseBody errorBody = response.errorBody();
+                    Log.d(TAG, "fail " + statusCode + errorBody.toString());
+                }
+            }
 
-        adapter.addItem(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.coffee),
-                "베트남커피", "설명", "3000원");
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.d(TAG, "no internet connectivity");
+            }
+        });
+    }
 
-        adapter.addItem(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.coffee),
-                "아포가토", "설명", "3000원");
+    // DB에서 memberSeq에 해당하는 메뉴내용 가져오기
+    private void showMenuList(int memberSeq) {
+        RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
+        Call<ArrayList<Menu>> call
+                = remoteService.listMenu(memberSeq);
+        call.enqueue(new Callback<ArrayList<Menu>>() {
 
-        adapter.addItem(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.coffee),
-                "딸기생크림케이크", "설명", "3000원");
+            @Override
+            public void onResponse(Call<ArrayList<Menu>> call,
+                                   Response<ArrayList<Menu>> response) {
+                ArrayList<Menu> list = response.body();
+
+                if (list == null) {
+                    list = new ArrayList<>();
+                }
+
+                if (response.isSuccessful()) {
+                    Log.d(TAG, "list size " + list.size());
+                    if (list.size() == 0) {
+
+                    } else {
+                        adapter.setItemList(list);
+                    }
+                } else {
+                    Log.d(TAG, "not success");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Menu>> call, Throwable t) {
+                Log.d(TAG, "no internet connectivity");
+                Log.d(TAG, t.toString());
+            }
+        });
     }
 }

@@ -32,7 +32,6 @@ import com.sook.cs.letitgo.MyApp;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.item.Seller;
 import com.sook.cs.letitgo.lib.EtcLib;
-import com.sook.cs.letitgo.lib.MyToast;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
 
@@ -115,11 +114,11 @@ public class Login2_1_store_info extends AppCompatActivity {
                     try {
                         currentItem.seq = Integer.parseInt(seq);
                         if (currentItem.seq == 0) {
-                            MyToast.s(context, R.string.member_insert_fail_message);
+                            Toast.makeText(context, R.string.member_insert_fail_message, Toast.LENGTH_SHORT);
                             return;
                         }
                     } catch (Exception e) {
-                        MyToast.s(context, R.string.member_insert_fail_message);
+                        Toast.makeText(context, R.string.member_insert_fail_message, Toast.LENGTH_SHORT);
                         return;
                     }
                     currentItem.name = newItem.name;

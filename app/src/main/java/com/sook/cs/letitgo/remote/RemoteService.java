@@ -3,7 +3,10 @@ package com.sook.cs.letitgo.remote;
 
 import com.sook.cs.letitgo.item.Customer;
 import com.sook.cs.letitgo.item.Member;
+import com.sook.cs.letitgo.item.Menu;
 import com.sook.cs.letitgo.item.Seller;
+
+import java.util.ArrayList;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -15,12 +18,14 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * 서버에 호출할 메소드를 선언하는 인터페이스
  */
 public interface RemoteService {
-    String BASE_URL = "http://192.168.10.130:3000";
+    //String BASE_URL = "http://192.168.10.130:3000";  //마이크임팩트
+    String BASE_URL = "http://192.168.21.168:3000";  //학교
     String MEMBER_ICON_URL = BASE_URL + "/member/";
     String IMAGE_URL = BASE_URL + "/img/";
 
@@ -47,5 +52,13 @@ public interface RemoteService {
     Call<String> insertSellerInfo(@Body Seller seller);
     @GET("member/seller/{seller_seq}")
     Call<Seller> selecSellerInfo(@Path("seller_seq") int seq);
+
+    //매장 메뉴 등록, 추가, 수정
+    @POST("/menu/update")
+    Call<String> insertMenuInfo(@Body Menu menu);
+
+    //매장 메뉴 리스트
+    @GET("/menu/list")
+    Call<ArrayList<Menu>> listMenu(@Query("seller_seq") int sellerSeq);
 
 }

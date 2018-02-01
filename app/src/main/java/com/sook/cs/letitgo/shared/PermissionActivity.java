@@ -13,9 +13,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.sook.cs.letitgo.R;
-import com.sook.cs.letitgo.lib.MyToast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,7 +143,7 @@ public class PermissionActivity extends AppCompatActivity {
         dialog.setPositiveButton(R.string.setting, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
-                MyToast.s(PermissionActivity.this, R.string.permission_setting_restart);
+                Toast.makeText(PermissionActivity.this, R.string.permission_setting_restart, Toast.LENGTH_SHORT);
                 PermissionActivity.this.finish();
 
                 goAppSettingActivity();
