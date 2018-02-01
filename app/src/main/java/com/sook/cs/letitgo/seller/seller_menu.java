@@ -260,6 +260,7 @@ public class seller_menu extends Fragment {
                             menu_item.seller_seq = 1; //라고 가정
                             menu_item.action = ADD_MENU;
                             insertMenuInfo();
+                            showMenuList(memberSeq);
                             dialog.dismiss();
                         }
                     }
