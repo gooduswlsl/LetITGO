@@ -11,7 +11,7 @@ public class Customer implements Serializable {
     public String phone;
     public String sextype;
     public String birthday;
-    @SerializedName("img") public String img;
+    public String img;
 
     public int getSeq() {
         return seq;

@@ -4,7 +4,7 @@ import android.app.Application;
 import android.os.StrictMode;
 
 import com.sook.cs.letitgo.item.Customer;
-import com.sook.cs.letitgo.item.Member;
+//import com.sook.cs.letitgo.item.Member;
 import com.sook.cs.letitgo.item.Seller;
 
 
@@ -12,7 +12,7 @@ import com.sook.cs.letitgo.item.Seller;
  * 앱 전역에서 사용할 수 있는 클래스
  */
 public class MyApp extends Application {
-    private Member member;
+   // private Member member;
     private Seller seller;
     private Customer customer;
 

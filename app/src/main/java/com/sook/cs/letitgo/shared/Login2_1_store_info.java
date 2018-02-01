@@ -233,7 +233,7 @@ public class Login2_1_store_info extends AppCompatActivity {
         }
         if (photoFile != null) {
             photoUri = FileProvider.getUriForFile(Login2_1_store_info.this,
-                    "com.example.yeonjin.myapplication.provider", photoFile);
+                    "com.sook.cs.letitgo.provider", photoFile);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
             startActivityForResult(intent, PICK_FROM_CAMERA);
         }
@@ -369,7 +369,7 @@ public class Login2_1_store_info extends AppCompatActivity {
             File tempFile = new File(folder.toString(), croppedFileName.getName());
 
             photoUri = FileProvider.getUriForFile(Login2_1_store_info.this,
-                    "com.example.yeonjin.myapplication.provider", tempFile);
+                    "com.sook.cs.letitgo.provider", tempFile);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);

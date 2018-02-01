@@ -23,7 +23,7 @@ import com.sook.cs.letitgo.MyApp;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.customer.customer_main;
 import com.sook.cs.letitgo.item.Customer;
-import com.sook.cs.letitgo.item.Member;
+//import com.sook.cs.letitgo.item.Member;
 import com.sook.cs.letitgo.lib.EtcLib;
 import com.sook.cs.letitgo.lib.StringLib;
 import com.sook.cs.letitgo.remote.RemoteService;
@@ -51,6 +51,14 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     EditText phoneEdit;
 
     Customer currentItem;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //if(requestCode==0)
+          //  if(resultCode==1)
+                currentItem.img=data.getStringExtra("img_name");
+    }
 
     /**
      * 액티비티를 생성하고 화면을 구성한다.
@@ -217,6 +225,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         newItem.name = nameEdit.getText().toString();
         newItem.sextype = sextypeEdit.getText().toString();
         newItem.birthday = birthEdit.getText().toString().replace(" ", "");
+        newItem.img = currentItem.img;
 
         return newItem;
     }
@@ -255,7 +264,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
      * 사용자가 입력한 정보를 저장한다.
      */
     private void save() {
+        Log.d("ok", "save");
+        Log.d("ok", currentItem.img);
         final Customer newItem = getCustomerInfo();
+        newItem.img = currentItem.img;
 
         if (isNoName(newItem)) {
             Toast.makeText(this, "이름", Toast.LENGTH_SHORT).show();
@@ -316,6 +328,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
      */
     private void startProfileIconChange() {
         Intent intent = new Intent(this, ProfileIconActivity.class);
-        startActivity(intent);
+       // startActivity(intent);
+        startActivityForResult(intent, 0);
     }
 }

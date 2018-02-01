@@ -14,7 +14,7 @@ import com.sook.cs.letitgo.MyApp;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.customer.customer_main;
 import com.sook.cs.letitgo.item.Customer;
-import com.sook.cs.letitgo.item.Member;
+//import com.sook.cs.letitgo.item.Member;
 import com.sook.cs.letitgo.item.Seller;
 import com.sook.cs.letitgo.lib.EtcLib;
 import com.sook.cs.letitgo.lib.RemoteLib;
@@ -33,7 +33,7 @@ import retrofit2.Response;
 public class IndexActivity extends AppCompatActivity {
     int count = 0;
     Context context;
-    Member currentMember;
+   // Member currentMember;
 
     /**
      * 레이아웃을 설정하고 인터넷에 연결되어 있는지를 확인한다.

@@ -2,7 +2,6 @@ package com.sook.cs.letitgo.remote;
 
 
 import com.sook.cs.letitgo.item.Customer;
-import com.sook.cs.letitgo.item.Member;
 import com.sook.cs.letitgo.item.Menu;
 import com.sook.cs.letitgo.item.Seller;
 
@@ -33,8 +32,6 @@ public interface RemoteService {
     @GET("/member/{phone}")
     Call<String> selectMemberInfo(@Path("phone")String phone);
 
-    @POST("/member/info")
-    Call<String> insertMemberInfo(@Body Member member);
 
     @Multipart
     @POST("/member/img_upload")

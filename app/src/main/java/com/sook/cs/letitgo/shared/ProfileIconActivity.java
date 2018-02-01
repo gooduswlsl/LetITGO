@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,7 +43,6 @@ public class ProfileIconActivity extends AppCompatActivity implements View.OnCli
     ImageView profileIconImage;
 
    Customer customer;
-   // CUstomer customer;
     Seller seller;
 
     File profileIconFile;
@@ -95,6 +95,7 @@ public class ProfileIconActivity extends AppCompatActivity implements View.OnCli
      * 프로필 아이콘을 설정한다.
      */
     private void setProfileIcon() {
+        Log.d("Profile", "setProfileIcon");
         if (StringLib.getInstance().isBlank(customer.img)) {
             Picasso.with(this).load(R.drawable.ic_person).into(profileIconImage);
         } else {
@@ -108,7 +109,8 @@ public class ProfileIconActivity extends AppCompatActivity implements View.OnCli
      * 사용자가 선택한 프로필 아이콘을 저장할 파일 이름을 설정한다.
      */
     private void setProfileIconFile() {
-        profileIconFilename = customer.seq + "_" + String.valueOf(System.currentTimeMillis());
+        Log.d("Profile", "setProfileIconFile");
+        profileIconFilename = (customer.seq+1) + "_" + String.valueOf(System.currentTimeMillis());
 
         profileIconFile = FileLib.getInstance().getProfileIconFile(context, profileIconFilename);
     }
@@ -159,6 +161,9 @@ public class ProfileIconActivity extends AppCompatActivity implements View.OnCli
                 break;
 
             case R.id.action_close:
+                Intent it = new Intent();
+                it.putExtra("img_name", profileIconFilename+".png");
+                setResult(1, it);
                 finish();
                 break;
         }
@@ -170,7 +175,10 @@ public class ProfileIconActivity extends AppCompatActivity implements View.OnCli
      * 카메라 앱을 실행해서 이미지를 촬영한다.
      */
     private void getImageFromCamera() {
+        Log.d("Profile", "getImageFromCamera");
+
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(profileIconFile));
         startActivityForResult(intent, PICK_FROM_CAMERA);
     }
@@ -209,6 +217,11 @@ public class ProfileIconActivity extends AppCompatActivity implements View.OnCli
      * 카메라에서 촬영한 이미지를 프로필 아이콘에 사용할 크기로 자른다.
      */
     private void cropImageFromCamera() {
+        Log.d("Profile", "crop image from camera");
+        Log.d("Profile", profileIconFilename);
+        Log.d("Profile ", String.valueOf(profileIconFile));
+        Log.d("Profile", String.valueOf(Uri.fromFile(profileIconFile)));
+
         Uri uri = Uri.fromFile(profileIconFile);
         Intent intent = getCropIntent(uri, uri);
         startActivityForResult(intent, CROP_FROM_CAMERA);
@@ -233,13 +246,19 @@ public class ProfileIconActivity extends AppCompatActivity implements View.OnCli
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        Log.d("Profile result", String.valueOf(resultCode));
 
         if (resultCode != RESULT_OK) return;
 
         if (requestCode == PICK_FROM_CAMERA) {
-            cropImageFromCamera();
+            Log.d("Profile", "pick from camera");
+           // cropImageFromCamera();
+            Picasso.with(this).load(profileIconFile).into(profileIconImage);
+            uploadProfileIcon();
+
 
         } else if (requestCode == CROP_FROM_CAMERA) {
+            Log.d("Profile", "crop from camera");
             Picasso.with(this).load(profileIconFile).into(profileIconImage);
             uploadProfileIcon();
 
@@ -258,8 +277,11 @@ public class ProfileIconActivity extends AppCompatActivity implements View.OnCli
      * 프로필 아이콘을 서버에 업로드한다.
      */
     private void uploadProfileIcon() {
-        RemoteLib.getInstance().uploadMemberIcon(customer.seq, profileIconFile);
+        Log.d("Profile", "uploadProfileIcon");
+        RemoteLib.getInstance().uploadMemberIcon((customer.seq), profileIconFile);
 
-        customer.img = profileIconFilename + ".png";
+       // customer.img = profileIconFilename + ".png";
+        Log.d("Profile", profileIconFilename+".png");
+
     }
 }
