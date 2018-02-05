@@ -66,10 +66,11 @@ router.post('/customer', function(req, res) {
   var name = req.body.name;
   var sextype = req.body.sextype;
   var birthday = req.body.birthday;
+    var img = req.body.img;
 
- var sql_insert = "insert into customer (phone, name, sextype, birthday) values(?, ?, ?, ?);";
+ var sql_insert = "insert into customer (phone, name, sextype, birthday, img) values(?, ?, ?, ?, ?);";
    
-  db.get().query(sql_insert, [phone, name, sextype, birthday], function (err, rows) {
+  db.get().query(sql_insert, [phone, name, sextype, birthday, img], function (err, rows) {
     console.log("rows"+JSON.stringify(rows));
 	 if (err) {
 		  console.log("ERR "+err);
@@ -139,14 +140,10 @@ router.post('/img_upload', function (req, res) {
   form.on('fileBegin', function (name, file){
     file.path = './public/member/' + file.name;
   });
+    
+    form.parse(req);
 
-  form.parse(req, function(err, fields, files) {
-    var sql_update = "update customer set img = ? where seq = ?;";
-	
-    db.get().query(sql_update, [files.file.name, fields.member_seq], function (err, rows) {
-      res.sendStatus(200);
-    });
-  });
 });
+
 
 module.exports = router;
