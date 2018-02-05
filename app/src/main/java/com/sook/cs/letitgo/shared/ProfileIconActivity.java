@@ -107,7 +107,7 @@ public class ProfileIconActivity extends AppCompatActivity implements View.OnCli
      * 사용자가 선택한 프로필 아이콘을 저장할 파일 이름을 설정한다.
      */
     private void setProfileIconFile() {
-        profileIconFilename = customer.seq + "_" + String.valueOf(System.currentTimeMillis());
+        profileIconFilename = String.valueOf(System.currentTimeMillis());
 
         profileIconFile = FileLib.getInstance().getProfileIconFile(context, profileIconFilename);
     }
@@ -158,8 +158,6 @@ public class ProfileIconActivity extends AppCompatActivity implements View.OnCli
                 break;
 
             case R.id.action_close:
-
-                //Log.d("img", customer.img);
                 if (customer.img != null) {
                     Intent it = new Intent(this, ProfileActivity.class);
                     it.putExtra("imgname", customer.img);
