@@ -33,7 +33,7 @@ import retrofit2.Response;
 public class IndexActivity extends AppCompatActivity {
     int count = 0;
     Context context;
-   // Member currentMember;
+    // Member currentMember;
 
     /**
      * 레이아웃을 설정하고 인터넷에 연결되어 있는지를 확인한다.
@@ -216,7 +216,7 @@ public class IndexActivity extends AppCompatActivity {
     }
 
     private void insertSeller() {
-       Log.d("ok", "seller!!!!!!!");
+        Log.d("ok", "seller!!!!!!!");
 
         Intent it = new Intent(IndexActivity.this, Login2_1_store_info.class);
         startActivity(it);

@@ -23,7 +23,6 @@ import com.sook.cs.letitgo.MyApp;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.customer.customer_main;
 import com.sook.cs.letitgo.item.Customer;
-//import com.sook.cs.letitgo.item.Member;
 import com.sook.cs.letitgo.lib.EtcLib;
 import com.sook.cs.letitgo.lib.StringLib;
 import com.sook.cs.letitgo.remote.RemoteService;
@@ -52,14 +51,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     Customer currentItem;
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //if(requestCode==0)
-          //  if(resultCode==1)
-                currentItem.img=data.getStringExtra("img_name");
-    }
-
     /**
      * 액티비티를 생성하고 화면을 구성한다.
      *
@@ -86,7 +77,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             Picasso.with(this).load(R.drawable.ic_person).into(profileIconImage);
         } else {
             Picasso.with(this)
-                    .load(RemoteService.MEMBER_ICON_URL + currentItem.img)
+                    .load(RemoteService.MEMBER_IMG_URL + currentItem.img)
                     .into(profileIconImage);
         }
     }
@@ -264,8 +255,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
      * 사용자가 입력한 정보를 저장한다.
      */
     private void save() {
-        Log.d("ok", "save");
-        Log.d("ok", currentItem.img);
         final Customer newItem = getCustomerInfo();
         newItem.img = currentItem.img;
 
@@ -323,12 +312,17 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == 1)
+            currentItem.img = data.getStringExtra("imgname");
+    }
+
     /**
      * ProfileIconActivity를 실행해서 프로필 아이콘을 변경할 수 있게 한다.
      */
     private void startProfileIconChange() {
         Intent intent = new Intent(this, ProfileIconActivity.class);
-       // startActivity(intent);
-        startActivityForResult(intent, 0);
+        startActivity(intent);
     }
 }
