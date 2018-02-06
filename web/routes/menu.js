@@ -83,6 +83,30 @@ router.get('/list', function(req, res, next) {
   });
 });
 
+//menu/sellerList
+router.get('/sellerList', function(req, res){
+    var sql = "select * from seller";
+    db.get().query(sql, function(err, rows){
+        if(rows.length>0)
+            res.status(200).json(rows);
+        
+        else
+            res.sendStatus(400);
+        
+    });
+});
+
+//menu/sellerList/:seller_seq
+router.get('/sellerList/:seller_seq', function(req, res){
+    var seller_seq = req.params.seller_seq;
+    var sql = "select * from seller where seq=?";
+    
+    db.get().query(sql, seller_seq, function(err, rows){
+        if(err)
+            console.log(err);
+        res.status(200).json(rows[0]);
+    });
+});
 
 
 module.exports = router;

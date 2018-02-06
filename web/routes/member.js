@@ -138,7 +138,7 @@ router.post('/img_upload', function (req, res) {
   var form = new formidable.IncomingForm();
 
   form.on('fileBegin', function (name, file){
-    file.path = './public/member/' + file.name;
+    file.path = './public/customer/' + file.name;
   });
     
     form.parse(req);
