@@ -27,8 +27,8 @@ public interface RemoteService {
     String BASE_URL = "http://192.168.21.168:3000";  //학교
     //String BASE_URL = "http://175.193.168.234:3000";  //301호
 
-    String MEMBER_IMG_URL = BASE_URL + "/member/";
-    String IMAGE_URL = BASE_URL + "/img/";
+    String CUSTOMER_IMG_URL = BASE_URL + "/customer/";
+    String SELLER_IMAGE_URL = BASE_URL + "/seller/";
 
     //멤버
     @GET("/member/{phone}")

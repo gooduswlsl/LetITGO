@@ -20,6 +20,7 @@ import com.sook.cs.letitgo.item.Seller;
 import com.sook.cs.letitgo.databinding.ItemSellerImgBinding;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -70,9 +71,11 @@ public class Adapter_seller_list extends RecyclerView.Adapter<MyViewHolder> {
     }
 
     @BindingAdapter({"bind:imageUrl"})
-    public static void loadImage(ImageView imageView, String url) {
-        Glide.with(imageView.getContext()).load(url).into(imageView);
+    public static void loadImage(ImageView imageView, String fileName) {
+        Picasso.with(imageView.getContext()).load(RemoteService.SELLER_IMAGE_URL+fileName).into(imageView);
     }
+
+
 
 
 }

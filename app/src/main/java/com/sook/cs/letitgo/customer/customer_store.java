@@ -96,6 +96,8 @@ public class customer_store extends Fragment {
                 Log.d("storelist", t.toString());
             }
         });
+
+
     }
 
     @Override

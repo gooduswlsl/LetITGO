@@ -98,7 +98,7 @@ public class ProfileIconActivity extends AppCompatActivity implements View.OnCli
             Picasso.with(this).load(R.drawable.ic_person).into(profileIconImage);
         } else {
             Picasso.with(this)
-                    .load(RemoteService.MEMBER_IMG_URL + customer.img)
+                    .load(RemoteService.CUSTOMER_IMG_URL + customer.img)
                     .into(profileIconImage);
         }
     }

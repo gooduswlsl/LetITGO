@@ -77,7 +77,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             Picasso.with(this).load(R.drawable.ic_person).into(profileIconImage);
         } else {
             Picasso.with(this)
-                    .load(RemoteService.MEMBER_IMG_URL + currentItem.img)
+                    .load(RemoteService.CUSTOMER_IMG_URL + currentItem.img)
                     .into(profileIconImage);
         }
     }
@@ -323,6 +323,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
      */
     private void startProfileIconChange() {
         Intent intent = new Intent(this, ProfileIconActivity.class);
-        startActivity(intent);
+        context.startActivity(intent);
     }
 }
