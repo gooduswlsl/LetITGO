@@ -32,6 +32,7 @@ import com.sook.cs.letitgo.MyApp;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.item.Seller;
 import com.sook.cs.letitgo.lib.EtcLib;
+import com.sook.cs.letitgo.lib.RemoteLib;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
 
@@ -51,6 +52,8 @@ import static com.sook.cs.letitgo.R.id.addressView;
 public class Login2_1_store_info extends AppCompatActivity {
     Context context;
     Seller currentItem;
+    File croppedFileName;
+    String imageFileName;
 
     private ImageView imgMain;
     private Button addressbtn;
@@ -98,9 +101,9 @@ public class Login2_1_store_info extends AppCompatActivity {
     }
 
     private void save() {
-        final Seller newItem = getSellerInfoItem();
 
-        Log.d("ok","save1");
+        uploadProfileIcon();
+        final Seller newItem = getSellerInfoItem();
 
         RemoteService remoteService =
                 ServiceGenerator.createService(RemoteService.class);
@@ -138,7 +141,6 @@ public class Login2_1_store_info extends AppCompatActivity {
     }
 
     public void nextbtn(View v){
-        Log.d("ok","nextbtn");
         save();
         Intent intent = new Intent(getApplicationContext(),Login_finish.class);
         startActivity(intent);
@@ -181,6 +183,7 @@ public class Login2_1_store_info extends AppCompatActivity {
         item.tel = telEdit.getText().toString();
         item.address = addressText.getText().toString();
         item.webpage = webpageEdit.getText().toString();
+        item.img = currentItem.img;
 
         return item;
     }
@@ -241,7 +244,7 @@ public class Login2_1_store_info extends AppCompatActivity {
 
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("HHmmss").format(new Date());
-        String imageFileName = "IP" + timeStamp + "_";
+        imageFileName = "IP" + timeStamp + "_"; //
         File storageDir = new File(Environment.getExternalStorageDirectory() + "/NOSTest/");
         if (!storageDir.exists()) {
             storageDir.mkdirs();
@@ -358,7 +361,7 @@ public class Login2_1_store_info extends AppCompatActivity {
             intent.putExtra("aspectX", 1);
             intent.putExtra("aspectY", 1);
             intent.putExtra("scale", true);
-            File croppedFileName = null;
+            croppedFileName = null; ///
             try {
                 croppedFileName = createImageFile();
             } catch (IOException e) {
@@ -394,7 +397,15 @@ public class Login2_1_store_info extends AppCompatActivity {
         }
     }
 
+    /**
+     * 프로필 아이콘을 서버에 업로드한다.
+     */
+    private void uploadProfileIcon() {
+        RemoteLib.getInstance().uploadSellerImg(croppedFileName);
+        currentItem.img =  imageFileName;
+        Log.d("ddtest",""+imageFileName);
 
+    }
 
 
 

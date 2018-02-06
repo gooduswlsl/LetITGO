@@ -8,7 +8,6 @@ import com.sook.cs.letitgo.item.Seller;
 import java.util.ArrayList;
 
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -25,7 +24,7 @@ import retrofit2.http.Query;
 public interface RemoteService {
     //String BASE_URL = "http://192.168.10.130:3000";  //마이크임팩트
     //String BASE_URL = "http://192.168.21.168:3000";  //학교
-    String BASE_URL = "http://175.193.168.234:3000";  //301호
+    String BASE_URL = "http://192.168.30.77:3000";  //301호
 
     String MEMBER_IMG_URL = BASE_URL + "/member/";
     String IMAGE_URL = BASE_URL + "/img/";
@@ -50,6 +49,10 @@ public interface RemoteService {
     Call<String> insertSellerInfo(@Body Seller seller);
     @GET("member/seller/{seller_seq}")
     Call<Seller> selecSellerInfo(@Path("seller_seq") int seq);
+
+    @Multipart
+    @POST("/member/img_upload2")
+    Call<ResponseBody> uploadSellerImg(@Part MultipartBody.Part file);
 
     //매장 메뉴 등록, 추가, 수정
     @POST("/menu/update")
