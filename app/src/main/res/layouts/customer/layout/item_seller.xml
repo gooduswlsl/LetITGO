@@ -22,7 +22,7 @@
             android:id="@+id/img_sImg"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:imageUrl="@{seller.getImg}" />
+            app:sellerImg="@{seller.getImg}" />
 
         <RelativeLayout
             android:layout_width="wrap_content"

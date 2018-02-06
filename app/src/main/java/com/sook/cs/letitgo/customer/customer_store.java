@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -14,14 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.databinding.FragmentSellerBinding;
 import com.sook.cs.letitgo.item.Seller;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
-import com.sook.cs.letitgo.util.DataUtil;
 
 import java.util.ArrayList;
 
@@ -35,7 +34,8 @@ import retrofit2.Response;
 
 public class customer_store extends Fragment {
     private FragmentSellerBinding binding;
-    private Adapter_seller_list recyclerAdapter;
+    private Adapter_seller_img adapterSellerImg;
+    private Adapter_seller_list adapterSellerList;
     private RecyclerView recyclerView;
 
     public customer_store() {
@@ -45,7 +45,7 @@ public class customer_store extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        recyclerAdapter = new Adapter_seller_list(getActivity(), new ArrayList<Seller>());
+        adapterSellerImg = new Adapter_seller_img(getActivity(), new ArrayList<Seller>());
     }
 
 
@@ -59,9 +59,11 @@ public class customer_store extends Fragment {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 switch (actionId) {
                     case EditorInfo.IME_ACTION_SEARCH:
+                        Log.d("search", "search click");
                         searchClick(v);
                         break;
                     default:
+                        searchClick(v);
                         return false;
                 }
                 return true;
@@ -72,7 +74,7 @@ public class customer_store extends Fragment {
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 5);
         recyclerView.setLayoutManager(layoutManager);
 
-        recyclerView.setAdapter(recyclerAdapter);
+        recyclerView.setAdapter(adapterSellerImg);
         listInfo();
 
 
@@ -87,7 +89,7 @@ public class customer_store extends Fragment {
             public void onResponse(Call<ArrayList<Seller>> call, Response<ArrayList<Seller>> response) {
                 ArrayList<Seller> list = response.body();
                 if (response.isSuccessful() && list != null) {
-                    recyclerAdapter.addSellerList(list);
+                    adapterSellerImg.addSellerList(list);
                 }
             }
 
@@ -106,7 +108,33 @@ public class customer_store extends Fragment {
 
 
     public void searchClick(View v) {
-        Toast.makeText(getActivity(), binding.editSearch.getText().toString(), Toast.LENGTH_SHORT).show();
+        final String key = binding.editSearch.getText().toString();
+        Log.d("search", "search click method");
+        if (!key.equals("")) {
+            recyclerView.removeAllViews();
+            RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
+            Call<ArrayList<Seller>> call = remoteService.searchSeller(key);
+            call.enqueue(new Callback<ArrayList<Seller>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Seller>> call, Response<ArrayList<Seller>> response) {
+                    ArrayList<Seller> list = response.body();
+                    if (response.isSuccessful() && list != null) {
+                        adapterSellerList = new Adapter_seller_list(getActivity(), list);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        recyclerView.setAdapter(adapterSellerList);
+
+                        binding.tvCount.setText(key + "에 대한 검색 결과가 " + list.size() + "건이 있습니다.");
+                        binding.tvCount.setVisibility(View.VISIBLE);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<Seller>> call, Throwable t) {
+
+                }
+            });
+        }
+
     }
 
 }

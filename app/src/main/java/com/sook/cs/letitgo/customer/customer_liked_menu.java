@@ -1,6 +1,5 @@
 package com.sook.cs.letitgo.customer;
 
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,7 +14,7 @@ import com.sook.cs.letitgo.util.DataUtil;
 
 public class customer_liked_menu extends Fragment {
     private FragmentLikedMenuBinding binding;
-    private Adapter_menu_liked recyclerAdapter;
+    private Adapter_menu_list recyclerAdapter;
     private RecyclerView recyclerView;
 
     public customer_liked_menu() {
@@ -25,7 +24,7 @@ public class customer_liked_menu extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        recyclerAdapter = new Adapter_menu_liked(getActivity(), DataUtil.getMenuArrayList());
+        recyclerAdapter = new Adapter_menu_list(getActivity(), DataUtil.getMenuArrayList());
     }
 
     @Nullable

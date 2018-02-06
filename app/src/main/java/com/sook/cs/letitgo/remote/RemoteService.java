@@ -27,6 +27,8 @@ public interface RemoteService {
     //String BASE_URL = "http://192.168.21.168:3000";  //학교
     String BASE_URL = "http://183.96.190.117:3000";  //집
 
+
+
     String CUSTOMER_IMG_URL = BASE_URL + "/customer/";
     String SELLER_IMG_URL = BASE_URL + "/seller/";
     String MENU_IMG_URL = BASE_URL + "/menu/";
@@ -50,12 +52,17 @@ public interface RemoteService {
     @GET("/menu/sellerList")
     Call<ArrayList<Seller>> listSellerInfo();
     @GET("/menu/sellerList/{sSeq}")
-    Call<Seller> selectSellerList(@Path("sSeq") int sSeq);
+    Call<Seller> selectSeller(@Path("sSeq") int sSeq);
     //메뉴정보얻어오기
     @GET("/menu/menuList")
     Call<ArrayList<Menu>> listMenuInfo();
     @GET("/menu/menuList/{mSeq}")
-    Call<Menu> selectMenuList(@Path("mSeq") int mSeq);
+    Call<Menu> selectMenu(@Path("mSeq") int mSeq);
+    //검색
+    @GET("/menu/searchSeller")
+    Call<ArrayList<Seller>> searchSeller(@Query("key") String key);
+    @GET("/menu/searchMenu")
+    Call<ArrayList<Menu>> searchMenu( @Query("key") String key);
 
 
     //판매자

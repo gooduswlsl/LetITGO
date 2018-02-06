@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -14,14 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.databinding.FragmentMenuBinding;
 import com.sook.cs.letitgo.item.Menu;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
-import com.sook.cs.letitgo.util.DataUtil;
 
 import java.util.ArrayList;
 
@@ -35,7 +34,8 @@ import retrofit2.Response;
 
 public class customer_menu extends Fragment {
     private FragmentMenuBinding binding;
-    private Adapter_menu_list recyclerAdapter;
+    private Adapter_menu_img adapterMenuImg;
+    private Adapter_menu_list adapterMenuList;
     private RecyclerView recyclerView;
 
     public customer_menu() {
@@ -45,7 +45,8 @@ public class customer_menu extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        recyclerAdapter = new Adapter_menu_list(getActivity(),  new ArrayList<Menu>());
+        adapterMenuImg = new Adapter_menu_img(getActivity(), new ArrayList<Menu>());
+
     }
 
     @Nullable
@@ -69,7 +70,7 @@ public class customer_menu extends Fragment {
         recyclerView = binding.recyclerviewMenu;
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 5);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(recyclerAdapter);
+        recyclerView.setAdapter(adapterMenuImg);
         listInfo();
 
         return binding.getRoot();
@@ -83,19 +84,44 @@ public class customer_menu extends Fragment {
             public void onResponse(Call<ArrayList<Menu>> call, Response<ArrayList<Menu>> response) {
                 ArrayList<Menu> list = response.body();
                 if (response.isSuccessful() && list != null) {
-                    recyclerAdapter.addMenuList(list);
+                    adapterMenuImg.addMenuList(list);
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<Menu>> call, Throwable t) {
-                Log.d("storelist", t.toString());
+
             }
         });
     }
 
     public void searchClick(View v) {
-        Toast.makeText(getActivity(), binding.editSearch.getText().toString(), Toast.LENGTH_SHORT).show();
+        final String key = binding.editSearch.getText().toString();
+        if (!key.equals("")) {
+            recyclerView.removeAllViews();
+            RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
+            Call<ArrayList<Menu>> call = remoteService.searchMenu(key);
+            call.enqueue(new Callback<ArrayList<Menu>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Menu>> call, Response<ArrayList<Menu>> response) {
+                    ArrayList<Menu> list = response.body();
+                    if (response.isSuccessful() && list != null) {
+                        adapterMenuList = new Adapter_menu_list(getActivity(), list);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        recyclerView.setAdapter(adapterMenuList);
+
+                        binding.tvCount.setText(key + "에 대한 검색 결과가 " + list.size() + "건이 있습니다.");
+                        binding.tvCount.setVisibility(View.VISIBLE);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<Menu>> call, Throwable t) {
+
+                }
+            });
+        }
+
     }
 
     @Override

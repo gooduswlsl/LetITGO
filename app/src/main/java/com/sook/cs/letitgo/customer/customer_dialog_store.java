@@ -37,7 +37,7 @@ public class customer_dialog_store extends Activity {
 
     private void selectSellerList(int seller_seq) {
         RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
-        Call<Seller> call = remoteService.selectSellerList(seller_seq);
+        Call<Seller> call = remoteService.selectSeller(seller_seq);
         call.enqueue(new Callback<Seller>() {
             @Override
             public void onResponse(Call<Seller> call, Response<Seller> response) {

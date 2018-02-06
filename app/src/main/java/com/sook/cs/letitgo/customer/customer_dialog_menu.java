@@ -39,7 +39,7 @@ public class customer_dialog_menu extends Activity {
 
     private void selectMenuList(int menu_seq) {
         RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
-        Call<Menu> call = remoteService.selectMenuList(menu_seq);
+        Call<Menu> call = remoteService.selectMenu(menu_seq);
         call.enqueue(new Callback<Menu>() {
             @Override
             public void onResponse(Call<Menu> call, Response<Menu> response) {
