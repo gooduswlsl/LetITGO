@@ -60,7 +60,6 @@ router.post('/update', function(req, res) {
 
 //menu/list
 router.get('/list', function(req, res, next) {
-    console.log("menu/list");
   var seller_seq = req.query.seller_seq;
   
   console.log(seller_seq);
@@ -81,12 +80,12 @@ router.get('/list', function(req, res, next) {
       } else {
         res.sendStatus(400);
       }
+       
   });
 });
 
 //menu/sellerList
 router.get('/sellerList', function(req, res){
-    console.log("menu/sellerList");
     var sql = "select * from seller";
     db.get().query(sql, function(err, rows){
         if(rows.length>0)
@@ -94,13 +93,13 @@ router.get('/sellerList', function(req, res){
         
         else
             res.sendStatus(400);
+       
         
     });
 });
 
 //menu/sellerList/:seller_seq
 router.get('/sellerList/:sSeq', function(req, res){
-    console.log("menu/sellerList/:seller_seq");
     var sSeq = req.params.sSeq;
     var sql = "select * from seller where seq=?";
     
@@ -108,25 +107,26 @@ router.get('/sellerList/:sSeq', function(req, res){
         if(err)
             console.log(err);
         res.status(200).json(rows[0]);
+       
     });
 });
 
 //menu/menuList
 router.get('/menuList', function(req, res){
-    console.log("menu/menuList");
     var sql = "select * from menu";
     db.get().query(sql, function(err, rows){
         if(rows.length>0)
             res.status(200).json(rows);
         else
             res.sendStatus(400);
+       
         
     });
 });
 
 //menu/menuList/:mSeq
 router.get('/menuList/:mSeq', function(req, res){
-    console.log("menu/menuList/mSeq");
+    console.log("select");
     var mSeq = req.params.mSeq;
     var sql = "select * from menu where mSeq=?";
     
@@ -134,8 +134,35 @@ router.get('/menuList/:mSeq', function(req, res){
         if(err)
             console.log(err);
         res.status(200).json(rows[0]);
+        
     });
 });
+
+//menu/searchSeller
+router.get('/searchSeller', function(req, res){
+    var key = req.query.key;
+    var sql = "select * from seller where name Like ?";
+    
+
+    db.get().query(sql, "%"+key+"%", function(err, rows){
+        if(err)
+            console.log(err);
+        res.status(200).json(rows);
+    });
+ });
+
+//menu/searchMenu
+router.get('/searchMenu', function(req, res){
+    var key = req.query.key;
+    var sql = "select * from menu where mName Like ?";
+    
+     db.get().query(sql,"%"+key+"%" , function(err, rows){
+         if(err)
+             console.log(err);
+         res.status(200).json(rows);
+     });
+});
+
 
 
 module.exports = router;
