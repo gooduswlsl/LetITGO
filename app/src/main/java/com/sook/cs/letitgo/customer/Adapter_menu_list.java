@@ -21,9 +21,9 @@ import com.sook.cs.letitgo.databinding.ItemMenuImgBinding;
 import java.util.ArrayList;
 
 public class Adapter_menu_list extends RecyclerView.Adapter<MyViewHolder> implements View.OnClickListener {
-    ItemMenuImgBinding mbinding;
-    ArrayList<Menu> menuArrayList;
-    Context mContext;
+    private ItemMenuImgBinding mbinding;
+    private ArrayList<Menu> menuArrayList;
+    private Context mContext;
 
     public Adapter_menu_list(Context mContext, ArrayList<Menu> menuArrayList) {
         this.menuArrayList = menuArrayList;

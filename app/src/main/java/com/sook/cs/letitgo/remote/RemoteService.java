@@ -24,8 +24,8 @@ import retrofit2.http.Query;
  */
 public interface RemoteService {
     //String BASE_URL = "http://192.168.10.130:3000";  //마이크임팩트
-    //String BASE_URL = "http://192.168.21.168:3000";  //학교
-    String BASE_URL = "http://175.193.168.234:3000";  //301호
+    String BASE_URL = "http://192.168.21.168:3000";  //학교
+    //String BASE_URL = "http://175.193.168.234:3000";  //301호
 
     String MEMBER_IMG_URL = BASE_URL + "/member/";
     String IMAGE_URL = BASE_URL + "/img/";
@@ -45,6 +45,10 @@ public interface RemoteService {
     @POST("/member/img_upload")
     Call<ResponseBody> uploadCustomerImg(@Part MultipartBody.Part file);
 
+    //매장정보얻어오기
+    @GET("menu/sellerList")
+    Call<ArrayList<Seller>> listSellerInfo();
+
     //판매자
     @POST("/member/seller")
     Call<String> insertSellerInfo(@Body Seller seller);
@@ -58,5 +62,6 @@ public interface RemoteService {
     //매장 메뉴 리스트
     @GET("/menu/list")
     Call<ArrayList<Menu>> listMenu(@Query("seller_seq") int sellerSeq);
+
 
 }

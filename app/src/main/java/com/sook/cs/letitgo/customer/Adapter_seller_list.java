@@ -20,10 +20,10 @@ import com.sook.cs.letitgo.databinding.ItemSellerImgBinding;
 
 import java.util.ArrayList;
 
-public class Adapter_seller_list extends RecyclerView.Adapter<MyViewHolder> implements View.OnClickListener {
-    ItemSellerImgBinding binding;
-    ArrayList<Seller> sellerArrayList;
-    Context mContext;
+public class Adapter_seller_list extends RecyclerView.Adapter<MyViewHolder> {
+    private ItemSellerImgBinding binding;
+    private ArrayList<Seller> sellerArrayList;
+    private Context mContext;
 
     public Adapter_seller_list(Context mContext, ArrayList<Seller> sellerArrayList) {
         this.sellerArrayList = sellerArrayList;
@@ -40,10 +40,28 @@ public class Adapter_seller_list extends RecyclerView.Adapter<MyViewHolder> impl
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {          // 항목을 뷰홀더에 바인딩
-        Seller seller = sellerArrayList.get(position);
+        final Seller seller = sellerArrayList.get(position);
         holder.simgBinding.setSeller(seller);
         holder.itemView.setTag(position);
-        holder.itemView.setOnClickListener(this);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Tag", String.valueOf(v.getTag()));
+
+                Intent it = new Intent(mContext, customer_dialog_store.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("store", sellerArrayList.get((Integer) v.getTag()));
+                it.putExtras(bundle);
+                (mContext).startActivity(it);
+
+
+            }
+        });
+    }
+
+    public void addSellerList(ArrayList<Seller> sellerArrayList){
+        this.sellerArrayList.addAll(sellerArrayList);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -56,16 +74,5 @@ public class Adapter_seller_list extends RecyclerView.Adapter<MyViewHolder> impl
         Glide.with(imageView.getContext()).load(url).into(imageView);
     }
 
-    @Override
-    public void onClick(View v) {
-        Log.d("Tag", String.valueOf(v.getTag()));
 
-        Intent it = new Intent(mContext, customer_dialog_store.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("store", sellerArrayList.get((Integer) v.getTag()));
-        it.putExtras(bundle);
-        (mContext).startActivity(it);
-
-
-    }
 }

@@ -2,10 +2,12 @@ package com.sook.cs.letitgo.customer;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +18,16 @@ import android.widget.Toast;
 
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.databinding.FragmentSellerBinding;
+import com.sook.cs.letitgo.item.Seller;
+import com.sook.cs.letitgo.remote.RemoteService;
+import com.sook.cs.letitgo.remote.ServiceGenerator;
 import com.sook.cs.letitgo.util.DataUtil;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by YEONJIN on 2018-01-08.
@@ -24,8 +35,8 @@ import com.sook.cs.letitgo.util.DataUtil;
 
 public class customer_store extends Fragment {
     FragmentSellerBinding binding;
-    private Adapter_seller_list recyclerAdapter;
-    private RecyclerView recyclerView;
+     Adapter_seller_list recyclerAdapter;
+     RecyclerView recyclerView;
 
     public customer_store() {
 
@@ -60,9 +71,41 @@ public class customer_store extends Fragment {
         recyclerView = binding.recyclerviewStore;
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 5);
         recyclerView.setLayoutManager(layoutManager);
+
         recyclerView.setAdapter(recyclerAdapter);
+        listInfo();
+
+
 
         return binding.getRoot();
+    }
+
+    private void listInfo() {
+        RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
+        Call<ArrayList<Seller>> call = remoteService.listSellerInfo();
+
+                call.enqueue(new Callback<ArrayList<Seller>>(){
+
+
+                    @Override
+                    public void onResponse(Call<ArrayList<Seller>> call, Response<ArrayList<Seller>> response) {
+                        ArrayList<Seller> list = response.body();
+                        if(response.isSuccessful() && list!= null){
+                            recyclerAdapter.addSellerList(list);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ArrayList<Seller>> call, Throwable t) {
+                        Log.d("storelist", t.toString());
+                    }
+                });
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
     }
 
 
