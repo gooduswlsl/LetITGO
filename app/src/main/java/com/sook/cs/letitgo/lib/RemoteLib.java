@@ -3,7 +3,6 @@ package com.sook.cs.letitgo.lib;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Handler;
 import android.util.Log;
 
 import com.sook.cs.letitgo.remote.RemoteService;
@@ -88,6 +87,32 @@ public class RemoteLib {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.d("ok", "uploadMemberImg fail");
+            }
+        });
+    }
+
+    public void uploadSellerImg(File file) {
+
+        RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
+
+        RequestBody requestFile =
+                RequestBody.create(MediaType.parse("multipart/form-data"), file);
+
+        MultipartBody.Part body =
+                MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+
+        Call<ResponseBody> call =
+                remoteService.uploadSellerImg(body);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call,
+                                   Response<ResponseBody> response) {
+                Log.d("ok", "uploadSellerImg success");
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("ok", "uploadSellerImg fail");
             }
         });
     }

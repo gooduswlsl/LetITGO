@@ -58,6 +58,10 @@ public interface RemoteService {
     @GET("member/seller/{seller_seq}")
     Call<Seller> selectSellerInfo(@Path("seller_seq") int seq);
 
+    @Multipart
+    @POST("/member/img_upload2")
+    Call<ResponseBody> uploadSellerImg(@Part MultipartBody.Part file);
+
     //매장 메뉴 등록, 추가, 수정
     @POST("/menu/update")
     Call<String> insertMenuInfo(@Body Menu menu);
@@ -65,6 +69,5 @@ public interface RemoteService {
     //매장 메뉴 리스트
     @GET("/menu/list")
     Call<ArrayList<Menu>> listMenu(@Query("seller_seq") int sellerSeq);
-
 
 }
