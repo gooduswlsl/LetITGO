@@ -60,6 +60,7 @@ router.post('/update', function(req, res) {
 
 //menu/list
 router.get('/list', function(req, res, next) {
+    console.log("menu/list");
   var seller_seq = req.query.seller_seq;
   
   console.log(seller_seq);
@@ -85,6 +86,7 @@ router.get('/list', function(req, res, next) {
 
 //menu/sellerList
 router.get('/sellerList', function(req, res){
+    console.log("menu/sellerList");
     var sql = "select * from seller";
     db.get().query(sql, function(err, rows){
         if(rows.length>0)
@@ -97,11 +99,38 @@ router.get('/sellerList', function(req, res){
 });
 
 //menu/sellerList/:seller_seq
-router.get('/sellerList/:seller_seq', function(req, res){
-    var seller_seq = req.params.seller_seq;
+router.get('/sellerList/:sSeq', function(req, res){
+    console.log("menu/sellerList/:seller_seq");
+    var sSeq = req.params.sSeq;
     var sql = "select * from seller where seq=?";
     
-    db.get().query(sql, seller_seq, function(err, rows){
+    db.get().query(sql, sSeq, function(err, rows){
+        if(err)
+            console.log(err);
+        res.status(200).json(rows[0]);
+    });
+});
+
+//menu/menuList
+router.get('/menuList', function(req, res){
+    console.log("menu/menuList");
+    var sql = "select * from menu";
+    db.get().query(sql, function(err, rows){
+        if(rows.length>0)
+            res.status(200).json(rows);
+        else
+            res.sendStatus(400);
+        
+    });
+});
+
+//menu/menuList/:mSeq
+router.get('/menuList/:mSeq', function(req, res){
+    console.log("menu/menuList/mSeq");
+    var mSeq = req.params.mSeq;
+    var sql = "select * from menu where mSeq=?";
+    
+    db.get().query(sql, mSeq, function(err, rows){
         if(err)
             console.log(err);
         res.status(200).json(rows[0]);
