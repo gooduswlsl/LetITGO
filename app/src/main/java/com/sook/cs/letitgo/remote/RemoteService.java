@@ -24,11 +24,12 @@ import retrofit2.http.Query;
  */
 public interface RemoteService {
     //String BASE_URL = "http://192.168.10.130:3000";  //마이크임팩트
-    String BASE_URL = "http://192.168.21.168:3000";  //학교
-    //String BASE_URL = "http://175.193.168.234:3000";  //301호
+    //String BASE_URL = "http://192.168.21.168:3000";  //학교
+    String BASE_URL = "http://183.96.190.117:3000";  //집
 
     String CUSTOMER_IMG_URL = BASE_URL + "/customer/";
-    String SELLER_IMAGE_URL = BASE_URL + "/seller/";
+    String SELLER_IMG_URL = BASE_URL + "/seller/";
+    String MENU_IMG_URL = BASE_URL + "/menu/";
 
     //멤버
     @GET("/member/{phone}")
@@ -36,9 +37,9 @@ public interface RemoteService {
 
 
     //소비자
-    @POST("member/customer")
+    @POST("/member/customer")
     Call<String> insertCustomerInfo(@Body Customer customer);
-    @GET("member/customer/{customer_seq}")
+    @GET("/member/customer/{customer_seq}")
     Call<Customer> selectCustomerInfo(@Path("customer_seq") int seq);
 
     @Multipart
@@ -46,21 +47,27 @@ public interface RemoteService {
     Call<ResponseBody> uploadCustomerImg(@Part MultipartBody.Part file);
 
     //매장정보얻어오기
-    @GET("menu/sellerList")
+    @GET("/menu/sellerList")
     Call<ArrayList<Seller>> listSellerInfo();
-    @GET("menu/sellerList/{seller_seq}")
-    Call<Seller> selectSellerList(@Path("seller_seq") int seller_seq);
+    @GET("/menu/sellerList/{sSeq}")
+    Call<Seller> selectSellerList(@Path("sSeq") int sSeq);
+    //메뉴정보얻어오기
+    @GET("/menu/menuList")
+    Call<ArrayList<Menu>> listMenuInfo();
+    @GET("/menu/menuList/{mSeq}")
+    Call<Menu> selectMenuList(@Path("mSeq") int mSeq);
 
 
     //판매자
     @POST("/member/seller")
     Call<String> insertSellerInfo(@Body Seller seller);
-    @GET("member/seller/{seller_seq}")
+    @GET("/member/seller/{seller_seq}")
     Call<Seller> selectSellerInfo(@Path("seller_seq") int seq);
 
     @Multipart
     @POST("/member/img_upload2")
     Call<ResponseBody> uploadSellerImg(@Part MultipartBody.Part file);
+
 
     //매장 메뉴 등록, 추가, 수정
     @POST("/menu/update")

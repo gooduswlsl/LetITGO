@@ -13,15 +13,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.sook.cs.letitgo.item.Menu;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.databinding.ItemMenuImgBinding;
+import com.sook.cs.letitgo.remote.RemoteService;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class Adapter_menu_list extends RecyclerView.Adapter<MyViewHolder> implements View.OnClickListener {
-    private ItemMenuImgBinding mbinding;
+public class Adapter_menu_list extends RecyclerView.Adapter<MyViewHolder>{
+    private ViewDataBinding binding;
     private ArrayList<Menu> menuArrayList;
     private Context mContext;
 
@@ -33,17 +34,27 @@ public class Adapter_menu_list extends RecyclerView.Adapter<MyViewHolder> implem
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        ViewDataBinding binding;
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.item_menu_img, parent, false);
         return new MyViewHolder((ItemMenuImgBinding) binding);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {          // 항목을 뷰홀더에 바인딩
-        Menu menu = menuArrayList.get(position);
+        final Menu menu = menuArrayList.get(position);
         holder.mimgBinding.setMenu(menu);
-        holder.itemView.setTag(position);
-        holder.itemView.setOnClickListener(this);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(mContext, customer_dialog_menu.class);
+                it.putExtra("menu_seq", menu.mSeq);
+                (mContext).startActivity(it);
+            }
+        });
+    }
+
+    public void addMenuList(ArrayList<Menu> menuArrayList) {
+        this.menuArrayList.addAll(menuArrayList);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -51,20 +62,10 @@ public class Adapter_menu_list extends RecyclerView.Adapter<MyViewHolder> implem
         return menuArrayList.size();
     }
 
-    @BindingAdapter({"bind:imageUrl"})
-    public static void loadImage(ImageView imageView, String url) {
-        Glide.with(imageView.getContext()).load(url).into(imageView);
-    }
 
-    @Override
-    public void onClick(View v) {
-        Log.d("Tag", String.valueOf(v.getTag()));
 
-        Intent it = new Intent(mContext, customer_dialog_menu.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("menu", menuArrayList.get((Integer) v.getTag()));
-        it.putExtras(bundle);
-        (mContext).startActivity(it);
-
+    @BindingAdapter({"bind:menuImg"})
+    public static void load(ImageView imageView, String fileName) {
+        Picasso.with(imageView.getContext()).load(RemoteService.MENU_IMG_URL + fileName).into(imageView);
     }
 }

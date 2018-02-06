@@ -29,7 +29,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Adapter_seller_list extends RecyclerView.Adapter<MyViewHolder> {
-    private ItemSellerImgBinding binding;
+    private ViewDataBinding binding;
     private ArrayList<Seller> sellerArrayList;
     private Context mContext;
 
@@ -41,7 +41,6 @@ public class Adapter_seller_list extends RecyclerView.Adapter<MyViewHolder> {
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        ViewDataBinding binding;
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.item_seller_img, parent, false);
         return new MyViewHolder((ItemSellerImgBinding) binding);
     }
@@ -70,12 +69,10 @@ public class Adapter_seller_list extends RecyclerView.Adapter<MyViewHolder> {
         return sellerArrayList.size();
     }
 
-    @BindingAdapter({"bind:imageUrl"})
-    public static void loadImage(ImageView imageView, String fileName) {
-        Picasso.with(imageView.getContext()).load(RemoteService.SELLER_IMAGE_URL+fileName).into(imageView);
+    @BindingAdapter({"bind:sellerImg"})
+    public static void loadImg(ImageView imageView, String fileName) {
+        Picasso.with(imageView.getContext()).load(RemoteService.SELLER_IMG_URL + fileName).into(imageView);
     }
-
-
 
 
 }

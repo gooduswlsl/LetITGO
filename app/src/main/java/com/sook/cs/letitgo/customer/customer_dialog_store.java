@@ -31,16 +31,13 @@ public class customer_dialog_store extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         binding = DataBindingUtil.setContentView(this, R.layout.dialog_seller);
         seller_seq = getIntent().getIntExtra("seller_seq", 0);
-        Log.d("dialog", String.valueOf(seller_seq));
         if (seller_seq != 0)
-            sellectSellerList(seller_seq);
+            selectSellerList(seller_seq);
     }
 
-    private void sellectSellerList(int seller_seq) {
+    private void selectSellerList(int seller_seq) {
         RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
         Call<Seller> call = remoteService.selectSellerList(seller_seq);
-        Log.d("sellerdialog", String.valueOf(seller_seq));
-
         call.enqueue(new Callback<Seller>() {
             @Override
             public void onResponse(Call<Seller> call, Response<Seller> response) {

@@ -34,9 +34,9 @@ import retrofit2.Response;
  */
 
 public class customer_store extends Fragment {
-    FragmentSellerBinding binding;
-    Adapter_seller_list recyclerAdapter;
-    RecyclerView recyclerView;
+    private FragmentSellerBinding binding;
+    private Adapter_seller_list recyclerAdapter;
+    private RecyclerView recyclerView;
 
     public customer_store() {
 
@@ -45,7 +45,7 @@ public class customer_store extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        recyclerAdapter = new Adapter_seller_list(getActivity(), DataUtil.getStoreArrayList());
+        recyclerAdapter = new Adapter_seller_list(getActivity(), new ArrayList<Seller>());
     }
 
 
@@ -96,8 +96,6 @@ public class customer_store extends Fragment {
                 Log.d("storelist", t.toString());
             }
         });
-
-
     }
 
     @Override

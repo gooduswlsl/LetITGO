@@ -22,7 +22,7 @@
             android:id="@+id/img_mImg"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:imageUrl="@{menu.getmImgUrl}" />
+            app:menuImg="@{menu.getmImgUrl}" />
 
         <TextView
             android:id="@+id/tv_mName"

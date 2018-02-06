@@ -48,12 +48,6 @@ public class Menu implements Serializable {
 
     public String getsSite() { return sSite; }
 
-    public void setsSite(String sSite) { this.sSite = sSite; }
-
-    public int getSeller_seq() { return seller_seq; }
-
-    public void setSeller_seq(int seller_seq) { this.seller_seq = seller_seq; }
-
     @Override
     public String toString() {
         return "Menu{" +
