@@ -159,10 +159,9 @@ public class ProfileIconActivity extends AppCompatActivity implements View.OnCli
 
             case R.id.action_close:
                 if (customer.img != null) {
-                    Intent it = new Intent(this, ProfileActivity.class);
+                    Intent it = new Intent();
                     it.putExtra("imgname", customer.img);
-                    startActivity(it);
-                    setResult(1);
+                    setResult(1, it);
                 }
                 finish();
                 break;

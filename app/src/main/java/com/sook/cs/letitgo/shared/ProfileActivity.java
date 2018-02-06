@@ -322,7 +322,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
      * ProfileIconActivity를 실행해서 프로필 아이콘을 변경할 수 있게 한다.
      */
     private void startProfileIconChange() {
-        Intent intent = new Intent(this, ProfileIconActivity.class);
-        context.startActivity(intent);
+        Intent it = new Intent(ProfileActivity.this, ProfileIconActivity.class);
+        startActivityForResult(it,1);
     }
 }
