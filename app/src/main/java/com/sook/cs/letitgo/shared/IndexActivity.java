@@ -173,7 +173,7 @@ public class IndexActivity extends AppCompatActivity {
 
     private void setSeller(int seq) {
         RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
-        Call<Seller> call = remoteService.selecSellerInfo(seq);
+        Call<Seller> call = remoteService.selectSellerInfo(seq);
         call.enqueue(new Callback<Seller>() {
             @Override
             public void onResponse(Call<Seller> call, Response<Seller> response) {

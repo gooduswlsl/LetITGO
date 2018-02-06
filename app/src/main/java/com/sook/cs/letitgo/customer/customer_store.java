@@ -35,8 +35,8 @@ import retrofit2.Response;
 
 public class customer_store extends Fragment {
     FragmentSellerBinding binding;
-     Adapter_seller_list recyclerAdapter;
-     RecyclerView recyclerView;
+    Adapter_seller_list recyclerAdapter;
+    RecyclerView recyclerView;
 
     public customer_store() {
 
@@ -76,30 +76,26 @@ public class customer_store extends Fragment {
         listInfo();
 
 
-
         return binding.getRoot();
     }
 
     private void listInfo() {
         RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
         Call<ArrayList<Seller>> call = remoteService.listSellerInfo();
+        call.enqueue(new Callback<ArrayList<Seller>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Seller>> call, Response<ArrayList<Seller>> response) {
+                ArrayList<Seller> list = response.body();
+                if (response.isSuccessful() && list != null) {
+                    recyclerAdapter.addSellerList(list);
+                }
+            }
 
-                call.enqueue(new Callback<ArrayList<Seller>>(){
-
-
-                    @Override
-                    public void onResponse(Call<ArrayList<Seller>> call, Response<ArrayList<Seller>> response) {
-                        ArrayList<Seller> list = response.body();
-                        if(response.isSuccessful() && list!= null){
-                            recyclerAdapter.addSellerList(list);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ArrayList<Seller>> call, Throwable t) {
-                        Log.d("storelist", t.toString());
-                    }
-                });
+            @Override
+            public void onFailure(Call<ArrayList<Seller>> call, Throwable t) {
+                Log.d("storelist", t.toString());
+            }
+        });
     }
 
     @Override

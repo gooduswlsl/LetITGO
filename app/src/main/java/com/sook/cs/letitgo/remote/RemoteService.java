@@ -48,12 +48,15 @@ public interface RemoteService {
     //매장정보얻어오기
     @GET("menu/sellerList")
     Call<ArrayList<Seller>> listSellerInfo();
+    @GET("menu/sellerList/{seller_seq}")
+    Call<Seller> selectSellerList(@Path("seller_seq") int seller_seq);
+
 
     //판매자
     @POST("/member/seller")
     Call<String> insertSellerInfo(@Body Seller seller);
     @GET("member/seller/{seller_seq}")
-    Call<Seller> selecSellerInfo(@Path("seller_seq") int seq);
+    Call<Seller> selectSellerInfo(@Path("seller_seq") int seq);
 
     //매장 메뉴 등록, 추가, 수정
     @POST("/menu/update")
