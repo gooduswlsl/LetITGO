@@ -5,10 +5,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+
 import com.sook.cs.letitgo.R;
 
 public class Login_2_1_1_searchAddress extends Activity {
@@ -46,6 +46,7 @@ public class Login_2_1_1_searchAddress extends Activity {
                 public void run() {
                     Intent intent = new Intent();
                     intent.putExtra("address","("+arg1+") "+arg2+" "+arg3);
+                    intent.putExtra("location",arg2);
                     setResult(RESULT_OK,intent);
                     finish();
 

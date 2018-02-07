@@ -12,6 +12,8 @@ public class Seller implements Serializable {
     public String tel;
     public String address;
     public String webpage;
+    public double latitude;
+    public double longitude;
 
     public int getSeq() {
         return seq;
@@ -45,6 +47,12 @@ public class Seller implements Serializable {
         return webpage;
     }
 
+    public double getLatitude() { return latitude; }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
     @Override
     public String toString() {
         return "Seller{" +
@@ -56,6 +64,8 @@ public class Seller implements Serializable {
                 ", tel='" + tel + '\'' +
                 ", address='" + address + '\'' +
                 ", webpage='" + webpage + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", longitude='" + longitude + '\'' +
                 '}';
     }
 }

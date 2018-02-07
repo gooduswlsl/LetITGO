@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
+import android.location.Address;
+import android.location.Geocoder;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
@@ -53,7 +55,8 @@ public class Login2_1_store_info extends AppCompatActivity {
     Context context;
     Seller currentItem;
     File croppedFileName;
-    String imageFileName;
+    String location;
+    String imageName;
 
     private ImageView imgMain;
     private Button addressbtn;
@@ -103,6 +106,8 @@ public class Login2_1_store_info extends AppCompatActivity {
     private void save() {
 
         uploadProfileIcon();
+        getGeo();
+
         final Seller newItem = getSellerInfoItem();
 
         RemoteService remoteService =
@@ -146,31 +151,31 @@ public class Login2_1_store_info extends AppCompatActivity {
         startActivity(intent);
     }
 
-//    public void getGeo(View v){
-//        final Geocoder geocoder = new Geocoder(this);
-//        List<Address> list = null;
-//
-//        String address = addressText.getText().toString();
-//        Log.d("test",address);
-//
-//        try{
-//            list = geocoder.getFromLocationName(address,5);
-//        }catch(IOException e){
-//            e.printStackTrace();
-//            Log.d("test","주소를 좌표로 변환시 에러");
-//        }
-//
-//        if (list != null){
-//            if (list.size() == 0){
-//                Toast.makeText(getApplicationContext(),"해당되는 주소가 없습니다.",Toast.LENGTH_SHORT).show();
-//            }else {
-//                double latitude = list.get(0).getLatitude();
-//                double longitude = list.get(0).getLongitude();
-//                Toast.makeText(getApplicationContext(), latitude + "/" + longitude, Toast.LENGTH_LONG).show();
-//            }
-//        }
-//
-//    }
+    public void getGeo(){
+        final Geocoder geocoder = new Geocoder(this);
+        List<Address> list = null;
+
+        String address = location;
+
+        try{
+            list = geocoder.getFromLocationName(address,5);
+        }catch(IOException e){
+            e.printStackTrace();
+            Log.d("test","주소를 좌표로 변환시 에러");
+        }
+
+        if (list != null){
+            if (list.size() == 0){
+                Toast.makeText(getApplicationContext(),"해당되는 주소가 없습니다.",Toast.LENGTH_SHORT).show();
+            }else {
+                currentItem.latitude = list.get(0).getLatitude();
+                currentItem.longitude = list.get(0).getLongitude();
+
+                Toast.makeText(getApplicationContext(), currentItem.latitude + "/" + currentItem.longitude, Toast.LENGTH_LONG).show();
+            }
+        }
+
+    }
 
 
 
@@ -184,6 +189,8 @@ public class Login2_1_store_info extends AppCompatActivity {
         item.address = addressText.getText().toString();
         item.webpage = webpageEdit.getText().toString();
         item.img = currentItem.img;
+        item.latitude = currentItem.latitude;
+        item.longitude = currentItem.longitude;
 
         return item;
     }
@@ -244,12 +251,13 @@ public class Login2_1_store_info extends AppCompatActivity {
 
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("HHmmss").format(new Date());
-        imageFileName = "IP" + timeStamp + "_"; //
+        String imageFileName = "IP" + timeStamp + "_"; //
         File storageDir = new File(Environment.getExternalStorageDirectory() + "/NOSTest/");
         if (!storageDir.exists()) {
             storageDir.mkdirs();
         }
         File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+        imageName = image.getName(); //저장되는 이미지파일의 이름
         mCurrentPhotoPath = "file:" + image.getAbsolutePath();
         return image;
     }
@@ -329,6 +337,7 @@ public class Login2_1_store_info extends AppCompatActivity {
 
         }else if (requestCode == GET_ADDRESS){ //주소 찾아오기 버튼 눌러서 주소 받아온 후
             String address = data.getStringExtra("address");
+            location = data.getStringExtra("location");
             addressText.setText(Html.fromHtml("<u>" + address + "</u>"));
         }
     }
@@ -402,8 +411,7 @@ public class Login2_1_store_info extends AppCompatActivity {
      */
     private void uploadProfileIcon() {
         RemoteLib.getInstance().uploadSellerImg(croppedFileName);
-        currentItem.img =  imageFileName;
-        Log.d("ddtest",""+imageFileName);
+        currentItem.img =  imageName;
 
     }
 
