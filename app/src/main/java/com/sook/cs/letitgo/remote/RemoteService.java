@@ -24,9 +24,8 @@ import retrofit2.http.Query;
 public interface RemoteService {
     //String BASE_URL = "http://192.168.10.130:3000";  //마이크임팩트
     //String BASE_URL = "http://192.168.21.168:3000";  //학교
-    String BASE_URL = "http://192.168.30.77:3000";  //집
-
-
+//    String BASE_URL = "http://192.168.30.77:3000";  //집
+    String BASE_URL = "http://192.168.53.81:3000";  //예원학교
 
     String CUSTOMER_IMG_URL = BASE_URL + "/customer/";
     String SELLER_IMG_URL = BASE_URL + "/seller/";
@@ -82,5 +81,10 @@ public interface RemoteService {
     //매장 메뉴 리스트
     @GET("/menu/list")
     Call<ArrayList<Menu>> listMenu(@Query("seller_seq") int sellerSeq);
+
+    //메뉴 사진 추가
+    @Multipart
+    @POST("/menu/icon_add")
+    Call<ResponseBody> addMenuIcon(@Part MultipartBody.Part file);
 
 }

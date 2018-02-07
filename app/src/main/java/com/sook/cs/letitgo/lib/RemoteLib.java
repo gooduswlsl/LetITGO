@@ -117,4 +117,29 @@ public class RemoteLib {
         });
     }
 
+    public void uploadPicIcon(File file) {
+        RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
+
+        RequestBody requestFile =
+                RequestBody.create(MediaType.parse("multipart/form-data"), file);
+
+        MultipartBody.Part body =
+                MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+
+        Call<ResponseBody> call =
+                remoteService.addMenuIcon(body);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call,
+                                   Response<ResponseBody> response) {
+                Log.d(TAG, "uploadMemberIcon success");
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e(TAG, "uploadMemberIcon fail");
+            }
+        });
+    }
+
 }

@@ -4,9 +4,8 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class Menu implements Serializable {
-    //    @SerializedName("keep_seq")
+
     public String mName;
-    public String mImgUrl;
     public int mPrice;
     public String mDetail;
     public String sName;
@@ -14,13 +13,7 @@ public class Menu implements Serializable {
     public int seller_seq;
     public int action;
     public int mSeq;
-//    private Drawable iconDrawable ;
-//    public void setIcon(Drawable icon) {
-//        iconDrawable = icon ;
-//    }
-//    public Drawable getIcon() {
-//        return this.iconDrawable ;
-//    }
+    public String mImgUrl;
 
     public void setmSeq( int mSeq){this.mSeq=mSeq;}
 
@@ -47,6 +40,12 @@ public class Menu implements Serializable {
     public void setsName(String sName) { this.sName = sName; }
 
     public String getsSite() { return sSite; }
+
+    public void setsSite(String sSite) { this.sSite = sSite; }
+
+    public int getSeller_seq() { return seller_seq; }
+
+    public void setSeller_seq(int seller_seq) { this.seller_seq = seller_seq; }
 
     @Override
     public String toString() {

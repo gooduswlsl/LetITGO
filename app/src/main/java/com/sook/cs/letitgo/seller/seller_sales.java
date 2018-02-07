@@ -46,20 +46,20 @@ public class seller_sales extends Fragment {
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
-            if (pDialog == null) {
-                pDialog = new ProgressDialog(getActivity());
-                pDialog.setMessage("차트 생성중입니다..");
-                pDialog.show();
-            }
+//            if (pDialog == null) {
+//                pDialog = new ProgressDialog(getActivity());
+//                pDialog.setMessage("차트 생성중입니다..");
+//                pDialog.show();
+//            }
         }
 
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            if (pDialog != null) {
-                pDialog.dismiss();
-                pDialog = null;
-            }
+//            if (pDialog != null) {
+//                pDialog.dismiss();
+//                pDialog = null;
+//            }
         }
 
         @Override

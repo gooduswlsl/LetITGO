@@ -92,6 +92,8 @@
             android:label="주소 찾기"
             android:theme="@android:style/Theme.Dialog" />
         <activity android:name="com.sook.cs.letitgo.shared.Login_finish"></activity>
+        <activity android:name=".seller.MenuPicAddActivity"></activity>
+        <activity android:name=".seller.MenuPicEditActivity"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

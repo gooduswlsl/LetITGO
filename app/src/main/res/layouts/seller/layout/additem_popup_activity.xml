@@ -79,8 +79,8 @@
         <ImageView
             android:id="@+id/img"
             android:layout_marginLeft="10dp"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
             android:src="@drawable/noimage" />
     </LinearLayout>
 

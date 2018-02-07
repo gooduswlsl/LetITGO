@@ -2,9 +2,9 @@ package com.sook.cs.letitgo.seller;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,8 +19,12 @@ import android.widget.Toast;
 
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.item.Menu;
+import com.sook.cs.letitgo.lib.StringLib;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -29,11 +33,21 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.app.Activity.RESULT_OK;
+
 public class seller_menu extends Fragment {
 
     private static final int ADD_MENU = 1;
     private static final int EDIT_MENU = 2;
     private static final int DELETE_MENU = 3;
+
+    private static final int EDIT_PICTURE_MENU =1;
+    private static final int ADD_PICTURE_MENU=2;
+
+    public Menu item;
+    public ImageView image;
+    public ImageView image2;
+    private String add_img_name;
 
     private final String TAG = this.getClass().getSimpleName();
     Menu menu_item;
@@ -42,6 +56,34 @@ public class seller_menu extends Fragment {
     int memberSeq;
 
     ListViewAdapter adapter;
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK){
+            if(requestCode == EDIT_PICTURE_MENU){
+                add_img_name= data.getStringExtra("filename")+".png";
+                Picasso.with(getActivity().getApplicationContext())
+                        .load(RemoteService. MENU_IMG_URL +  add_img_name)
+                        .memoryPolicy(MemoryPolicy.NO_CACHE)
+                        .networkPolicy(NetworkPolicy.NO_CACHE)
+                        .into(image);
+            }
+
+            if(requestCode == ADD_PICTURE_MENU){
+                add_img_name= data.getStringExtra("filename")+".png";
+                Picasso.with(getActivity().getApplicationContext())
+                        .load(RemoteService. MENU_IMG_URL +  add_img_name)
+                        .memoryPolicy(MemoryPolicy.NO_CACHE)
+                        .networkPolicy(NetworkPolicy.NO_CACHE)
+                        .into(image2);
+            }
+        } else {
+            Toast.makeText(getActivity().getApplicationContext(),"사진등록에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         context = this.getActivity();
@@ -66,12 +108,11 @@ public class seller_menu extends Fragment {
             @Override
             public void onItemClick(AdapterView parent, View v, final int position, long id) {
                 // 클릭한 item 가져오기
-                final Menu item = (Menu) parent.getItemAtPosition(position);
+                item = (Menu) parent.getItemAtPosition(position); //final에서 바꿔줌
 
                 final String titleStr = item.getmName();
                 String descStr = item.getmDetail();
                 String priceStr = String.valueOf(item.getmPrice());
-//                Drawable iconDrawable = item.getIcon();
 
                 // TODO : use item data.
                 LayoutInflater inflater = getLayoutInflater(null);
@@ -79,18 +120,18 @@ public class seller_menu extends Fragment {
                 final EditText name = alertLayout.findViewById(R.id.name);
                 final EditText details = alertLayout.findViewById(R.id.details);
                 final EditText price = alertLayout.findViewById(R.id.price);
-                final ImageView image = (ImageView) alertLayout.findViewById(R.id.img);
+                image = (ImageView) alertLayout.findViewById(R.id.img);
                 final Button getPicture = (Button) alertLayout.findViewById(R.id.getPicture);
 
                 final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-
                 alert.setView(alertLayout);
                 alert.setCancelable(false);
 
                 name.setText(titleStr);
                 details.setText(descStr);
                 price.setText(priceStr);
-//                image.setImageDrawable(iconDrawable);
+
+                changeImage();
 
                 name.setFocusable(false);
                 name.setClickable(false);
@@ -142,8 +183,13 @@ public class seller_menu extends Fragment {
 
                 getPicture.setOnClickListener(new Button.OnClickListener() { //사진 불러오기
                     @Override
-                    public void onClick(View view) {
-                        Toast.makeText(getActivity().getApplicationContext(), "사진을 불러와야 합니다", Toast.LENGTH_SHORT).show();
+                    public void onClick(View view) { //메뉴 수정(사진찍기)
+
+                        Intent intent = new Intent(getActivity().getApplicationContext(), MenuPicEditActivity.class);
+                        intent.putExtra("item",item);
+
+                        startActivityForResult(intent, EDIT_PICTURE_MENU);
+
                     }
                 });
 
@@ -166,6 +212,7 @@ public class seller_menu extends Fragment {
                             menu_item.mName = ed_name;
                             menu_item.mDetail = ed_details;
                             menu_item.mPrice = Integer.parseInt(ed_price);
+                            menu_item.mImgUrl=add_img_name;
                             menu_item.action = EDIT_MENU;
 
                             insertMenuInfo();
@@ -173,6 +220,13 @@ public class seller_menu extends Fragment {
                             item.setmName(ed_name);
                             item.setmDetail(ed_details);
                             item.setmPrice(Integer.parseInt(ed_price));
+
+                            //adapter 다시 불러오기
+                            adapter = new ListViewAdapter();
+                            ListView listview;
+                            listview = (ListView) getView().findViewById(R.id.listview);
+                            listview.setAdapter(adapter);
+                            showMenuList(memberSeq);
 
                             adapter.notifyDataSetChanged();
 
@@ -208,8 +262,18 @@ public class seller_menu extends Fragment {
                 final EditText name = alertLayout.findViewById(R.id.name);
                 final EditText details = alertLayout.findViewById(R.id.details);
                 final EditText price = alertLayout.findViewById(R.id.price);
-                final ImageView image = (ImageView) alertLayout.findViewById(R.id.img);
+                image2 = (ImageView) alertLayout.findViewById(R.id.img);
                 final Button getPicture = (Button) alertLayout.findViewById(R.id.getPicture);
+
+                getPicture.setOnClickListener( //메뉴 추가(사진찍기)
+                        new Button.OnClickListener() {
+                            public void onClick(View v) {
+                                Intent intent = new Intent(getActivity().getApplicationContext(), MenuPicAddActivity.class);
+
+                                startActivityForResult(intent, ADD_PICTURE_MENU);
+                            }
+                        }
+                );
 
                 final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
                 alert.setTitle("메뉴 추가하기");
@@ -248,16 +312,16 @@ public class seller_menu extends Fragment {
                             Toast.makeText(getActivity().getApplicationContext(), "입력들을 완성해주세요", Toast.LENGTH_SHORT).show();
                         } else { //입력 완성시 다이얼로그 닫을 수 있게 허용.
                             wantToCloseDialog = true;
-                            adapter.addItem(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.coffee),
-                                    ed_name, ed_details, ed_price);
                             adapter.notifyDataSetChanged();
                         }
                         if (wantToCloseDialog) {//다이얼로그 닫기
+                            Log.d(TAG,menu_item.toString());
                             menu_item.mName = ed_name;
                             menu_item.mDetail = ed_details;
                             menu_item.mPrice = Integer.parseInt(ed_price);
 //                            menu_item.seller_seq = memberSeq;
                             menu_item.seller_seq = 1; //라고 가정
+                            menu_item.mImgUrl = add_img_name;
                             menu_item.action = ADD_MENU;
                             insertMenuInfo();
                             showMenuList(memberSeq);
@@ -342,4 +406,17 @@ public class seller_menu extends Fragment {
             }
         });
     }
+
+    public void changeImage(){
+        if (StringLib.getInstance().isBlank(item.mImgUrl)) {
+            Picasso.with(getActivity().getApplicationContext()).load(R.drawable.noimage).into(image);
+        } else {
+            Picasso.with(getActivity().getApplicationContext())
+                    .load(RemoteService. MENU_IMG_URL + item.mImgUrl)
+                    .into(image);
+        }
+
+    }
+
 }
+

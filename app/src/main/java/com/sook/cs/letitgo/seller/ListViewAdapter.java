@@ -1,7 +1,6 @@
 package com.sook.cs.letitgo.seller;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,9 @@ import android.widget.TextView;
 
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.item.Menu;
+import com.sook.cs.letitgo.lib.StringLib;
+import com.sook.cs.letitgo.remote.RemoteService;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -20,6 +22,11 @@ public class ListViewAdapter extends BaseAdapter {
     private ArrayList<Menu> listViewItemList = new ArrayList<Menu>() ;
     // ListViewAdapter의 생성자
     public ListViewAdapter() {
+    }
+
+    public void updateAdapter( ArrayList<Menu> listViewItemList){ //추가했음
+        this.listViewItemList=listViewItemList;
+        notifyDataSetChanged();
     }
 
     // Adapter에 사용되는 데이터의 개수를 리턴. : 필수 구현
@@ -32,7 +39,6 @@ public class ListViewAdapter extends BaseAdapter {
         this.listViewItemList = itemList;
         notifyDataSetChanged();
     }
-
 
     // position에 위치한 데이터를 화면에 출력하는데 사용될 View를 리턴. : 필수 구현
     @Override
@@ -56,7 +62,13 @@ public class ListViewAdapter extends BaseAdapter {
         Menu listViewItem = listViewItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
-//        iconImageView.setImageDrawable(listViewItem.getIcon());
+        if (StringLib.getInstance().isBlank(listViewItem.mImgUrl)) {
+            Picasso.with(context).load(R.drawable.noimage).into(iconImageView);
+        } else {
+            Picasso.with(context)
+                    .load(RemoteService.MENU_IMG_URL + listViewItem.mImgUrl)
+                    .into(iconImageView);
+        }
         titleTextView.setText(listViewItem.getmName());
         descTextView.setText(listViewItem.getmDetail());
         priceTextView.setText(String.valueOf(listViewItem.getmPrice()));
@@ -76,17 +88,7 @@ public class ListViewAdapter extends BaseAdapter {
         return listViewItemList.get(position) ;
     }
 
-    //아이템추가
-    public void addItem(Drawable icon, String title, String desc, String price) {
-        Menu item = new Menu();
 
-//        item.setIcon(icon);
-        item.setmName(title);
-        item.setmDetail(desc);
-        item.setmPrice(Integer.parseInt(price));
-
-        listViewItemList.add(item);
-    }
     //아이템삭제
     public void deleteItem(int position){
         listViewItemList.remove(position);
