@@ -1,6 +1,6 @@
 package com.sook.cs.letitgo.item;
 
-public class LikedSeller {
+public class LikedStore {
     private int seq;
     private int sSeq;
 
@@ -23,7 +23,7 @@ public class LikedSeller {
 
     @Override
     public String toString() {
-        return "LikedSeller{" +
+        return "LikedStore{" +
                 "seq=" + seq +
                 ", sSeq=" + sSeq +
                 '}';

@@ -1,8 +1,6 @@
 package com.sook.cs.letitgo.customer;
 
 import android.app.Activity;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,7 +23,6 @@ public class customer_dialog_store extends Activity {
     int seller_seq;
 
     MyDBHelpers helper;
-    SQLiteDatabase db;
 
     public customer_dialog_store() {
     }
@@ -40,14 +37,16 @@ public class customer_dialog_store extends Activity {
         if (seller_seq != 0)
             selectSellerList(seller_seq);
 
-        helper = new MyDBHelpers(this, "liked.db", null, 1);
-        db = helper.getWritableDatabase();
+        setStar();
+    }
 
-        if (helper.isLiked(seller_seq))
+    private void setStar(){
+        helper = new MyDBHelpers(this, "liked.db", null, 1);
+
+        if (helper.isLikedStore(seller_seq))
             binding.imgStar.setImageResource(R.drawable.star);
         else
             binding.imgStar.setImageResource(R.drawable.star_empty);
-
     }
 
     private void selectSellerList(int seller_seq) {
@@ -68,27 +67,13 @@ public class customer_dialog_store extends Activity {
     }
 
     public void starClick(View v) {
-        if (helper.isLiked(seller_seq)) {
+        if (helper.isLikedStore(seller_seq)) {
             binding.imgStar.setImageResource(R.drawable.star_empty);
-            //helper.deleteStore(db, seller_seq);
             helper.deleteStore(seller_seq);
-            Log.d("star", String.valueOf(seller_seq));
-            Log.d("star", "isliked");
         } else {
             binding.imgStar.setImageResource(R.drawable.star);
             helper.insertStore(seller_seq);
-            Log.d("star", "islikedfail");
         }
     }
-//
-//    private boolean isLiked(int sSeq) {
-//        String sql = "select * from likedSeller where sSeq = "+sSeq;
-//        Cursor cursor = db.rawQuery(sql, null);
-//        cursor.close();
-//        if (cursor != null)
-//            return true;
-//        else
-//            return false;
-//    }
 
 }
