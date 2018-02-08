@@ -7,6 +7,10 @@
     <data>
 
         <variable
+            name="activity"
+            type="com.sook.cs.letitgo.customer.customer_dialog_store" />
+
+        <variable
             name="seller"
             type="com.sook.cs.letitgo.item.Seller" />
     </data>
@@ -33,20 +37,20 @@
             android:paddingRight="10dp"
             android:paddingTop="10dp">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="70dp">
 
                 <ImageView
                     android:id="@+id/img_logo"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     app:sellerImg="@{seller.getImg}" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_toRightOf="@id/img_logo"
                     android:orientation="vertical"
                     android:paddingLeft="10dp">
 
@@ -68,7 +72,18 @@
                         android:text="@{seller.getSite}"
                         tools:text="지점" />
                 </LinearLayout>
-            </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/img_star"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:clickable="true"
+                    android:onClick="starClick"
+                    android:src="@drawable/star_empty" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
