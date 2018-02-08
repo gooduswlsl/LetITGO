@@ -29,7 +29,6 @@ public class customer_dialog_menu extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         binding = DataBindingUtil.setContentView(this, R.layout.dialog_menu);
         menu_seq = getIntent().getIntExtra("menu_seq", 0);
         if (menu_seq != 0)

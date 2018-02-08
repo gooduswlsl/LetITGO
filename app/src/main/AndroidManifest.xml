@@ -46,8 +46,7 @@
             android:name="com.sook.cs.letitgo.customer.customer_main"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="com.sook.cs.letitgo.customer.customer_dialog_store"
-            android:theme="@android:style/Theme.Dialog"></activity>
+            android:name="com.sook.cs.letitgo.customer.customer_dialog_store"></activity>
         <activity
             android:name="com.sook.cs.letitgo.customer.customer_dialog_menu"
             android:theme="@android:style/Theme.Dialog"></activity>
