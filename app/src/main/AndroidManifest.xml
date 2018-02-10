@@ -12,15 +12,14 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_SMS" />
 
     <uses-feature
         android:glEsVersion="0x00020000"
-        android:required="true"/>
+        android:required="true" />
 
     <application
         android:name=".MyApp"
@@ -30,7 +29,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".shared.PermissionActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,17 +37,16 @@
             </intent-filter>
         </activity>
         <activity android:name=".shared.ProfileActivity" />
-        <activity android:name=".shared.ProfileIconActivity"/>
+        <activity android:name=".shared.ProfileIconActivity" />
         <activity android:name=".shared.IndexActivity" />
-        <activity android:name="com.sook.cs.letitgo.customer.MainActivity" />
+        <activity android:name=".customer.MainActivity" />
         <activity
-            android:name="com.sook.cs.letitgo.customer.customer_main"
+            android:name=".customer.customer_main"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".customer.customer_dialog_store" />
         <activity
-            android:name="com.sook.cs.letitgo.customer.customer_dialog_store"></activity>
-        <activity
-            android:name="com.sook.cs.letitgo.customer.customer_dialog_menu"
-            android:theme="@android:style/Theme.Dialog"></activity>
+            android:name=".customer.customer_dialog_menu"
+            android:theme="@android:style/Theme.Holo.Light.Dialog" />
         "
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -60,21 +57,20 @@
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
 
-        <activity android:name="com.sook.cs.letitgo.seller.Login" />
+        <activity android:name=".seller.Login" />
         <activity
-            android:name="com.sook.cs.letitgo.seller.Seller_main"
+            android:name=".seller.Seller_main"
             android:theme="@style/Toolbar" />
         <activity
-            android:name="com.sook.cs.letitgo.shared.Login1"
+            android:name=".shared.Login1"
             android:label="회원가입" />
         <activity
-            android:name="com.sook.cs.letitgo.shared.Login2"
+            android:name=".shared.Login2"
             android:label="이메일로 회원가입" />
         <activity
-            android:name="com.sook.cs.letitgo.shared.Login2_1_store_info"
+            android:name=".shared.Login2_1_store_info"
             android:label="매장 정보" />
-
-        <activity android:name="com.sook.cs.letitgo.shared.GroupActivity" />
+        <activity android:name=".shared.GroupActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -87,16 +83,20 @@
         </provider>
 
         <activity
-            android:name="com.sook.cs.letitgo.shared.Login_2_1_1_searchAddress"
+            android:name=".shared.Login_2_1_1_searchAddress"
             android:label="주소 찾기"
             android:theme="@android:style/Theme.Dialog" />
-        <activity android:name="com.sook.cs.letitgo.shared.Login_finish"></activity>
-        <activity android:name=".seller.MenuPicAddActivity"></activity>
-        <activity android:name=".seller.MenuPicEditActivity"></activity>
+        <activity android:name=".shared.Login_finish" />
+        <activity android:name=".seller.MenuPicAddActivity" />
+        <activity android:name=".seller.MenuPicEditActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+        <activity
+            android:name=".customer.customer_store_detail"
+            android:theme="@style/MyToolbar"></activity>
     </application>
+
 </manifest>

@@ -1,6 +1,7 @@
 package com.sook.cs.letitgo.customer;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -66,7 +67,7 @@ public class customer_dialog_store extends Activity {
         });
     }
 
-    public void starClick(View v) {
+    public void clickStar(View v) {
         if (helper.isLikedStore(seller_seq)) {
             binding.imgStar.setImageResource(R.drawable.star_empty);
             helper.deleteStore(seller_seq);
@@ -74,6 +75,12 @@ public class customer_dialog_store extends Activity {
             binding.imgStar.setImageResource(R.drawable.star);
             helper.insertStore(seller_seq);
         }
+    }
+
+    public void clickMore(View view){
+        Intent it = new Intent(customer_dialog_store.this, customer_store_detail.class);
+        it.putExtra("seller_seq", seller_seq);
+        startActivity(it);
     }
 
 }
