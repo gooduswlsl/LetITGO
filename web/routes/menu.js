@@ -150,12 +150,44 @@ router.get('/menuList/:mSeq', function(req, res){
     });
 });
 
+
+
+//menu/likedMenu
+router.get('/likedMenu',function(req, res){
+    var mSeqList = req.query.mSeqList;
+    console.log("durl");
+    console.log(mSeqList);
+    var sql = "select * from menu where mSeq IN "+mSeqList;
+    db.get().query(sql,function(err, rows){
+        if(err){
+            console.log(err);
+            res.status(400);
+        }else
+            res.status(200).json(rows);
+    })
+});
+
+//menu/likedSeller
+router.get('/likedSeller',function(req, res){
+    var sSeqList = req.query.sSeqList;
+    console.log("durl");
+    console.log(sSeqList);
+    var sql = "select * from seller where seq IN "+sSeqList;
+    db.get().query(sql,function(err, rows){
+        if(err){
+            console.log(err);
+            res.status(400);
+        }else
+            res.status(200).json(rows);
+    })
+});
+
+
+
 //menu/searchSeller
 router.get('/searchSeller', function(req, res){
     var key = req.query.key;
     var sql = "select * from seller where name Like ?";
-    
-
     db.get().query(sql, "%"+key+"%", function(err, rows){
         if(err)
             console.log(err);

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 
@@ -57,6 +56,7 @@ public class customer_dialog_menu extends Activity {
             public void onResponse(Call<Menu> call, Response<Menu> response) {
                 Menu menu = response.body();
                 binding.setMenu(menu);
+
                 setSeller(menu.seller_seq);
             }
 

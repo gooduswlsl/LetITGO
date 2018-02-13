@@ -113,7 +113,7 @@ public class customer_store_detail extends AppCompatActivity {
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.activity_customer_store_detail, container, false);
-       // binding.setFragment(this);
+        // binding.setFragment(this);
         binding.editSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -133,8 +133,7 @@ public class customer_store_detail extends AppCompatActivity {
         recyclerView = binding.recyclerviewStore;
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(context, 5);
         recyclerView.setLayoutManager(layoutManager);
-
-recyclerView.setAdapter(adapterSellerImg);
+        recyclerView.setAdapter(adapterSellerImg);
         listInfo();
 
 

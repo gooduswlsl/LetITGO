@@ -53,6 +53,11 @@ public class Adapter_seller_list extends RecyclerView.Adapter<MyViewHolder>{
         });
     }
 
+    public void addSellerList(ArrayList<Seller> sellerArrayList) {
+        this.sellerArrayList.addAll(sellerArrayList);
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return sellerArrayList.size();

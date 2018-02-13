@@ -23,9 +23,9 @@ import retrofit2.http.Query;
  */
 public interface RemoteService {
     //String BASE_URL = "http://192.168.10.139:3000";  //마이크임팩트
-    //String BASE_URL = "http://192.168.21.168:3000";  //학교
+    String BASE_URL = "http://192.168.21.168:3000";  //학교
     //String BASE_URL = "http://192.168.30.77:3000";  //집
-    String BASE_URL = "http://192.168.0.24:3000";  //죽전
+   // String BASE_URL = "http://192.168.0.24:3000";  //죽전
     //String BASE_URL = "http://192.168.53.81:3000";  //예원학교
 
 
@@ -64,6 +64,13 @@ public interface RemoteService {
     Call<ArrayList<Seller>> searchSeller(@Query("key") String key);
     @GET("/menu/searchMenu")
     Call<ArrayList<Menu>> searchMenu(@Query("key") String key);
+
+    //즐겨찾기
+    @GET("/menu/likedSeller")
+    Call<ArrayList<Seller>> listLikedSeller(@Query("sSeqList") String sSeqList);
+    @GET("/menu/likedMenu")
+    Call<ArrayList<Menu>> listLikedMenu(@Query("mSeqList") String mSeqList);
+
 
 
     //판매자

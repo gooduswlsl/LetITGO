@@ -54,6 +54,21 @@ public class MyDBHelpers extends SQLiteOpenHelper {
             return false;
     }
 
+    public int[] getStoreList() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "select sSeq from likedStore";
+        Cursor cursor = db.rawQuery(sql, null);
+        cursor.moveToFirst();
+        int length = cursor.getCount();
+        int[] sSeq = new int[length];
+        for (int i = 0; i < length; i++) {
+            sSeq[i] = cursor.getInt(0);
+            cursor.moveToNext();
+        }
+        return sSeq;
+
+    }
+
     public void insertMenu(int mSeq) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -76,6 +91,20 @@ public class MyDBHelpers extends SQLiteOpenHelper {
             return true;
         else
             return false;
+    }
+
+    public int[] getMenuList() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "select mSeq from likedMenu";
+        Cursor cursor = db.rawQuery(sql, null);
+        cursor.moveToFirst();
+        int length = cursor.getCount();
+        int[] mSeq = new int[length];
+        for (int i = 0; i < length; i++) {
+            mSeq[i] = cursor.getInt(0);
+            cursor.moveToNext();
+        }
+        return mSeq;
     }
 
 }
