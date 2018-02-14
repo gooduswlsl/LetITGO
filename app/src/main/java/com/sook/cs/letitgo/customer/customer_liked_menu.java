@@ -1,5 +1,6 @@
 package com.sook.cs.letitgo.customer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.databinding.FragmentLikedMenuBinding;
 import com.sook.cs.letitgo.item.Menu;
 import com.sook.cs.letitgo.item.Seller;
@@ -26,6 +28,8 @@ import retrofit2.Response;
 
 public class customer_liked_menu extends Fragment {
     private FragmentLikedMenuBinding binding;
+    int STAR_CHANGE = 0;
+
     private Adapter_menu_list recyclerAdapter;
     private RecyclerView recyclerView;
     private MyDBHelpers helper;
@@ -34,10 +38,11 @@ public class customer_liked_menu extends Fragment {
 
     }
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        recyclerAdapter = new Adapter_menu_list(getActivity(), new ArrayList<Menu>());
+        recyclerAdapter = new Adapter_menu_list(getContext(), new ArrayList<Menu>());
     }
 
     @Nullable
@@ -51,6 +56,11 @@ public class customer_liked_menu extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recyclerAdapter);
         return binding.getRoot();
+    }
+
+
+    public void onResult(int resultCode) {
+        Log.d("star", "ddd" + resultCode);
     }
 
     private void liked() {
@@ -72,5 +82,12 @@ public class customer_liked_menu extends Fragment {
             public void onFailure(Call<ArrayList<Menu>> call, Throwable t) {
             }
         });
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("star", "여기");
+        Log.d("star", String.valueOf(data.getIntExtra("position", 0)));
+           recyclerAdapter.menuArrayList.remove(data.getIntExtra("position", 0));
+        recyclerAdapter.notifyDataSetChanged();
     }
 }

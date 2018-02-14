@@ -1,10 +1,12 @@
 package com.sook.cs.letitgo.customer;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +23,6 @@ public class customer_liked extends Fragment {
     FragmentLikedBinding binding;
 
     public customer_liked() {
-
     }
 
     @Nullable
@@ -50,10 +51,20 @@ public class customer_liked extends Fragment {
                 break;
             case 2:
                 customer_liked_menu fragment2 = new customer_liked_menu();
-                transaction.replace(R.id.fragment_container2, fragment2);
+                transaction.replace(R.id.fragment_container2, fragment2, "fragment2");
                 transaction.commit();
                 break;
 
         }
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("star", "customer_liked");
+
+            Fragment fragment = getFragmentManager().findFragmentByTag("fragment2");
+            fragment.onActivityResult(requestCode, resultCode, data);
+
+    }
+
 }

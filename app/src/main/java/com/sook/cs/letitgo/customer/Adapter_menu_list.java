@@ -1,5 +1,6 @@
 package com.sook.cs.letitgo.customer;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.BindingAdapter;
@@ -37,7 +38,7 @@ public class Adapter_menu_list extends RecyclerView.Adapter<MyViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {          // 항목을 뷰홀더에 바인딩
+    public void onBindViewHolder(MyViewHolder holder, final int position) {          // 항목을 뷰홀더에 바인딩
         final Menu menu = menuArrayList.get(position);
         holder.mbinding.setMenu(menu);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -45,7 +46,8 @@ public class Adapter_menu_list extends RecyclerView.Adapter<MyViewHolder> {
             public void onClick(View v) {
                 Intent it = new Intent(mContext, customer_dialog_menu.class);
                 it.putExtra("menu_seq", menu.mSeq);
-                (mContext).startActivity(it);
+                it.putExtra("position", position);
+                ((Activity)(mContext)).startActivityForResult(it,0);
             }
         });
     }
@@ -54,6 +56,7 @@ public class Adapter_menu_list extends RecyclerView.Adapter<MyViewHolder> {
         this.menuArrayList.addAll(menuArrayList);
         notifyDataSetChanged();
     }
+
 
     @Override
     public int getItemCount() {
