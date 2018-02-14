@@ -17,8 +17,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.sook.cs.letitgo.MyApp;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.item.Menu;
+import com.sook.cs.letitgo.item.Seller;
 import com.sook.cs.letitgo.lib.StringLib;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
@@ -54,6 +56,7 @@ public class seller_menu extends Fragment {
 
     Context context;
     int memberSeq;
+    Seller current_seller;
 
     ListViewAdapter adapter;
 
@@ -88,8 +91,8 @@ public class seller_menu extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         context = this.getActivity();
 
-//        memberSeq = ((MyApp)getActivity().getApplication()). getSeller_seq();
-        memberSeq = 1;  //memberSeq=1라고 가정
+        current_seller = ((MyApp) getActivity().getApplicationContext()).getSeller();  //현재 seller정보 가져오기
+        memberSeq = current_seller.getSeq();
         return inflater.inflate(R.layout.seller_menu, container, false);
     }
 
@@ -319,8 +322,7 @@ public class seller_menu extends Fragment {
                             menu_item.mName = ed_name;
                             menu_item.mDetail = ed_details;
                             menu_item.mPrice = Integer.parseInt(ed_price);
-//                            menu_item.seller_seq = memberSeq;
-                            menu_item.seller_seq = 1; //라고 가정
+                            menu_item.seller_seq = memberSeq;
                             menu_item.mImgUrl = add_img_name;
                             menu_item.action = ADD_MENU;
                             insertMenuInfo();

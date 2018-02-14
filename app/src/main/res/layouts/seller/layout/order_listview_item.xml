@@ -24,9 +24,9 @@
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="match_parent"
+            android:layout_width="253dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.00"
             android:gravity="center_vertical"
             android:text="New Text"
             android:textColor="#000000"
@@ -49,45 +49,54 @@
         android:id="@+id/fragment1"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
-
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:orientation="vertical"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:layout_width="wrap_content"
+            android:gravity="center_vertical">
+
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:text="수락"
+            android:id="@+id/btn_accept"
+            android:focusable="false"/>
+
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:text="거절"
+            android:id="@+id/btn_decline"
+            android:focusable="false"/>
 
             <Button
-                android:id="@+id/btn_accept"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
                 android:layout_weight="1"
-                android:focusable="false"
-                android:text="수락" />
-
-            <Button
-                android:id="@+id/btn_decline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:focusable="false"
-                android:text="거절" />
-
-            <TextView
-                android:id="@+id/acceptStr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="수락하였습니다."
+                android:text="메뉴 준비중"
+                android:textSize="12dp"
                 android:textColor="#41AF39"
-                android:visibility="gone" />
+                android:id="@+id/btn_finished"
+                android:visibility="gone"/>
 
-            <TextView
-                android:id="@+id/declineStr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="거절하였습니다."
-                android:textColor="#FFA7A7"
-                android:visibility="gone" />
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textColor="#41AF39"
+            android:text="주문 끝"
+            android:id="@+id/acceptStr"
+            android:visibility="gone"/>
 
-        </LinearLayout>
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textColor="#FFA7A7"
+            android:text="거절"
+            android:id="@+id/declineStr"
+            android:visibility="gone"/>
+
+    </LinearLayout>
     </FrameLayout>
 </LinearLayout>

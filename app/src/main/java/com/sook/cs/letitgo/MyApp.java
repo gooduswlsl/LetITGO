@@ -38,7 +38,6 @@ public class MyApp extends Application {
 
     public Seller getSeller() {
         if (seller == null) seller = new Seller();
-
         return seller;
     }
 

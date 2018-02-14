@@ -3,6 +3,8 @@ package com.sook.cs.letitgo.remote;
 
 import com.sook.cs.letitgo.item.Customer;
 import com.sook.cs.letitgo.item.Menu;
+import com.sook.cs.letitgo.item.Order;
+import com.sook.cs.letitgo.item.Sales;
 import com.sook.cs.letitgo.item.Seller;
 
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ public interface RemoteService {
     //String BASE_URL = "http://192.168.21.168:3000";  //학교
 //    String BASE_URL = "http://192.168.30.77:3000";  //집
     String BASE_URL = "http://192.168.53.81:3000";  //예원학교
+
 
     String CUSTOMER_IMG_URL = BASE_URL + "/customer/";
     String SELLER_IMG_URL = BASE_URL + "/seller/";
@@ -86,5 +89,22 @@ public interface RemoteService {
     @Multipart
     @POST("/menu/icon_add")
     Call<ResponseBody> addMenuIcon(@Part MultipartBody.Part file);
+
+    //매장 주문 리스트
+    @GET("/order/list")
+    Call<ArrayList<Order>> listOrder(@Query("seller_seq") int sellerSeq);
+
+    @POST("/order/sendPermit")
+    Call<String> sendPermit(@Query("permit") int permit,
+                            @Query("seq") int seq);
+
+    @POST("/order/sendTotal_price")
+    Call<String> sendTotal_price(@Query("seq") int seq, @Query("total_price") int total_price);
+
+    //매장 주문 리스트
+    @GET("/order/getMonthSales")
+    Call<ArrayList<Sales>> getMonthSales(@Query("seller_seq") int sellerSeq);
+
+
 
 }

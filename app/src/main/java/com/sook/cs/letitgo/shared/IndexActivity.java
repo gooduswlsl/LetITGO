@@ -14,7 +14,6 @@ import com.sook.cs.letitgo.MyApp;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.customer.customer_main;
 import com.sook.cs.letitgo.item.Customer;
-//import com.sook.cs.letitgo.item.Member;
 import com.sook.cs.letitgo.item.Seller;
 import com.sook.cs.letitgo.lib.EtcLib;
 import com.sook.cs.letitgo.lib.RemoteLib;
@@ -25,6 +24,8 @@ import com.sook.cs.letitgo.seller.Seller_main;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+//import com.sook.cs.letitgo.item.Member;
 
 /**
  * 시작 액티비티이며 이 액티비티에서 사용자 정보를 조회해서

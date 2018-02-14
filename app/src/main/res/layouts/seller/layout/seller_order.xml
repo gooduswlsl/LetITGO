@@ -12,11 +12,16 @@
         android:paddingRight="20dp"
         android:paddingTop="10dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <ListView
             android:id="@+id/listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+        </android.support.v4.widget.SwipeRefreshLayout>
 
     </RelativeLayout>
 </LinearLayout>
