@@ -28,11 +28,10 @@ import retrofit2.Response;
 
 public class customer_liked_menu extends Fragment {
     private FragmentLikedMenuBinding binding;
-    int STAR_CHANGE = 0;
-
     private Adapter_menu_list recyclerAdapter;
     private RecyclerView recyclerView;
     private MyDBHelpers helper;
+    private int RESULT_OK = -1;
 
     public customer_liked_menu() {
 
@@ -58,9 +57,12 @@ public class customer_liked_menu extends Fragment {
         return binding.getRoot();
     }
 
-
-    public void onResult(int resultCode) {
-        Log.d("star", "ddd" + resultCode);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            recyclerAdapter.menuArrayList.remove(data.getIntExtra("position", 0));
+            recyclerAdapter.notifyDataSetChanged();
+        }
     }
 
     private void liked() {
@@ -82,12 +84,5 @@ public class customer_liked_menu extends Fragment {
             public void onFailure(Call<ArrayList<Menu>> call, Throwable t) {
             }
         });
-    }
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("star", "여기");
-        Log.d("star", String.valueOf(data.getIntExtra("position", 0)));
-           recyclerAdapter.menuArrayList.remove(data.getIntExtra("position", 0));
-        recyclerAdapter.notifyDataSetChanged();
     }
 }

@@ -23,7 +23,9 @@ import com.sook.cs.letitgo.databinding.ActivityCustomerBinding;
 
 public class customer_main extends AppCompatActivity {
     ActivityCustomerBinding binding;
-    int STAR_CHANGE = 0;
+    android.support.v4.app.Fragment fragment;
+    int REQUEST_SELLER = 0, REQUEST_MENU = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +44,8 @@ public class customer_main extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("star", "customer_main");
-        if (requestCode == STAR_CHANGE) {
-            android.support.v4.app.Fragment fragment = getSupportFragmentManager().findFragmentByTag("fragment4");
+        if (requestCode == REQUEST_SELLER || requestCode == REQUEST_MENU) {
+            fragment = getSupportFragmentManager().findFragmentByTag("fragment_liked");
             fragment.onActivityResult(requestCode, resultCode, data);
         }
     }
@@ -85,7 +86,7 @@ public class customer_main extends AppCompatActivity {
 
             case 4:
                 customer_liked fragment4 = new customer_liked();
-                transaction.replace(R.id.fragment_container, fragment4, "fragment4");
+                transaction.replace(R.id.fragment_container, fragment4, "fragment_liked");
                 transaction.commit();
                 break;
 

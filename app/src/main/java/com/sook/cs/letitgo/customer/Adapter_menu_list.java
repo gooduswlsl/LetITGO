@@ -24,6 +24,7 @@ public class Adapter_menu_list extends RecyclerView.Adapter<MyViewHolder> {
     ViewDataBinding binding;
     ArrayList<Menu> menuArrayList;
     Context mContext;
+    int REQUEST_MENU = 1;
 
     public Adapter_menu_list(Context mContext, ArrayList<Menu> menuArrayList) {
         this.menuArrayList = menuArrayList;
@@ -47,7 +48,7 @@ public class Adapter_menu_list extends RecyclerView.Adapter<MyViewHolder> {
                 Intent it = new Intent(mContext, customer_dialog_menu.class);
                 it.putExtra("menu_seq", menu.mSeq);
                 it.putExtra("position", position);
-                ((Activity)(mContext)).startActivityForResult(it,0);
+                ((Activity) (mContext)).startActivityForResult(it, REQUEST_MENU);
             }
         });
     }

@@ -1,5 +1,6 @@
 package com.sook.cs.letitgo.customer;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.BindingAdapter;
@@ -22,10 +23,11 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class Adapter_seller_list extends RecyclerView.Adapter<MyViewHolder>{
+public class Adapter_seller_list extends RecyclerView.Adapter<MyViewHolder> {
     ViewDataBinding binding;
     ArrayList<Seller> sellerArrayList;
     Context mContext;
+    int REQUEST_SELLER = 0;
 
     public Adapter_seller_list(Context mContext, ArrayList<Seller> sellerArrayList) {
         this.sellerArrayList = sellerArrayList;
@@ -40,7 +42,7 @@ public class Adapter_seller_list extends RecyclerView.Adapter<MyViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {          // 항목을 뷰홀더에 바인딩
+    public void onBindViewHolder(MyViewHolder holder, final int position) {          // 항목을 뷰홀더에 바인딩
         final Seller seller = sellerArrayList.get(position);
         holder.sbinding.setSeller(seller);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -48,7 +50,8 @@ public class Adapter_seller_list extends RecyclerView.Adapter<MyViewHolder>{
             public void onClick(View v) {
                 Intent it = new Intent(mContext, customer_dialog_store.class);
                 it.putExtra("seller_seq", seller.seq);
-                (mContext).startActivity(it);
+                it.putExtra("position", position);
+                ((Activity) (mContext)).startActivityForResult(it, REQUEST_SELLER);
             }
         });
     }

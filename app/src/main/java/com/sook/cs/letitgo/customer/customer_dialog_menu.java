@@ -60,7 +60,6 @@ public class customer_dialog_menu extends Activity {
             public void onResponse(Call<Menu> call, Response<Menu> response) {
                 Menu menu = response.body();
                 binding.setMenu(menu);
-
                 setSeller(menu.seller_seq);
             }
 
@@ -89,12 +88,17 @@ public class customer_dialog_menu extends Activity {
     }
 
     public void clickStar(View v) {
+        Intent it = new Intent();
+        it.putExtra("position", position);
+        it.putExtra("menu_seq", menu_seq);
         if (helper.isLikedMenu(menu_seq)) {
             binding.imgStar.setImageResource(R.drawable.star_empty);
             helper.deleteMenu(menu_seq);
+            setResult(RESULT_OK, it);
         } else {
             binding.imgStar.setImageResource(R.drawable.star);
             helper.insertMenu(menu_seq);
+            setResult(RESULT_CANCELED, it);
         }
     }
 
@@ -111,11 +115,6 @@ public class customer_dialog_menu extends Activity {
     }
 
     public void clickX(View v) {
-        Intent it = getIntent();
-        it.putExtra("position", position);
-        setResult(RESULT_OK, it);
-        Log.d("star", "clickx");
-        Log.d("star", String.valueOf(menu_seq));
         finish();
     }
 
