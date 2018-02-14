@@ -1,10 +1,13 @@
 package com.sook.cs.letitgo.customer;
 
+import android.app.Fragment;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +23,9 @@ import com.sook.cs.letitgo.databinding.ActivityCustomerBinding;
 
 public class customer_main extends AppCompatActivity {
     ActivityCustomerBinding binding;
+    android.support.v4.app.Fragment fragment;
+    int REQUEST_SELLER = 0, REQUEST_MENU = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +39,15 @@ public class customer_main extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.actionbar_actions, menu);
         return true;
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_SELLER || requestCode == REQUEST_MENU) {
+            fragment = getSupportFragmentManager().findFragmentByTag("fragment_liked");
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     @Override
@@ -71,7 +86,7 @@ public class customer_main extends AppCompatActivity {
 
             case 4:
                 customer_liked fragment4 = new customer_liked();
-                transaction.replace(R.id.fragment_container, fragment4);
+                transaction.replace(R.id.fragment_container, fragment4, "fragment_liked");
                 transaction.commit();
                 break;
 
