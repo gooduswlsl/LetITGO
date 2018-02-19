@@ -31,7 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class seller_order extends Fragment{
+public class seller_order extends Fragment {
 
     Seller current_seller;
     private final String TAG = this.getClass().getSimpleName();
@@ -54,7 +54,7 @@ public class seller_order extends Fragment{
         final ListView listview;
         final SwipeRefreshLayout swipeRefreshLayout;
 
-        swipeRefreshLayout=(SwipeRefreshLayout)getView().findViewById(R.id.swipeRefreshLo);
+        swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipeRefreshLo);
         listview = (ListView) getView().findViewById(R.id.listview);
         listview.setAdapter(adapter);
         showOrderList(current_seller.getSeq());
@@ -80,18 +80,18 @@ public class seller_order extends Fragment{
                 alert.setCancelable(false);
 
                 //position의 order에 해당하는 관련 Customer, Menu객체 가져오기
-                final Customer order_customer=adapter.getPositionCustomer(position);
-                final Menu order_menu=adapter.getPositionMenu(position);
+                final Customer order_customer = adapter.getPositionCustomer(position);
+                final Menu order_menu = adapter.getPositionMenu(position);
 
                 //예약시간String 깔끔하게
-                String all=item.getTime_take();
-                int here= all.indexOf("T");
+                String all = item.getTime_take();
+                int here = all.indexOf("T");
                 String date = all.substring(0, here);
-                String time = all.substring(here+1,here+6);
+                String time = all.substring(here + 1, here + 6);
 
-                menu_name.setText(order_menu.getmName()+" / "+item.getNum()+"개");
-                time_take.setText(date+" "+time);
-                order_price.setText((order_menu.getmPrice()*item.getNum())+"원");
+                menu_name.setText(order_menu.getmName() + " / " + item.getNum() + "개");
+                time_take.setText(date + " " + time);
+                order_price.setText((order_menu.getmPrice() * item.getNum()) + "원");
                 message.setText(item.getMessage());
                 customer_name.setText(order_customer.getName());
                 customer_phone.setText(order_customer.getPhone());
@@ -101,7 +101,7 @@ public class seller_order extends Fragment{
                     Picasso.with(getActivity().getApplicationContext()).load(R.drawable.ic_person).into(profile);
                 } else {
                     Picasso.with(getActivity().getApplicationContext())
-                            .load(RemoteService. CUSTOMER_IMG_URL + order_customer.getImg())
+                            .load(RemoteService.CUSTOMER_IMG_URL + order_customer.getImg())
                             .into(profile);
                 }
 
@@ -139,7 +139,7 @@ public class seller_order extends Fragment{
 
             @Override
             public void onResponse(Call<ArrayList<Order>> call,
-                    Response<ArrayList<Order>> response) {
+                                   Response<ArrayList<Order>> response) {
                 ArrayList<Order> list = response.body();
 
                 if (list == null) {

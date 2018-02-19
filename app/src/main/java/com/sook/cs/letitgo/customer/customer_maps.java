@@ -1,9 +1,20 @@
 package com.sook.cs.letitgo.customer;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +27,16 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.sook.cs.letitgo.item.GeoItem;
+import com.sook.cs.letitgo.item.Seller;
+import com.sook.cs.letitgo.remote.RemoteService;
+import com.sook.cs.letitgo.remote.ServiceGenerator;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by YEONJIN on 2018-01-08.
@@ -24,6 +45,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class customer_maps extends Fragment implements OnMapReadyCallback {
     FragmentMapsBinding binding;
     private MapView mapView;
+    private Adapter_seller_list adapterSellerList;
+    private RecyclerView recyclerView;
 
     public customer_maps() {
 
@@ -32,17 +55,28 @@ public class customer_maps extends Fragment implements OnMapReadyCallback {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        adapterSellerList = new Adapter_seller_list(getActivity(), new ArrayList<Seller>());
     }
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_maps, container, false);
-        binding.setFragment(this);
-        mapView = binding.map;
-        mapView.getMapAsync(this);
-        return binding.getRoot();
+        return inflater.inflate(R.layout.fragment_maps, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {  //액티비티가 처음 생성될 때
+        super.onActivityCreated(savedInstanceState);
+        mapView = getView().findViewById(R.id.map);
+        if (mapView != null) {
+            mapView.onCreate(savedInstanceState);
+        }
+
+        recyclerView = getView().findViewById(R.id.recyclerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(adapterSellerList);
+        listInfo();
     }
 
     @Override
@@ -88,15 +122,6 @@ public class customer_maps extends Fragment implements OnMapReadyCallback {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {  //액티비티가 처음 생성될 때 실행
-        super.onActivityCreated(savedInstanceState);
-        if (mapView != null) {
-            mapView.onCreate(savedInstanceState);
-        }
-    }
-
-
-    @Override
     public void onMapReady(GoogleMap googleMap) {
         LatLng SEOUL = new LatLng(37.56, 126.97);
         MarkerOptions markerOptions = new MarkerOptions();
@@ -106,6 +131,25 @@ public class customer_maps extends Fragment implements OnMapReadyCallback {
         googleMap.addMarker(markerOptions);
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(SEOUL));
         googleMap.animateCamera(CameraUpdateFactory.zoomTo(13));
+    }
+
+    private void listInfo() {
+        RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
+        Call<ArrayList<Seller>> call = remoteService.listSellerMap(GeoItem.getKnownLocation().latitude, GeoItem.getKnownLocation().longitude);
+        call.enqueue(new Callback<ArrayList<Seller>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Seller>> call, Response<ArrayList<Seller>> response) {
+                ArrayList<Seller> list = response.body();
+                if (response.isSuccessful() && list != null) {
+                    adapterSellerList.addSellerList(list);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Seller>> call, Throwable t) {
+                Log.d("map", "onfailure");
+            }
+        });
     }
 
 }
