@@ -1,9 +1,6 @@
 <html>
 <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <!--<%-->
-    <!--String name=-->
-    <!--%>-->
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
@@ -24,11 +21,6 @@
           ['11월',  1030,      540],
           ['12월',  1030,      540]
         ]);
-
-        <%
-        for (int i=1; i<=10; i++)
-        {
-        %>
 
         var options = {
           title: 'OO상점 매출 그래프',
