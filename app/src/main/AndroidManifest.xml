@@ -95,8 +95,8 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".customer.customer_store_detail"
-            android:theme="@style/MyToolbar"></activity>
+            android:name=".customer.customer_store_detail"></activity>
+
     </application>
 
 </manifest>
