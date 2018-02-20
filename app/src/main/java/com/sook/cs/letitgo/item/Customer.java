@@ -1,7 +1,5 @@
 package com.sook.cs.letitgo.item;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
@@ -16,26 +14,24 @@ public class Customer implements Serializable {
     public int getSeq() {
         return seq;
     }
-
     public String getName() {
         return name;
     }
-
     public String getPhone() {
         return phone;
     }
-
     public String getSextype() {
         return sextype;
     }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
+    public String getBirthday() { return birthday; }
     public String getImg() {
         return img;
     }
+    public void setSeq(int seq){ this.seq = seq; }
+    public void setName(String name) { this.name = name; }
+    public void setSextype(String sextype) { this.sextype = sextype; }
+    public void setBirthday(String birthday) { this.birthday = birthday; }
+    public void setImg(String img) { this.img = img; }
 
     @Override
     public String toString() {
