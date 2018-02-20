@@ -62,7 +62,6 @@ case 3: // 메뉴 삭제
 //menu/list
 router.get('/list', function(req, res, next) {
 var seller_seq = req.query.seller_seq;
-
 console.log(seller_seq);
 
 if(!seller_seq) { return res.sendStatus(400); } 
@@ -118,10 +117,29 @@ router.get('/sellerList/:sSeq', function(req, res){
     db.get().query(sql, sSeq, function(err, rows){
         if(err)
             console.log(err);
-        res.status(200).json(rows[0]);
+        else
+            res.status(200).json(rows[0]);
        
     });
 });
+
+
+//menu/sellerMap
+router.get('/sellerMap', function(req, res){
+    console.log("distance");
+    var lat = req.query.lat;
+    var lng = req.query.lng;
+    
+    var sql ="select * from seller order by ((6371*acos(cos(radians(?))*cos(radians(latitude))*cos(radians(longitude)-radians(?))+sin(radians(?))*sin(radians(latitude))))*1000)" 
+    
+    db.get().query(sql, [lat, lng, lat], function(err, rows){
+        if(err)
+            console.log(err);
+        else
+            res.status(200).json(rows);
+    });
+
+})
 
 //menu/menuList
 router.get('/menuList', function(req, res){
@@ -130,8 +148,7 @@ router.get('/menuList', function(req, res){
         if(rows.length>0)
             res.status(200).json(rows);
         else
-            res.sendStatus(400);
-       
+            res.sendStatus(400);       
         
     });
 });

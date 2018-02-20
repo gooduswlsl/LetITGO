@@ -147,6 +147,7 @@ public class customer_maps extends Fragment implements OnMapReadyCallback {
 
             @Override
             public void onFailure(Call<ArrayList<Seller>> call, Throwable t) {
+                Log.d("map", t.getMessage());
                 Log.d("map", "onfailure");
             }
         });

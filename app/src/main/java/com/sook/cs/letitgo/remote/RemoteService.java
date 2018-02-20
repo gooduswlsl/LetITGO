@@ -55,8 +55,8 @@ public interface RemoteService {
     Call<ArrayList<Seller>> listSellerInfo();
     @GET("/menu/sellerList/{sSeq}")
     Call<Seller> selectSeller(@Path("sSeq") int sSeq);
-    @GET("/menu/seLLerList/distance")
-    Call<ArrayList<Seller>> listSellerMap(@Query("lat") Double latitude, @Query("long") Double longitude);
+    @GET("/menu/sellerMap")
+    Call<ArrayList<Seller>> listSellerMap(@Query("lat") double lat, @Query("lng") double lng);
 
     //메뉴정보얻어오기
     @GET("/menu/menuList")
