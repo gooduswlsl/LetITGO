@@ -1,4 +1,4 @@
-package com.sook.cs.letitgo.shared;
+package com.sook.cs.letitgo.customer;
 
 import android.content.Context;
 import android.content.Intent;
@@ -28,7 +28,7 @@ import java.io.File;
 /**
  * 프로필 아이콘을 등록하는 액티비티
  */
-public class ProfileIconActivity extends AppCompatActivity implements View.OnClickListener {
+public class customer_changePic extends AppCompatActivity implements View.OnClickListener {
     private final String TAG = getClass().getSimpleName();
 
     private static final int PICK_FROM_CAMERA = 0;
@@ -159,7 +159,7 @@ public class ProfileIconActivity extends AppCompatActivity implements View.OnCli
                 if (customer.img != null) {
                     Intent it = new Intent();
                     it.putExtra("imgname", customer.img);
-                    setResult(1, it);
+                    setResult(100, it);
                 }
                 finish();
                 break;

@@ -29,7 +29,6 @@ public class seller_store_info extends Fragment implements OnMapReadyCallback {
     private TextView name, tel, site, address, webpage;
     private ImageView img;
 
-
     Seller current_seller;
     private final String TAG = this.getClass().getSimpleName();
 
@@ -120,17 +119,8 @@ public class seller_store_info extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-//        LatLng seoul = new LatLng(37.555744, 126.970431);
-
         LatLngBounds ZOOMIN = new LatLngBounds(
                 new LatLng(current_seller.getLatitude(), current_seller.getLongitude()), new LatLng(current_seller.getLatitude(), current_seller.getLongitude()));
-//
-//        googleMap.moveCamera(CameraUpdateFactory.newLatLng(seoul));
-//        //줌 애니메이션
-//        CameraUpdate zoom = CameraUpdateFactory.zoomTo(12);
-//        googleMap.animateCamera(zoom);
-//
-//        googleMap.animateCamera(CameraUpdateFactory.newLatLng(seoul));
 
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ZOOMIN.getCenter(), 15));
 

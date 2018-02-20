@@ -97,6 +97,8 @@
         <activity
             android:name=".customer.customer_store_detail"
             android:theme="@style/MyToolbar"></activity>
+        <activity android:name=".customer.customer_leave"></activity>
+        <activity android:name=".customer.customer_changePic"></activity>
     </application>
 
 </manifest>
