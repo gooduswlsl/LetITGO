@@ -17,10 +17,8 @@ public class GeoItem {
      */
     public static LatLng getKnownLocation() {
         if (knownLatitude == 0 || knownLongitude == 0) {
-            Log.d("map", "0임");
             return new LatLng(37.566229, 126.977689);
         } else {
-            Log.d("map", "0아니야");
             return new LatLng(knownLatitude, knownLongitude);
         }
     }

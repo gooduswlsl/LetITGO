@@ -42,6 +42,11 @@ public class customer_dialog_store extends Activity {
         setStar();
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
     private void setStar() {
         helper = new MyDBHelpers(this, "liked.db", null, 1);
 
@@ -84,7 +89,7 @@ public class customer_dialog_store extends Activity {
     }
 
     public void clickMore(View view) {
-        Intent it = new Intent(customer_dialog_store.this, customer_store_detail.class);
+        Intent it = new Intent(getApplicationContext(), customer_store_detail.class);
         it.putExtra("seller_seq", seller_seq);
         startActivity(it);
     }

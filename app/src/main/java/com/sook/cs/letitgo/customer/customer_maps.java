@@ -1,24 +1,18 @@
 package com.sook.cs.letitgo.customer;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.databinding.DataBindingUtil;
-import android.location.Location;
-import android.location.LocationManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Marker;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.databinding.FragmentMapsBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -31,8 +25,10 @@ import com.sook.cs.letitgo.item.GeoItem;
 import com.sook.cs.letitgo.item.Seller;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,11 +38,15 @@ import retrofit2.Response;
  * Created by YEONJIN on 2018-01-08.
  */
 
-public class customer_maps extends Fragment implements OnMapReadyCallback {
+public class customer_maps extends Fragment implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
     FragmentMapsBinding binding;
     private MapView mapView;
-    private Adapter_seller_list adapterSellerList;
+    private LatLng latLng;
+    private GoogleMap googleMap;
+    private Adapter_seller_map adapterSellerMap;
     private RecyclerView recyclerView;
+    private PicassoMarker target;
+    private HashMap<Marker, Integer> markerMap = new HashMap<>();
 
     public customer_maps() {
 
@@ -55,7 +55,7 @@ public class customer_maps extends Fragment implements OnMapReadyCallback {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapterSellerList = new Adapter_seller_list(getActivity(), new ArrayList<Seller>());
+        adapterSellerMap = new Adapter_seller_map(this.getContext(), new ArrayList<Seller>());
     }
 
 
@@ -71,30 +71,13 @@ public class customer_maps extends Fragment implements OnMapReadyCallback {
         mapView = getView().findViewById(R.id.map);
         if (mapView != null) {
             mapView.onCreate(savedInstanceState);
+            mapView.getMapAsync(this);
         }
 
         recyclerView = getView().findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(adapterSellerList);
+        recyclerView.setAdapter(adapterSellerMap);
         listInfo();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        mapView.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        mapView.onStop();
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mapView.onSaveInstanceState(outState);
     }
 
     @Override
@@ -104,34 +87,24 @@ public class customer_maps extends Fragment implements OnMapReadyCallback {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        mapView.onPause();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mapView.onLowMemory();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mapView.onLowMemory();
-    }
-
-    @Override
     public void onMapReady(GoogleMap googleMap) {
-        LatLng SEOUL = new LatLng(37.56, 126.97);
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(SEOUL);
-        markerOptions.title("서울");
-        markerOptions.snippet("수도");
-        googleMap.addMarker(markerOptions);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(SEOUL));
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(13));
+        this.googleMap = googleMap;
+        latLng = GeoItem.getKnownLocation();
+        if (latLng == null)
+            latLng = new LatLng(37.56, 126.97); //null이면 서울
+
+        MarkerOptions markerOptions = new MarkerOptions()
+                .position(latLng)
+                .title("내위치")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker));
+
+        googleMap.addMarker(markerOptions).showInfoWindow();
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        googleMap.setOnInfoWindowClickListener(this);
+        listInfo();
     }
+
 
     private void listInfo() {
         RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
@@ -141,16 +114,38 @@ public class customer_maps extends Fragment implements OnMapReadyCallback {
             public void onResponse(Call<ArrayList<Seller>> call, Response<ArrayList<Seller>> response) {
                 ArrayList<Seller> list = response.body();
                 if (response.isSuccessful() && list != null) {
-                    adapterSellerList.addSellerList(list);
+                    adapterSellerMap.addSellerList(list);
+                    setMap(list);
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<Seller>> call, Throwable t) {
-                Log.d("map", t.getMessage());
                 Log.d("map", "onfailure");
             }
         });
     }
 
+    private void setMap(ArrayList<Seller> list) {
+        Log.d("map", "setMap");
+        for (Seller item : list) {
+            MarkerOptions markerOption = new MarkerOptions().position(new LatLng(item.latitude, item.longitude))
+                    .title(item.getName())
+                    .snippet(item.getSite())
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.empty));
+
+            Marker marker = googleMap.addMarker(markerOption);
+            target = new PicassoMarker(marker);
+            Picasso.with(getContext()).load((RemoteService.SELLER_IMG_URL + item.getImg())).resize(120, 120).into(target);
+            markerMap.put(marker, item.getSeq());
+        }
+    }
+
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        Intent it = new Intent(getContext(), customer_dialog_store.class);
+        it.putExtra("seller_seq", markerMap.get(marker));
+        (getContext()).startActivity(it);
+    }
 }

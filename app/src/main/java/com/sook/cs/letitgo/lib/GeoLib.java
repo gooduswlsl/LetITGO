@@ -8,6 +8,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
@@ -48,16 +49,19 @@ public class GeoLib {
         int result = ContextCompat.checkSelfPermission(context,
                 Manifest.permission.ACCESS_FINE_LOCATION);
         if (result == PackageManager.PERMISSION_GRANTED) {
+            Log.d("map", "permission granted");
             location = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
         }
 
         if (location != null) {
+            Log.d("map", "위치받아와");
             GeoItem.knownLatitude = location.getLatitude();
             GeoItem.knownLongitude = location.getLongitude();
         } else {
+            Log.d("map", "위치못받아");
             //서울 설정
-            GeoItem.knownLatitude = 37.566229;
-            GeoItem.knownLongitude = 126.977689;
+            GeoItem.knownLatitude = 37.5445812;
+            GeoItem.knownLongitude = 126.9671958;
         }
     }
 
