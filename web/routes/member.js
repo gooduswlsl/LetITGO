@@ -81,6 +81,40 @@ router.post('/customer', function(req, res) {
     });
   });
 
+
+//member/changeProfile
+router.post('/changeProfile', function(req, res) {
+  var seq = req.body.seq;
+  var name = req.body.name;
+  var sextype = req.body.sextype;
+  var birthday = req.body.birthday;
+  var img = req.body.img;
+
+  var sql_update = "update customer "+
+ 				  "set name = ?, sextype =? , birthday = ?, img = ? "+
+                  "where seq = ? limit 1; ";
+
+  	db.get().query(sql_update, [name, sextype, birthday, img, seq], function (err, result) {
+	     if (err) return res.sendStatus(400);
+
+	     res.status(200).send('' + result.insertId);
+	   });
+  });
+
+
+//member/leaveMember
+router.post('/leaveMember', function(req, res){
+    var seq = req.query.seq;
+
+    var sql_delete = "delete from customer where seq = ?; ";
+
+    db.get().query(sql_delete, seq, function(err, result){
+    	if (err) return res.sendStatus(400);
+         res.status(200).send('' + result.insertId);
+       });
+ });
+
+
 //member/seller
 router.post('/seller', function(req, res) {
     var phone = req.body.phone;
