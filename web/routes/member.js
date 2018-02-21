@@ -66,11 +66,12 @@ router.post('/customer', function(req, res) {
   var name = req.body.name;
   var sextype = req.body.sextype;
   var birthday = req.body.birthday;
-    var img = req.body.img;
+  var img = req.body.img;
+  var regId = req.body.regId;
 
- var sql_insert = "insert into customer (phone, name, sextype, birthday, img) values(?, ?, ?, ?, ?);";
-   
-  db.get().query(sql_insert, [phone, name, sextype, birthday, img], function (err, rows) {
+ var sql_insert = "insert into customer (phone, name, sextype, birthday, img, regId) values(?, ?, ?, ?, ?, ?);";
+
+  db.get().query(sql_insert, [phone, name, sextype, birthday, img, regId], function (err, rows) {
     console.log("rows"+JSON.stringify(rows));
 	 if (err) {
 		  console.log("ERR "+err);
@@ -80,6 +81,7 @@ router.post('/customer', function(req, res) {
 
     });
   });
+
 
 
 //member/changeProfile
@@ -115,6 +117,7 @@ router.post('/leaveMember', function(req, res){
  });
 
 
+
 //member/seller
 router.post('/seller', function(req, res) {
     var phone = req.body.phone;
@@ -123,23 +126,27 @@ router.post('/seller', function(req, res) {
     var tel = req.body.tel;
     var address = req.body.address;
     var webpage = req.body.webpage;
-    //var img = req.body.img;
+    var img = req.body.img;
+    var latitude = req.body.latitude;
+    var longitude = req.body.longitude;
+    var regId = req.body.regId;
 
-  console.log({name,site,tel,address,webpage,phone});
+
+  console.log({name,site,tel,address,webpage,phone,img,latitude,longitude, regId});
 
   var sql_count = "select count(*) as cnt " +
-            "from seller " + 
+            "from seller " +
             "where phone = ?;";
 
-  var sql_insert = "insert into seller (name, site, tel, address, webpage, phone) values(?, ?, ?, ?, ?, ?);";
-  var sql_update = "update seller set name = ?, site = ?, tel = ?, address = ?, webpage = ? where phone = ?; ";
+  var sql_insert = "insert into seller (name, site, tel, address, webpage, phone, img,latitude,longitude,regId) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+  var sql_update = "update seller set name = ?, site = ?, tel = ?, address = ?, webpage = ?, img = ?, latitude = ?, longitude = ?, regId = ? where phone = ?; ";
   var sql_select = "select seq from seller where phone = ?; ";
-  
+
   db.get().query(sql_count, phone, function (err, rows) {
     if (rows[0].cnt > 0) {
       console.log("sql_update : " + sql_update);
 
-      db.get().query(sql_update, [name, site, tel, address, webpage, phone], function (err, result) {
+      db.get().query(sql_update, [name, site, tel, address, webpage, phone, img, latitude, longitude, regId], function (err, result) {
         if (err) {
             console.log(err);
             return res.sendStatus(400);
@@ -155,7 +162,7 @@ router.post('/seller', function(req, res) {
     } else {
       console.log("sql_insert : " + sql_insert);
 
-      db.get().query(sql_insert, [name,site,tel,address,webpage,phone], function (err, result) {
+      db.get().query(sql_insert, [name,site,tel,address,webpage,phone,img,latitude,longitude, regId], function (err, result) {
         if (err) return res.sendStatus(400);
 
         res.status(200).send('' + result.insertId);
@@ -163,8 +170,6 @@ router.post('/seller', function(req, res) {
     }
   });
 });
-
-
 
 
 //member/img_upload
@@ -178,6 +183,36 @@ router.post('/img_upload', function (req, res) {
     form.parse(req);
 
 });
+
+//member/sendNewSellerRegId
+router.post('/sendNewSellerRegId', function(req, res){
+    var seq = req.query.seq;
+    var regId = req.query.regId;
+
+    console.log("seq:"+seq+" regId:"+regId);
+
+    var sql = "update seller set regId = ? where seq = ? limit 1; ";
+
+    db.get().query(sql, [regId, seq], function(err, result){
+    	if (err) return res.sendStatus(400);
+         res.status(200).send('' + result.insertId);
+       });
+ });
+
+//member/sendNewCustomerRegId
+router.post('/sendNewCustomerRegId', function(req, res){
+    var seq = req.query.seq;
+    var regId = req.query.regId;
+
+    console.log("seq:"+seq+" regId:"+regId);
+
+    var sql = "update customer set regId = ? where seq = ? limit 1; ";
+
+    db.get().query(sql, [regId, seq], function(err, result){
+    	if (err) return res.sendStatus(400);
+         res.status(200).send('' + result.insertId);
+       });
+ });
 
 
 module.exports = router;
