@@ -28,7 +28,7 @@ public interface RemoteService {
 //    String BASE_URL = "http://192.168.21.168:3000";  //학교
     //String BASE_URL = "http://192.168.30.77:3000";  //집
    // String BASE_URL = "http://192.168.0.24:3000";  //죽전
-    String BASE_URL = "http://192.168.10.118:3000";  //예원학교
+    String BASE_URL = "http://192.168.53.81:3000";  //예원학교
 
 
 
@@ -63,6 +63,8 @@ public interface RemoteService {
     Call<ArrayList<Seller>> listSellerInfo();
     @GET("/menu/sellerList/{sSeq}")
     Call<Seller> selectSeller(@Path("sSeq") int sSeq);
+    @GET("/menu/sellerMap")
+    Call<ArrayList<Seller>> listSellerMap(@Query("lat") double lat, @Query("lng") double lng);
 
     //메뉴정보얻어오기
     @GET("/menu/menuList")

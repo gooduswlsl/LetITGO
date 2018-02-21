@@ -7,7 +7,6 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class Adapter_menu_img extends RecyclerView.Adapter<MyViewHolder>{
+public class Adapter_menu_img extends RecyclerView.Adapter<MyViewHolder> {
     private ViewDataBinding binding;
     private ArrayList<Menu> menuArrayList;
     private Context mContext;
@@ -46,7 +45,7 @@ public class Adapter_menu_img extends RecyclerView.Adapter<MyViewHolder>{
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(mContext, customer_dialog_menu.class);
-                it.putExtra("menu_seq", menu.mSeq);
+                it.putExtra("menu", menu);
                 (mContext).startActivity(it);
             }
         });
@@ -61,7 +60,6 @@ public class Adapter_menu_img extends RecyclerView.Adapter<MyViewHolder>{
     public int getItemCount() {
         return menuArrayList.size();
     }
-
 
 
     @BindingAdapter({"bind:menuImg"})

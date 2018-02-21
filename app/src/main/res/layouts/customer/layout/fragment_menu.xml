@@ -6,6 +6,10 @@
         <variable
             name="fragment"
             type="com.sook.cs.letitgo.customer.customer_menu" />
+
+        <variable
+            name="activity"
+            type="com.sook.cs.letitgo.customer.customer_store_detail" />
     </data>
 
     <LinearLayout
@@ -33,7 +37,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:background="@drawable/search"
-                android:onClick="@{fragment::searchClick}" />
+                android:onClick="searchClick" />
 
 
         </LinearLayout>

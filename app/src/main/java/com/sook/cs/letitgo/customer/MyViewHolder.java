@@ -7,10 +7,12 @@ import com.sook.cs.letitgo.databinding.ItemMenuBinding;
 import com.sook.cs.letitgo.databinding.ItemMenuImgBinding;
 import com.sook.cs.letitgo.databinding.ItemSellerBinding;
 import com.sook.cs.letitgo.databinding.ItemSellerImgBinding;
+import com.sook.cs.letitgo.databinding.ItemSellerMapBinding;
 
-public class MyViewHolder extends RecyclerView.ViewHolder{
+public class MyViewHolder extends RecyclerView.ViewHolder {
     ItemSellerBinding sbinding;
     ItemSellerImgBinding simgBinding;
+    ItemSellerMapBinding sMapBinding;
     ItemMenuBinding mbinding;
     ItemMenuImgBinding mimgBinding;
 
@@ -27,6 +29,13 @@ public class MyViewHolder extends RecyclerView.ViewHolder{
         this.simgBinding = simgBinding;
         simgBinding = DataBindingUtil.bind(itemView);
         simgBinding.executePendingBindings();
+    }
+
+    public MyViewHolder(ItemSellerMapBinding sMapBinding) {
+        super(sMapBinding.getRoot());
+        this.sMapBinding = sMapBinding;
+        sMapBinding = DataBindingUtil.bind(itemView);
+        sMapBinding.executePendingBindings();
     }
 
     public MyViewHolder(ItemMenuBinding mbinding) {

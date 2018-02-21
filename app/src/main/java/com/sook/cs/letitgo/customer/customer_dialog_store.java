@@ -9,23 +9,32 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.item.Seller;
 import com.sook.cs.letitgo.databinding.DialogSellerBinding;
-import com.sook.cs.letitgo.remote.RemoteService;
-import com.sook.cs.letitgo.remote.ServiceGenerator;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class customer_dialog_store extends Activity {
+public class customer_dialog_store extends Activity implements OnMapReadyCallback {
     DialogSellerBinding binding;
     int seller_seq, position;
-
+    MapView map;
+    Seller seller;
     MyDBHelpers helper;
 
     public customer_dialog_store() {
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        map.onResume();
     }
 
     @Override
@@ -34,11 +43,15 @@ public class customer_dialog_store extends Activity {
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         binding = DataBindingUtil.setContentView(this, R.layout.dialog_seller);
-        seller_seq = getIntent().getIntExtra("seller_seq", 0);
-        position = getIntent().getIntExtra("position", 0);
-        if (seller_seq != 0)
-            selectSellerList(seller_seq);
+        seller = (Seller) getIntent().getSerializableExtra("seller");
+        seller_seq = seller.getSeq();
+        binding.setSeller(seller);
 
+        map = binding.map;
+        map.onCreate(savedInstanceState);
+        map.getMapAsync(this);
+
+        Log.d("dialog", "onCreate");
         setStar();
     }
 
@@ -49,23 +62,6 @@ public class customer_dialog_store extends Activity {
             binding.imgStar.setImageResource(R.drawable.star);
         else
             binding.imgStar.setImageResource(R.drawable.star_empty);
-    }
-
-    private void selectSellerList(int seller_seq) {
-        RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
-        Call<Seller> call = remoteService.selectSeller(seller_seq);
-        call.enqueue(new Callback<Seller>() {
-            @Override
-            public void onResponse(Call<Seller> call, Response<Seller> response) {
-                Seller seller = response.body();
-                binding.setSeller(seller);
-            }
-
-            @Override
-            public void onFailure(Call<Seller> call, Throwable t) {
-                Log.d("sellerdialog", t.toString());
-            }
-        });
     }
 
     public void clickStar(View v) {
@@ -84,9 +80,21 @@ public class customer_dialog_store extends Activity {
     }
 
     public void clickMore(View view) {
-        Intent it = new Intent(customer_dialog_store.this, customer_store_detail.class);
+        Intent it = new Intent(getApplicationContext(), customer_store_detail.class);
         it.putExtra("seller_seq", seller_seq);
         startActivity(it);
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        LatLng latLng = new LatLng(seller.getLatitude(), seller.getLongitude());
+        LatLngBounds ZOOMIN = new LatLngBounds(latLng, latLng);
+
+        MarkerOptions markerOptions = new MarkerOptions()
+                .position(latLng)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker));
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ZOOMIN.getCenter(), 16));
+        googleMap.addMarker(markerOptions).showInfoWindow();
+    }
 }

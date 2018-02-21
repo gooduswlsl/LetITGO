@@ -16,6 +16,7 @@ import com.sook.cs.letitgo.customer.customer_main;
 import com.sook.cs.letitgo.item.Customer;
 import com.sook.cs.letitgo.item.Seller;
 import com.sook.cs.letitgo.lib.EtcLib;
+import com.sook.cs.letitgo.lib.GeoLib;
 import com.sook.cs.letitgo.lib.RemoteLib;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
@@ -109,6 +110,7 @@ public class IndexActivity extends AppCompatActivity {
     public void startTask() {
         String phone = EtcLib.getInstance().getPhoneNumber(this);
         selectMemberInfo(phone);
+        GeoLib.getInstance().setLastKnownLocation(this);
     }
 
     /**

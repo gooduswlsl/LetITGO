@@ -6,6 +6,7 @@
         <variable
             name="fragment"
             type="com.sook.cs.letitgo.customer.customer_store" />
+
     </data>
 
     <LinearLayout

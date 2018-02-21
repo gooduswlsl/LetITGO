@@ -77,8 +77,7 @@ public class customer_main extends AppCompatActivity {
         if (requestCode == REQUEST_SELLER || requestCode == REQUEST_MENU) {
             fragment = getSupportFragmentManager().findFragmentByTag("fragment_liked");
             fragment.onActivityResult(requestCode, resultCode, data);
-        }
-        else if( resultCode == REQUEST_PROFILE){
+        } else if (resultCode == REQUEST_PROFILE) {
             fragment = getSupportFragmentManager().findFragmentByTag("fragment_my");
             fragment.onActivityResult(requestCode, resultCode, data);
         }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -49,8 +50,7 @@ public class Adapter_seller_list extends RecyclerView.Adapter<MyViewHolder> {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(mContext, customer_dialog_store.class);
-                it.putExtra("seller_seq", seller.seq);
-                it.putExtra("position", position);
+                it.putExtra("seller", seller);
                 ((Activity) (mContext)).startActivityForResult(it, REQUEST_SELLER);
             }
         });

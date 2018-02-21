@@ -20,8 +20,8 @@
 
         <ImageView
             android:id="@+id/img_sImg"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             app:sellerImg="@{seller.getImg}" />
 
         <RelativeLayout
@@ -33,17 +33,21 @@
                 android:id="@+id/tv_sName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="5dp"
                 android:text="@{seller.getName}"
+                android:textSize="13sp"
                 android:textStyle="bold"
                 tools:text="가게명" />
+
 
             <TextView
                 android:id="@+id/tv_branch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_above="@id/tv_locate"
                 android:layout_toRightOf="@id/tv_sName"
                 android:text="@{seller.getSite}"
+                android:textSize="12sp"
                 tools:text="지점명" />
 
             <TextView
@@ -51,10 +55,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_sName"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:text="@{seller.getAddress}"
+                android:textSize="10sp"
                 tools:text="위치" />
 
+
+            <TextView
+                android:id="@+id/tv_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="@{seller.getDistance}"
+                android:textColor="@color/text_color_gray"
+                android:textSize="10sp"
+                tools:text="거리" />
 
         </RelativeLayout>
     </LinearLayout>
