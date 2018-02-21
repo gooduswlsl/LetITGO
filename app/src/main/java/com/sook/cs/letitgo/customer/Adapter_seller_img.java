@@ -53,7 +53,10 @@ public class Adapter_seller_img extends RecyclerView.Adapter<MyViewHolder> {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(mContext, customer_dialog_store.class);
-                it.putExtra("seller_seq", seller.seq);
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("seller", seller);
+                it.putExtras(bundle);
                 (mContext).startActivity(it);
             }
         });

@@ -29,6 +29,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.sook.cs.letitgo.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+
         <activity android:name=".shared.PermissionActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -48,14 +70,7 @@
             android:name=".customer.customer_dialog_menu"
             android:theme="@android:style/Theme.Holo.Light.Dialog" />
         "
-        <!--
-             The API key for Google Maps-based APIs is defined as a string resource.
-             (See the file "res/values/google_maps_api.xml").
-             Note that the API key is linked to the encryption key used to sign the APK.
-             You need a different API key for each encryption key, including the release key that is used to
-             sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/.
-        -->
+
 
         <activity android:name=".seller.Login" />
         <activity
@@ -72,15 +87,6 @@
             android:label="매장 정보" />
         <activity android:name=".shared.GroupActivity" />
 
-        <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.sook.cs.letitgo.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths" />
-        </provider>
 
         <activity
             android:name=".shared.Login_2_1_1_searchAddress"
@@ -90,12 +96,8 @@
         <activity android:name=".seller.MenuPicAddActivity" />
         <activity android:name=".seller.MenuPicEditActivity" />
 
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".customer.customer_store_detail"></activity>
+        <activity android:name=".customer.customer_store_detail"></activity>
 
         <activity android:name=".customer.customer_leave"></activity>
         <activity android:name=".customer.customer_changePic"></activity>

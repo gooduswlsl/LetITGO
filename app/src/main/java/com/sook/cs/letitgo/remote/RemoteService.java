@@ -24,11 +24,11 @@ import retrofit2.http.Query;
  * 서버에 호출할 메소드를 선언하는 인터페이스
  */
 public interface RemoteService {
-    //String BASE_URL = "http://192.168.10.139:3000";  //마이크임팩트
-//    String BASE_URL = "http://192.168.21.168:3000";  //학교
+    String BASE_URL = "http://192.168.10.85:3000";  //마이크임팩트
+    //String BASE_URL = "http://192.168.21.168:3000";  //학교
     //String BASE_URL = "http://192.168.30.77:3000";  //집
    // String BASE_URL = "http://192.168.0.24:3000";  //죽전
-    String BASE_URL = "http://192.168.53.81:3000";  //예원학교
+    //String BASE_URL = "http://192.168.53.81:3000";  //예원학교
 
 
 

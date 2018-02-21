@@ -46,7 +46,7 @@ public class customer_maps extends Fragment implements OnMapReadyCallback, Googl
     private Adapter_seller_map adapterSellerMap;
     private RecyclerView recyclerView;
     private PicassoMarker target;
-    private HashMap<Marker, Integer> markerMap = new HashMap<>();
+    private HashMap<Marker, Seller> markerMap = new HashMap<>();
 
     public customer_maps() {
 
@@ -96,7 +96,8 @@ public class customer_maps extends Fragment implements OnMapReadyCallback, Googl
         MarkerOptions markerOptions = new MarkerOptions()
                 .position(latLng)
                 .title("내위치")
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker));
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker))
+                .draggable(true);
 
         googleMap.addMarker(markerOptions).showInfoWindow();
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
@@ -137,7 +138,7 @@ public class customer_maps extends Fragment implements OnMapReadyCallback, Googl
             Marker marker = googleMap.addMarker(markerOption);
             target = new PicassoMarker(marker);
             Picasso.with(getContext()).load((RemoteService.SELLER_IMG_URL + item.getImg())).resize(120, 120).into(target);
-            markerMap.put(marker, item.getSeq());
+            markerMap.put(marker, item);
         }
     }
 
@@ -145,7 +146,9 @@ public class customer_maps extends Fragment implements OnMapReadyCallback, Googl
     @Override
     public void onInfoWindowClick(Marker marker) {
         Intent it = new Intent(getContext(), customer_dialog_store.class);
-        it.putExtra("seller_seq", markerMap.get(marker));
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("seller", markerMap.get(marker));
+        it.putExtras(bundle);
         (getContext()).startActivity(it);
     }
 }

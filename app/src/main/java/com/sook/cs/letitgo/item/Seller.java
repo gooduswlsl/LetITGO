@@ -42,7 +42,7 @@ public class Seller implements Serializable {
     }
 
     public String getAddress() {
-        return address;
+        return address.substring(8);
     }
 
     public String getWebpage() {

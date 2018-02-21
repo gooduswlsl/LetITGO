@@ -6,18 +6,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.databinding.FragmentLikedMenuBinding;
 import com.sook.cs.letitgo.item.Menu;
-import com.sook.cs.letitgo.item.Seller;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
-import com.sook.cs.letitgo.util.DataUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
