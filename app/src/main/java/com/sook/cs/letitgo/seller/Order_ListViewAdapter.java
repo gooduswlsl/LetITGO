@@ -11,6 +11,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.item.Customer;
 import com.sook.cs.letitgo.item.Menu;
@@ -18,12 +25,16 @@ import com.sook.cs.letitgo.item.Order;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 
 public class Order_ListViewAdapter extends BaseAdapter {
 
@@ -36,6 +47,8 @@ public class Order_ListViewAdapter extends BaseAdapter {
     private static final int ACCEPT_ORDER = 1;
     private static final int DECLINE_ORDER = -1;
     private static final int ORDER_FINISHED = 2;
+
+    RequestQueue queue;
 
     // Order_ListViewAdapter의 생성자
     public Order_ListViewAdapter() {
@@ -69,10 +82,6 @@ public class Order_ListViewAdapter extends BaseAdapter {
         final TextView acceptStr = (TextView) convertView.findViewById(R.id.acceptStr);
         final TextView declineStr = (TextView) convertView.findViewById(R.id.declineStr);
 
-
-//        btn_accept.setTag(position);
-//        btn_decline.setTag(position);
-
         btn_accept.setOnClickListener(new View.OnClickListener() {  //수락
 
             @Override
@@ -84,6 +93,7 @@ public class Order_ListViewAdapter extends BaseAdapter {
                 btn_finished.setClickable(true);
                 sendPermit(listViewItemList.get(position).getSeq(),ACCEPT_ORDER, position);
                 sendTotal_price(listViewItemList.get(position).getSeq(),m_list.get(position).getmPrice()*listViewItemList.get(position).getNum());
+                send("고객님의 주문이 수락되었습니다.", position);
 
                 Toast.makeText(view.getContext(), c_list.get(position).getName()+"님의 주문을 수락하였습니다.", Toast.LENGTH_SHORT).show();
             }
@@ -97,6 +107,8 @@ public class Order_ListViewAdapter extends BaseAdapter {
                 declineStr.setVisibility(View.VISIBLE);
                 btn_accept.setClickable(false);
                 sendPermit(listViewItemList.get(position).getSeq(),DECLINE_ORDER, position);
+                send("고객님의 주문이 거절되었습니다.", position);
+                queue = Volley.newRequestQueue(context.getApplicationContext());
 
                 Toast.makeText(view.getContext(), c_list.get(position).getName()+"님의 주문을 거절하였습니다.", Toast.LENGTH_SHORT).show();
             }
@@ -109,6 +121,7 @@ public class Order_ListViewAdapter extends BaseAdapter {
                 btn_finished.setVisibility(View.GONE);
                 acceptStr.setVisibility(View.VISIBLE);
                 sendPermit(listViewItemList.get(position).getSeq(),ORDER_FINISHED, position);
+                send("고객님의 주문완료! 오늘도 좋은 하루 되세요", position);
 
                 Toast.makeText(view.getContext(), c_list.get(position).getName()+"님의 주문을 완료하였습니다.", Toast.LENGTH_SHORT).show();
 
@@ -166,7 +179,6 @@ public class Order_ListViewAdapter extends BaseAdapter {
             }
         }, 1000);
 
-
         return convertView;
 
     }
@@ -196,6 +208,7 @@ public class Order_ListViewAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    //주문한 customer 정보 가져오기
     private void findCustomerInfo(int seq) {
         RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
         Call<Customer> call = remoteService. selectCustomerInfo(seq);
@@ -216,6 +229,7 @@ public class Order_ListViewAdapter extends BaseAdapter {
         });
     }
 
+    //주문한 menu 정보 가져오기
     private void selectMenuInfo(final int menu_seq) {
         RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
         Call<Menu> call = remoteService.selectMenu(menu_seq);
@@ -234,7 +248,7 @@ public class Order_ListViewAdapter extends BaseAdapter {
         });
     }
 
-    // permit값 보내기
+    // permit값 보내기 (기본값 0, 거절 -1, 수락 1, 주문완료 2)
     private void sendPermit(int seq, int permit, int position) {
         final int seller_seq=listViewItemList.get(position).getSeller_seq();
         Log.d(TAG,"sendPermit seller_seq: "+seller_seq);
@@ -321,4 +335,95 @@ public class Order_ListViewAdapter extends BaseAdapter {
 
     }
 
+    /*customer 핸드폰에 푸시메시지 보내기
+    클라우드 서버에 메시지 전송하기 위해 Volley 라이브러리 이용
+    메시지는 JSON객체로 묶음.*/
+    public void send(String input, int position) {
+
+        //전송정보 담아둘 JSONObject 객체 생성
+        JSONObject requestData = new JSONObject();
+
+        try {
+            requestData.put("priority", "high");
+
+            JSONObject dataObj = new JSONObject();
+            dataObj.put("contents", input);
+            requestData.put("data", dataObj);
+
+            JSONArray idArray = new JSONArray();
+            idArray.put(0, c_list.get(position).regId);
+            Log.d(TAG, c_list.get(position).regId);
+            requestData.put("registration_ids", idArray);
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        sendData(requestData, new SendResponseListener() {
+            @Override
+            public void onRequestCompleted() {
+                Log.d(TAG,"onRequestCompleted() 호출됨.");
+            }
+
+            @Override
+            public void onRequestStarted() {
+                Log.d(TAG,"onRequestStarted() 호출됨.");
+            }
+
+            @Override
+            public void onRequestWithError(VolleyError error) {
+                Log.d(TAG,"onRequestWithError() 호출됨.");
+            }
+        });
+
+    }
+
+    public interface SendResponseListener {
+        public void onRequestStarted();
+        public void onRequestCompleted();
+        public void onRequestWithError(VolleyError error);
+    }
+
+    public void sendData(JSONObject requestData, final SendResponseListener listener) {
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                "https://fcm.googleapis.com/fcm/send",
+                requestData,
+                new com.android.volley.Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        listener.onRequestCompleted();
+                    }
+                }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listener.onRequestWithError(error);
+            }
+          }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String,String>();
+
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<String,String>();
+                headers.put("Authorization","key=AAAANjIyu7A:APA91bGxMJrapRgMA0eeNq4PJkBdtlCe8mbdPnO14B-xoTmo-oG2Uzp6046qXT0-kFqxFdEqBhYjQz3yLZzy1mq2dT9psAsPMp_7KyRKRVqfXJvSTbcaguvyN3XKS9zUpwlFFUMXKyol");
+
+                return headers;
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+        };
+
+        request.setShouldCache(false);
+        listener.onRequestStarted();
+        queue.add(request);
+    }
 }

@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.sook.cs.letitgo.MyApp;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.item.Seller;
@@ -65,6 +66,7 @@ public class Login2_1_store_info extends AppCompatActivity {
     private EditText telEdit;
     private EditText siteEdit;
     private EditText webpageEdit;
+    private String regId;
 
     private static final int PICK_FROM_CAMERA = 1;
     private static final int PICK_FROM_ALBUM = 2;
@@ -87,6 +89,9 @@ public class Login2_1_store_info extends AppCompatActivity {
         currentItem = ((MyApp) getApplication()).getSeller();
         context = this;
 
+        regId = FirebaseInstanceId.getInstance().getToken();
+        currentItem.setRegId(regId);
+        Log.d("regId",currentItem.regId);
 
         setContentView(R.layout.activity_main3);
         checkPermissions();
@@ -109,6 +114,7 @@ public class Login2_1_store_info extends AppCompatActivity {
         getGeo();
 
         final Seller newItem = getSellerInfoItem();
+        newItem.regId = currentItem.regId;
 
         RemoteService remoteService =
                 ServiceGenerator.createService(RemoteService.class);

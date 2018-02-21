@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.Volley;
 import com.sook.cs.letitgo.MyApp;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.item.Customer;
@@ -49,6 +50,7 @@ public class seller_order extends Fragment{
         current_seller = ((MyApp) getActivity().getApplicationContext()).getSeller();
 
         adapter = new Order_ListViewAdapter();
+        adapter.queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
         // 리스트뷰 참조 및 Adapter달기
         final ListView listview;

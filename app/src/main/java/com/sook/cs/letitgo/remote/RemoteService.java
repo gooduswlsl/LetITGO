@@ -28,7 +28,7 @@ public interface RemoteService {
 //    String BASE_URL = "http://192.168.21.168:3000";  //학교
     //String BASE_URL = "http://192.168.30.77:3000";  //집
    // String BASE_URL = "http://192.168.0.24:3000";  //죽전
-    String BASE_URL = "http://192.168.53.81:3000";  //예원학교
+    String BASE_URL = "http://192.168.10.118:3000";  //예원학교
 
 
 
@@ -46,6 +46,8 @@ public interface RemoteService {
     Call<String> insertCustomerInfo(@Body Customer customer);
     @GET("/member/customer/{customer_seq}")
     Call<Customer> selectCustomerInfo(@Path("customer_seq") int seq);
+    @POST("/member/sendNewCustomerRegId")
+    Call<String> sendNewCustomerRegId(@Query("seq") int seq, @Query("regId") String regId);
     @Multipart
     @POST("/member/img_upload")
     Call<ResponseBody> uploadCustomerImg(@Part MultipartBody.Part file);
@@ -87,6 +89,8 @@ public interface RemoteService {
     Call<String> insertSellerInfo(@Body Seller seller);
     @GET("/member/seller/{seller_seq}")
     Call<Seller> selectSellerInfo(@Path("seller_seq") int seq);
+    @POST("/member/sendNewSellerRegId")
+    Call<String> sendNewSellerRegId(@Query("seq") int seq, @Query("regId") String regId);
     @Multipart
     @POST("/member/img_upload2")
     Call<ResponseBody> uploadSellerImg(@Part MultipartBody.Part file);
