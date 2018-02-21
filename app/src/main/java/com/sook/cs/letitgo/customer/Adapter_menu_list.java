@@ -46,7 +46,7 @@ public class Adapter_menu_list extends RecyclerView.Adapter<MyViewHolder> {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(mContext, customer_dialog_menu.class);
-                it.putExtra("menu_seq", menu.mSeq);
+                it.putExtra("menu", menu);
                 it.putExtra("position", position);
                 ((Activity) (mContext)).startActivityForResult(it, REQUEST_MENU);
             }

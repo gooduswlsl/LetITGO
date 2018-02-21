@@ -50,10 +50,7 @@ public class Adapter_seller_list extends RecyclerView.Adapter<MyViewHolder> {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(mContext, customer_dialog_store.class);
-
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("seller", seller);
-                it.putExtras(bundle);
+                it.putExtra("seller", seller);
                 ((Activity) (mContext)).startActivityForResult(it, REQUEST_SELLER);
             }
         });

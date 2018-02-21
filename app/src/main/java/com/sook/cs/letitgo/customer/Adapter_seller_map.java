@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,8 +48,7 @@ public class Adapter_seller_map extends RecyclerView.Adapter<MyViewHolder> {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(mContext, customer_dialog_store.class);
-                it.putExtra("seller_seq", seller.seq);
-                it.putExtra("position", position);
+                it.putExtra("seller", seller);
                 ((Activity) (mContext)).startActivityForResult(it, REQUEST_SELLER);
             }
         });

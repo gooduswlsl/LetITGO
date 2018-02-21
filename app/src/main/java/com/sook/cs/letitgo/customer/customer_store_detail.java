@@ -50,7 +50,6 @@ public class customer_store_detail extends AppCompatActivity {
         adapterMenuImg = new Adapter_menu_img(this, new ArrayList<Menu>());
 
         seller_seq = getIntent().getIntExtra("seller_seq", 0);
-
         if (seller_seq != 0)
             setTitle();
         setView();

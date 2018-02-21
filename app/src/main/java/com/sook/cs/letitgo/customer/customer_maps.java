@@ -146,9 +146,7 @@ public class customer_maps extends Fragment implements OnMapReadyCallback, Googl
     @Override
     public void onInfoWindowClick(Marker marker) {
         Intent it = new Intent(getContext(), customer_dialog_store.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("seller", markerMap.get(marker));
-        it.putExtras(bundle);
+        it.putExtra("seller", markerMap.get(marker));
         (getContext()).startActivity(it);
     }
 }

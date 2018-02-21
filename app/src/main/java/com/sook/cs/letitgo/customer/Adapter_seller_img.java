@@ -1,25 +1,20 @@
 package com.sook.cs.letitgo.customer;
 
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.item.Seller;
 import com.sook.cs.letitgo.databinding.ItemSellerImgBinding;
 import com.sook.cs.letitgo.remote.RemoteService;
-import com.sook.cs.letitgo.remote.ServiceGenerator;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -53,10 +48,7 @@ public class Adapter_seller_img extends RecyclerView.Adapter<MyViewHolder> {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(mContext, customer_dialog_store.class);
-
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("seller", seller);
-                it.putExtras(bundle);
+                it.putExtra("seller", seller);
                 (mContext).startActivity(it);
             }
         });

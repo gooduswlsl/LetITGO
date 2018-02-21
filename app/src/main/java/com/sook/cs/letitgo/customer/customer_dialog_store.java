@@ -43,7 +43,8 @@ public class customer_dialog_store extends Activity implements OnMapReadyCallbac
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         binding = DataBindingUtil.setContentView(this, R.layout.dialog_seller);
-        seller = (Seller)getIntent().getSerializableExtra("seller");
+        seller = (Seller) getIntent().getSerializableExtra("seller");
+        seller_seq = seller.getSeq();
         binding.setSeller(seller);
 
         map = binding.map;
@@ -63,7 +64,7 @@ public class customer_dialog_store extends Activity implements OnMapReadyCallbac
             binding.imgStar.setImageResource(R.drawable.star_empty);
     }
 
-   public void clickStar(View v) {
+    public void clickStar(View v) {
         Intent it = new Intent();
         it.putExtra("position", position);
         it.putExtra("seller_seq", seller_seq);
@@ -88,7 +89,6 @@ public class customer_dialog_store extends Activity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         LatLng latLng = new LatLng(seller.getLatitude(), seller.getLongitude());
         LatLngBounds ZOOMIN = new LatLngBounds(latLng, latLng);
-
 
         MarkerOptions markerOptions = new MarkerOptions()
                 .position(latLng)

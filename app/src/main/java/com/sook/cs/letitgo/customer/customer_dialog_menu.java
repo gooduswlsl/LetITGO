@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 
@@ -22,8 +21,8 @@ import retrofit2.Response;
 
 public class customer_dialog_menu extends Activity {
     DialogMenuBinding binding;
-    int menu_seq, position;
-    int num;
+    int menu_seq, position, num;
+    Menu menu;
     MyDBHelpers helper;
 
     public customer_dialog_menu() {
@@ -34,11 +33,13 @@ public class customer_dialog_menu extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         binding = DataBindingUtil.setContentView(this, R.layout.dialog_menu);
-        menu_seq = getIntent().getIntExtra("menu_seq", 0);
-        position = getIntent().getIntExtra("position", 0);
-        if (menu_seq != 0)
-            selectMenuList(menu_seq);
+        menu = (Menu) getIntent().getSerializableExtra("menu");
+        binding.setMenu(menu);
 
+        position = getIntent().getIntExtra("position", 0);
+        menu_seq = menu.getmSeq();
+
+        setSeller(menu.seller_seq);
         setStar();
     }
 
@@ -50,25 +51,6 @@ public class customer_dialog_menu extends Activity {
             binding.imgStar.setImageResource(R.drawable.star);
         else
             binding.imgStar.setImageResource(R.drawable.star_empty);
-    }
-
-    private void selectMenuList(int menu_seq) {
-        RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
-        Call<Menu> call = remoteService.selectMenu(menu_seq);
-        call.enqueue(new Callback<Menu>() {
-            @Override
-            public void onResponse(Call<Menu> call, Response<Menu> response) {
-                Menu menu = response.body();
-                binding.setMenu(menu);
-                setSeller(menu.seller_seq);
-            }
-
-            @Override
-            public void onFailure(Call<Menu> call, Throwable t) {
-            }
-        });
-
-
     }
 
     private void setSeller(int seller_seq) {
