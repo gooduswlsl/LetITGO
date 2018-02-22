@@ -184,6 +184,18 @@ router.post('/img_upload', function (req, res) {
 
 });
 
+//member/img_upload2
+router.post('/img_upload2', function (req, res) {
+  var form = new formidable.IncomingForm();
+
+  form.on('fileBegin', function (name, file){
+    file.path = './public/seller/' + file.name;
+  });
+
+    form.parse(req);
+
+});
+
 //member/sendNewSellerRegId
 router.post('/sendNewSellerRegId', function(req, res){
     var seq = req.query.seq;
@@ -213,6 +225,40 @@ router.post('/sendNewCustomerRegId', function(req, res){
          res.status(200).send('' + result.insertId);
        });
  });
+
+ //member/changeSellerInfo
+ router.post('/changeSellerInfo', function(req, res) {
+ 	  var seq = req.body.seq;
+ 	  var name = req.body.name;
+ 	  var site = req.body.site;
+ 	  var tel = req.body.tel;
+ 	  var address = req.body.address;
+ 	  var webpage = req.body.webpage;
+ 	  var img = req.body.img;
+ 	  var latitude = req.body.latitude;
+ 	  var longitude = req.body.longitude;
+
+ 	  var sql_update = "update seller set name = ?, site = ?, tel = ?, address = ?, webpage = ?, img = ?, latitude = ?, longitude = ? where seq = ? limit 1; ";
+
+   	db.get().query(sql_update, [name, site, tel, address, webpage, img, latitude, longitude, seq], function (err, result) {
+ 	     if (err) return res.sendStatus(400);
+
+ 	     res.status(200).send('' + result.insertId);
+ 	   });
+   });
+
+
+ //member/leaveSeller
+ router.post('/leaveSeller', function(req, res){
+     var seq = req.query.seq;
+
+     var sql_delete = "delete from seller where seq = ?; ";
+
+     db.get().query(sql_delete, seq, function(err, result){
+     	if (err) return res.sendStatus(400);
+          res.status(200).send('' + result.insertId);
+        });
+  });
 
 
 module.exports = router;
