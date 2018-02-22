@@ -1,11 +1,13 @@
 package com.sook.cs.letitgo.seller;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,6 +30,7 @@ public class seller_store_info extends Fragment implements OnMapReadyCallback {
     private MapView mapView = null;
     private TextView name, tel, site, address, webpage;
     private ImageView img;
+    private Button edit;
 
     Seller current_seller;
     private final String TAG = this.getClass().getSimpleName();
@@ -39,6 +42,7 @@ public class seller_store_info extends Fragment implements OnMapReadyCallback {
 
         current_seller = ((MyApp) getActivity().getApplicationContext()).getSeller();  //현재 seller정보 가져오기
 
+
         mapView = layout.findViewById(R.id.map);
         mapView.getMapAsync(this);
         name = layout.findViewById(R.id.store_name);
@@ -47,6 +51,7 @@ public class seller_store_info extends Fragment implements OnMapReadyCallback {
         address = layout.findViewById(R.id.store_address);
         webpage =  layout.findViewById(R.id.store_webpage);
         img = layout.findViewById(R.id.store_img);
+        edit = layout.findViewById(R.id.edit);
 
         return layout;
     }
@@ -107,13 +112,15 @@ public class seller_store_info extends Fragment implements OnMapReadyCallback {
         address.setText(current_seller.getAddress());
         webpage.setText(current_seller.getWebpage());
 
-        if (StringLib.getInstance().isBlank(current_seller.getImg())) {
-            Picasso.with(getActivity().getApplicationContext()).load(R.drawable.noimage).into(img);
-        } else {
-            Picasso.with(getActivity().getApplicationContext())
-                    .load(RemoteService.SELLER_IMG_URL + current_seller.getImg())
-                    .into(img);
-        }
+         showPicture();
+
+        edit.setOnClickListener(new View.OnClickListener() {  //매장정보 수정
+            @Override
+            public void onClick(final View view) {
+                Intent intent = new Intent( getContext(), seller_edit_profile.class );
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -129,6 +136,16 @@ public class seller_store_info extends Fragment implements OnMapReadyCallback {
         marker.position(new LatLng( current_seller.getLatitude(), current_seller.getLongitude()))
                 .title(current_seller.getName());
         googleMap.addMarker(marker).showInfoWindow();
+    }
+
+    private void showPicture(){
+        if (StringLib.getInstance().isBlank(current_seller.getImg())) {
+            Picasso.with(getActivity().getApplicationContext()).load(R.drawable.noimage).into(img);
+        } else {
+            Picasso.with(getActivity().getApplicationContext())
+                    .load(RemoteService.SELLER_IMG_URL + current_seller.getImg())
+                    .into(img);
+        }
     }
 
 }

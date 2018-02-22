@@ -1,5 +1,6 @@
 package com.sook.cs.letitgo.item;
 
+import com.google.android.gms.maps.model.LatLng;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")

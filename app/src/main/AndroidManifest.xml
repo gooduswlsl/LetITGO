@@ -119,6 +119,7 @@
             </intent-filter>
         </service>
         <activity android:name=".Please"></activity>
+        <activity android:name=".seller.seller_edit_profile"></activity>
     </application>
 
 </manifest>

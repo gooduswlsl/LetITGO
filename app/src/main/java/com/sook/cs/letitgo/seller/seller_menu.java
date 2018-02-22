@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sook.cs.letitgo.MyApp;
@@ -50,6 +51,7 @@ public class seller_menu extends Fragment {
     public ImageView image;
     public ImageView image2;
     private String add_img_name;
+    private TextView first_visit;
 
     private final String TAG = this.getClass().getSimpleName();
     Menu menu_item;
@@ -105,6 +107,7 @@ public class seller_menu extends Fragment {
         ListView listview;
         listview = (ListView) getView().findViewById(R.id.listview);
         listview.setAdapter(adapter);
+        first_visit = (TextView) getView().findViewById(R.id.first_visit);
         showMenuList(memberSeq);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -394,6 +397,7 @@ public class seller_menu extends Fragment {
                     if (list.size() == 0) {
 
                     } else {
+                        first_visit.setVisibility(View.GONE);
                         adapter.setItemList(list);
                     }
                 } else {

@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Marker;
 import com.sook.cs.letitgo.R;
-import com.sook.cs.letitgo.databinding.FragmentMapsBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -39,7 +38,6 @@ import retrofit2.Response;
  */
 
 public class customer_maps extends Fragment implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
-    FragmentMapsBinding binding;
     private MapView mapView;
     private LatLng latLng;
     private GoogleMap googleMap;

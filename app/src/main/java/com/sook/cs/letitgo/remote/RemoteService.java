@@ -96,6 +96,13 @@ public interface RemoteService {
     @Multipart
     @POST("/member/img_upload2")
     Call<ResponseBody> uploadSellerImg(@Part MultipartBody.Part file);
+
+    //판매자 회원정보 수정, 탈퇴
+    @POST("/member/changeSellerInfo")
+    Call<String> changeSellerInfo(@Body Seller seller);
+    @POST("/member/leaveSeller")
+    Call<String> leaveSeller(@Query("seq") int seq);
+
     //매장 메뉴 등록, 추가, 수정
     @POST("/menu/update")
     Call<String> insertMenuInfo(@Body Menu menu);

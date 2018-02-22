@@ -37,6 +37,7 @@ public class seller_order extends Fragment {
     Seller current_seller;
     private final String TAG = this.getClass().getSimpleName();
     Order_ListViewAdapter adapter;
+    private TextView no_order;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,6 +60,7 @@ public class seller_order extends Fragment {
         swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipeRefreshLo);
         listview = (ListView) getView().findViewById(R.id.listview);
         listview.setAdapter(adapter);
+        no_order = getView().findViewById(R.id.no_order);
         showOrderList(current_seller.getSeq());
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -153,6 +155,7 @@ public class seller_order extends Fragment {
                     if (list.size() == 0) {
 
                     } else {
+                        no_order.setVisibility(View.GONE);
                         adapter.setItemList(list);
                     }
                 } else {
