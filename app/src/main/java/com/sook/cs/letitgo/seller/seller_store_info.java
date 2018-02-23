@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,7 +30,7 @@ public class seller_store_info extends Fragment implements OnMapReadyCallback {
     private MapView mapView = null;
     private TextView name, tel, site, address, webpage;
     private ImageView img;
-    private Button edit;
+    private ImageView edit;
 
     Seller current_seller;
     private final String TAG = this.getClass().getSimpleName();
@@ -106,6 +106,7 @@ public class seller_store_info extends Fragment implements OnMapReadyCallback {
         if (mapView != null) {
             mapView.onCreate(savedInstanceState);
         }
+        Log.d(TAG,current_seller.toString());
         name.setText(current_seller.getName());
         site.setText(current_seller.getName()+" "+current_seller.getSite());
         tel.setText(current_seller.getTel());

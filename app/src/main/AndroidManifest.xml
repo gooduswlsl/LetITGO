@@ -61,7 +61,8 @@
         </activity>
         <activity android:name=".shared.ProfileActivity" />
         <activity android:name=".shared.ProfileIconActivity" />
-        <activity android:name=".shared.IndexActivity" />
+        <activity android:name=".shared.IndexActivity"
+            android:theme="@style/Toolbar"/>
         <activity android:name=".customer.MainActivity" />
         <activity
             android:name=".customer.customer_main"
@@ -86,7 +87,8 @@
         <activity
             android:name=".shared.Login2_1_store_info"
             android:label="매장 정보" />
-        <activity android:name=".shared.GroupActivity" />
+        <activity android:name=".shared.GroupActivity"
+                  android:theme="@style/Toolbar"/>
 
 
         <activity

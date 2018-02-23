@@ -16,6 +16,7 @@ public class Seller implements Serializable {
     public double latitude;
     public double longitude;
     public String regId;
+    public int type;
 
     public int getSeq() {
         return seq;
@@ -92,6 +93,8 @@ public class Seller implements Serializable {
                 ", webpage='" + webpage + '\'' +
                 ", latitude='" + latitude + '\'' +
                 ", longitude='" + longitude + '\'' +
+                ", regId='" + regId + '\'' +
+                ", type='" + type + '\'' +
                 '}';
     }
 }
