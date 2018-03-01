@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 
 import com.sook.cs.letitgo.item.Menu;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.databinding.DialogMenuBinding;
+import com.sook.cs.letitgo.item.Order;
 import com.sook.cs.letitgo.item.Seller;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
@@ -24,6 +26,7 @@ public class customer_dialog_menu extends Activity {
     int menu_seq, position, num;
     Menu menu;
     MyDBHelpers helper;
+    MyDBHelpers_cart helperCart;
 
     public customer_dialog_menu() {
     }
@@ -100,4 +103,21 @@ public class customer_dialog_menu extends Activity {
         finish();
     }
 
+    public void clickOK(View v){
+        num = Integer.parseInt(binding.tvNum.getText().toString());
+        helperCart = new MyDBHelpers_cart(this, "cart.db", null, 1);
+        if(helperCart.isInCart(menu_seq)){
+            Log.d("menudialog", "ok");
+            helperCart.updateCart(menu_seq, num);
+        }else{
+            Log.d("menudialog", "no");
+            helperCart.insertCart(menu_seq, menu.getSeller_seq(), num);
+        }
+
+        Intent intent = new Intent(getApplicationContext(), customer_dialog_cart.class);
+        intent.putExtra("num",num);
+        intent.putExtra("menu", menu);
+        startActivity(intent);
+        finish();
+    }
 }

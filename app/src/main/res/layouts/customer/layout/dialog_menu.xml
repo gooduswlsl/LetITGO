@@ -215,7 +215,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:gravity="center"
-                    android:text="0"
+                    android:text="1"
                     android:textSize="15sp" />
 
                 <ImageButton
@@ -237,6 +237,7 @@
                 android:layout_marginTop="30dp"
                 android:layout_weight="1"
                 android:background="#95c85b"
+                android:onClick="clickOK"
                 android:text="확 인"
                 android:textColor="@color/text_color_white"
                 android:textSize="13sp" />

@@ -3,6 +3,7 @@ package com.sook.cs.letitgo.customer;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 
+import com.sook.cs.letitgo.databinding.ItemCartBinding;
 import com.sook.cs.letitgo.databinding.ItemMenuBinding;
 import com.sook.cs.letitgo.databinding.ItemMenuImgBinding;
 import com.sook.cs.letitgo.databinding.ItemSellerBinding;
@@ -17,6 +18,7 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
     ItemMenuBinding mbinding;
     ItemMenuImgBinding mimgBinding;
     ItemOrderBinding oBinding;
+    ItemCartBinding cBinding;
 
     public MyViewHolder(ItemSellerBinding sbinding) {
         super(sbinding.getRoot());
@@ -58,5 +60,12 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
         this.oBinding = oBinding;
         oBinding = DataBindingUtil.bind(itemView);
         oBinding.executePendingBindings();
+    }
+
+    public MyViewHolder(ItemCartBinding cBinding) {
+        super(cBinding.getRoot());
+        this.cBinding = cBinding;
+        cBinding = DataBindingUtil.bind(itemView);
+        cBinding.executePendingBindings();
     }
 }
