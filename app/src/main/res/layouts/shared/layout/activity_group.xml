@@ -2,23 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="#AED581"
+    android:gravity="center">
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_seller"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:scaleType="centerCrop"
         android:onClick="buttonClick"
-        android:tag="0"
-        android:text="Seller" />
+        android:layout_marginRight="20dp"
+        android:background="@drawable/btn_seller"
+        android:tag="0" />
 
     <Button
         android:id="@+id/btn_customer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         android:onClick="buttonClick"
-        android:tag="1"
-        android:text="Customer" />
-
-
+        android:background="@drawable/btn_customer"
+        android:tag="1" />
 </LinearLayout>

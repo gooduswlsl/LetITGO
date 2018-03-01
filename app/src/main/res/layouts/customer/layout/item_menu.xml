@@ -9,25 +9,33 @@
         <variable
             name="menu"
             type="com.sook.cs.letitgo.item.Menu" />
+
+        <variable
+            name="seller"
+            type="com.sook.cs.letitgo.item.Seller" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
         android:padding="10dp">
 
         <ImageView
             android:id="@+id/mImg"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:scaleType="fitCenter"
             app:menuImg="@{menu.getmImgUrl}" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp">
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/mImg">
 
             <TextView
                 android:id="@+id/tv_mName"
@@ -35,25 +43,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:text="@{menu.getmName}"
-                android:textSize="13sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 tools:text="메뉴명" />
 
-            <TextView
-                android:id="@+id/tv_mPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/tv_mName"
-                android:text="@{Integer.toString(menu.getmPrice)}"
-                android:textStyle="bold"
-                tools:text="가격" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@id/tv_mPrice"
-                android:text="원" />
 
             <TextView
                 android:id="@+id/tv_sName"
@@ -61,7 +54,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_mName"
                 android:layout_marginTop="10dp"
-                android:text="@{menu.getsName}"
+                android:text="@{seller.getName}"
+                android:textSize="12sp"
+                android:textStyle="bold"
                 tools:text="가게" />
 
             <TextView
@@ -69,11 +64,40 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_mName"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/tv_sName"
-                android:text="@{menu.getsSite}"
+                android:text="@{seller.getSite}"
+                android:textSize="12sp"
                 tools:text="지점" />
         </RelativeLayout>
-    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/tv_mPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{Integer.toString(menu.getmPrice)}"
+                android:textColor="#49a54e"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                tools:text="가격" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="원"
+                android:textColor="#49a54e"
+                android:textSize="13sp" />
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
 </layout>

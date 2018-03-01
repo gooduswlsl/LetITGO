@@ -69,5 +69,4 @@ public class Adapter_seller_img extends RecyclerView.Adapter<MyViewHolder> {
         Picasso.with(imageView.getContext()).load(RemoteService.SELLER_IMG_URL + fileName).into(imageView);
     }
 
-
 }

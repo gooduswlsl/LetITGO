@@ -19,24 +19,32 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_likedStore"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@android:color/transparent"
                 android:onClick="@{fragment::likedClick}"
+                android:scaleType="fitCenter"
+                android:src="@drawable/tab_seller"
                 android:tag="1"
                 android:text="매장" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_likedMenu"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@android:color/transparent"
                 android:onClick="@{fragment::likedClick}"
+                android:scaleType="fitCenter"
+                android:src="@drawable/tab_menux"
                 android:tag="2"
                 android:text="메뉴" />
 
@@ -46,7 +54,7 @@
             android:id="@+id/fragment_container2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="5" />
+            android:layout_weight="8" />
 
     </LinearLayout>
 </layout>

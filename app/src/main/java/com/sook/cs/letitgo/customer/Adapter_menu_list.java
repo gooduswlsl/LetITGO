@@ -15,10 +15,16 @@ import android.widget.ImageView;
 import com.sook.cs.letitgo.item.Menu;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.databinding.ItemMenuBinding;
+import com.sook.cs.letitgo.item.Seller;
 import com.sook.cs.letitgo.remote.RemoteService;
+import com.sook.cs.letitgo.remote.ServiceGenerator;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Adapter_menu_list extends RecyclerView.Adapter<MyViewHolder> {
     ViewDataBinding binding;
@@ -51,7 +57,10 @@ public class Adapter_menu_list extends RecyclerView.Adapter<MyViewHolder> {
                 ((Activity) (mContext)).startActivityForResult(it, REQUEST_MENU);
             }
         });
+
+        setSeller(holder, menu.getSeller_seq());
     }
+
 
     public void addMenuList(ArrayList<Menu> menuArrayList) {
         this.menuArrayList.addAll(menuArrayList);
@@ -62,6 +71,22 @@ public class Adapter_menu_list extends RecyclerView.Adapter<MyViewHolder> {
     @Override
     public int getItemCount() {
         return menuArrayList.size();
+    }
+
+    public void setSeller(final MyViewHolder holder, int seller_seq) {
+        RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
+        Call<Seller> call = remoteService.selectSeller(seller_seq);
+        call.enqueue(new Callback<Seller>() {
+            @Override
+            public void onResponse(Call<Seller> call, Response<Seller> response) {
+                Seller seller = response.body();
+                holder.mbinding.setSeller(seller);
+            }
+
+            @Override
+            public void onFailure(Call<Seller> call, Throwable t) {
+            }
+        });
     }
 
     @BindingAdapter({"bind:menuImg"})

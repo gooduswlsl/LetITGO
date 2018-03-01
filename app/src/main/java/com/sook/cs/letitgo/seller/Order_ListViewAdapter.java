@@ -60,7 +60,7 @@ public class Order_ListViewAdapter extends BaseAdapter {
         }
 
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
-        final TextView textView1 = (TextView) convertView.findViewById(R.id.textView1);
+        final TextView textView1 = (TextView) convertView.findViewById(R.id.text1);
         final TextView textView2 = (TextView) convertView.findViewById(R.id.textView2);
         final TextView textView3 = (TextView) convertView.findViewById(R.id.textView3);
         final Button btn_accept = (Button) convertView.findViewById(R.id.btn_accept);

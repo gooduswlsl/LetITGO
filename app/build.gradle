@@ -5,8 +5,9 @@ android {
     buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "com.sook.cs.letitgo"
-        minSdkVersion 15
+        minSdkVersion 21
         targetSdkVersion 27
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -19,6 +20,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 
     dataBinding {
         enabled = true;

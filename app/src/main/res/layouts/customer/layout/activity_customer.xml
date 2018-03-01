@@ -20,57 +20,74 @@
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="5" />
+            android:layout_weight="7" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:gravity="bottom">
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_store"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@android:color/transparent"
                 android:onClick="@{activity::menuClick}"
-                android:tag="1"
-                android:text="매장검색" />
+                android:padding="13dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_seller"
+                android:tag="1" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_menu"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@android:color/transparent"
                 android:onClick="@{activity::menuClick}"
-                android:tag="2"
-                android:text="메뉴검색" />
+                android:padding="13dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_menu"
+                android:tag="2" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_map"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@android:color/transparent"
                 android:onClick="@{activity::menuClick}"
-                android:tag="3"
-                android:text="지도" />
+                android:padding="13dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_map"
+                android:tag="3" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_liked"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@android:color/transparent"
                 android:onClick="@{activity::menuClick}"
-                android:tag="4"
-                android:text="즐겨찾기" />
+                android:padding="13dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_liked"
+                android:tag="4" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_my"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@android:color/transparent"
                 android:onClick="@{activity::menuClick}"
-                android:tag="5"
-                android:text="마이        페이지" />
+                android:padding="13dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_my"
+                android:tag="5" />
 
         </LinearLayout>
     </LinearLayout>

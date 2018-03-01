@@ -22,6 +22,7 @@
             android:id="@+id/img_mImg"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:scaleType="fitCenter"
             app:menuImg="@{menu.getmImgUrl}" />
 
         <TextView

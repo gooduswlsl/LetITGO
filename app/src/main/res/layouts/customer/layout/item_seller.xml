@@ -14,6 +14,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="10dp">
@@ -33,8 +35,9 @@
                 android:id="@+id/tv_sName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="5dp"
                 android:text="@{seller.getName}"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 tools:text="가게명" />
 
@@ -44,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/tv_sName"
                 android:text="@{seller.getSite}"
+                android:textSize="13sp"
                 tools:text="지점명" />
 
             <TextView
@@ -53,6 +57,7 @@
                 android:layout_below="@id/tv_sName"
                 android:layout_marginTop="10dp"
                 android:text="@{seller.getAddress}"
+                android:textSize="12sp"
                 tools:text="위치" />
 
 

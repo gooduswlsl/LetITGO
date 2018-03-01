@@ -32,6 +32,7 @@ public class customer_liked extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_liked, container, false);
         binding.setFragment(this);
         callFragment(1);
+        setButton(1);
         return binding.getRoot();
     }
 
@@ -48,6 +49,7 @@ public class customer_liked extends Fragment {
     public void likedClick(View v) {
         int num = Integer.parseInt(v.getTag().toString());
         callFragment(num);
+        setButton(num);
     }
 
     private void callFragment(int fragment_no) {
@@ -67,5 +69,16 @@ public class customer_liked extends Fragment {
         }
     }
 
-
+    private void setButton(int fragment_no){
+        binding.btnLikedStore.setImageResource(R.drawable.tab_sellerx);
+        binding.btnLikedMenu.setImageResource(R.drawable.tab_menux);
+        switch(fragment_no){
+            case 1:
+                binding.btnLikedStore.setImageResource(R.drawable.tab_seller);
+                break;
+            case 2:
+                binding.btnLikedMenu.setImageResource(R.drawable.tab_menu);
+                break;
+        }
+    }
 }

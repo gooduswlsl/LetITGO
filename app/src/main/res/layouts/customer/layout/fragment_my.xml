@@ -1,193 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_default"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.sook.cs.letitgo.customer.customer_liked">
 
-    <RelativeLayout
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/spacing_large"
+    <data>
+
+        <variable
+            name="fragment"
+            type="com.sook.cs.letitgo.customer.customer_my" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/profile_icon"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
-            android:layout_gravity="top"
-            android:src="@drawable/ic_person"
-            android:clickable="false"
-            app:civ_border_color="#AAAAAA"
-            app:civ_border_width="2dp" />
 
-        <ImageView
-            android:id="@+id/profile_icon_change"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="4dp"
-            android:layout_marginRight="4dp"
-            android:background="@drawable/button_circle"
-            android:elevation="4dp"
-            android:padding="8dp"
-            android:visibility="gone"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_camera" />
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:padding="13dp">
-
-        <TextView
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/spacing_medium"
-            android:gravity="start"
-            android:text="@string/profile_name"
-            android:textSize="@dimen/text_size_small2"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/profile_name"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:gravity="start"
-            android:enabled="false"
-            android:maxLength="7"
-            android:maxLines="1"
-            android:textSize="@dimen/text_size_small2" />
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="60dp"
-        android:background="#55AAAAAA" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:padding="13dp">
-
-        <TextView
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/spacing_medium"
-            android:gravity="start"
-            android:text="@string/profile_sextype"
-            android:textSize="@dimen/text_size_small2"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/profile_sextype"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:enabled="false"
-            android:gravity="start"
-            android:textSize="@dimen/text_size_small2" />
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="60dp"
-        android:background="#55AAAAAA" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:padding="13dp">
-
-        <TextView
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/spacing_medium"
-            android:gravity="start"
-            android:text="@string/profile_birth"
-            android:textSize="@dimen/text_size_small2"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/profile_birth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:enabled="false"
-            android:gravity="start"
-            android:textSize="@dimen/text_size_small2" />
-
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="60dp"
-        android:background="#55AAAAAA" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:padding="13dp">
-
-        <TextView
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/spacing_medium"
-            android:gravity="start"
-            android:text="@string/profile_phone"
-            android:textSize="@dimen/text_size_small2"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/profile_phone"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@android:color/white"
-            android:enabled="false"
-            android:gravity="start"
-            android:textSize="@dimen/text_size_small2" />
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <ImageButton
+                android:id="@+id/btn_myOrder"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:onClick="@{fragment::myClick}"
+                android:scaleType="fitCenter"
+                android:src="@drawable/tab_order"
+                android:tag="1"
+                android:text="매장" />
+
+            <ImageButton
+                android:id="@+id/btn_myInfo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:onClick="@{fragment::myClick}"
+                android:scaleType="fitCenter"
+                android:src="@drawable/tab_infox"
+                android:tag="2"
+                android:text="메뉴" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/fragment_container2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8" />
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/changeProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:text="개인정보 수정" />
-    <Button
-        android:id="@+id/changeProfile2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:visibility="gone"
-        android:text="저장하기" />
-
-    <TextView
-        android:id="@+id/leaveMember"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="혹시 탈퇴하고 싶으신가요?"
-        android:textSize="12dp"
-        android:layout_marginTop="3dp"
-        android:layout_gravity="center_horizontal"/>
-</LinearLayout>
+</layout>

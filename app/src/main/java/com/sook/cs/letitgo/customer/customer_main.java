@@ -6,9 +6,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sook.cs.letitgo.R;
@@ -22,6 +21,7 @@ import com.sook.cs.letitgo.databinding.ActivityCustomerBinding;
 public class customer_main extends AppCompatActivity {
     ActivityCustomerBinding binding;
     android.support.v4.app.Fragment fragment;
+    TextView title;
     int REQUEST_SELLER = 0, REQUEST_MENU = 1, REQUEST_PROFILE = 100;
 
 
@@ -30,15 +30,15 @@ public class customer_main extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_customer);
         binding.setActivity(this);
+
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        ab.setCustomView(R.layout.actionbar_cart);
+        title = ab.getCustomView().findViewById(R.id.ab_title);
+
         callFragment(1);
+        setImages(1);
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.actionbar_actions, menu);
-        return true;
-    }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -51,10 +51,8 @@ public class customer_main extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public void cartClick(View v) {
         Toast.makeText(getApplicationContext(), "CART", Toast.LENGTH_SHORT).show();
-        return true;
     }
 
     public void menuClick(View v) {
@@ -101,32 +99,31 @@ public class customer_main extends AppCompatActivity {
     }
 
     private void setImages(int fragment_no) {
-        ActionBar ab = getSupportActionBar();
-        binding.btnStore.setText("매장검색");
-        binding.btnMenu.setText("메뉴검색");
-        binding.btnMap.setText("지도");
-        binding.btnLiked.setText("즐겨찾기");
-        binding.btnMy.setText("마이");
+        binding.btnStore.setImageResource(R.drawable.ic_seller);
+        binding.btnMenu.setImageResource(R.drawable.ic_menu);
+        binding.btnMap.setImageResource(R.drawable.ic_map);
+        binding.btnLiked.setImageResource(R.drawable.ic_liked);
+        binding.btnMy.setImageResource(R.drawable.ic_my);
         switch (fragment_no) {
             case 1:
-                binding.btnStore.setText("이것");
-                ab.setTitle("매장 검색");
+                binding.btnStore.setImageResource(R.drawable.ic_seller2);
+                title.setText("매장 검색");
                 break;
             case 2:
-                binding.btnMenu.setText("이것");
-                ab.setTitle("메뉴 검색");
+                binding.btnMenu.setImageResource(R.drawable.ic_menu2);
+                title.setText("메뉴 검색");
                 break;
             case 3:
-                binding.btnMap.setText("이것");
-                ab.setTitle("지도");
+                binding.btnMap.setImageResource(R.drawable.ic_map2);
+                title.setText("지도");
                 break;
             case 4:
-                binding.btnLiked.setText("이것");
-                ab.setTitle("즐겨찾기");
+                binding.btnLiked.setImageResource(R.drawable.ic_liked2);
+                title.setText("즐겨찾기");
                 break;
             case 5:
-                binding.btnMy.setText("이것");
-                ab.setTitle("마이페이지");
+                binding.btnMy.setImageResource(R.drawable.ic_my2);
+                title.setText("마이페이지");
                 break;
         }
     }

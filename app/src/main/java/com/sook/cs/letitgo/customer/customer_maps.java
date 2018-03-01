@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,7 +15,6 @@ import android.view.ViewGroup;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Marker;
 import com.sook.cs.letitgo.R;
-import com.sook.cs.letitgo.databinding.FragmentMapsBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -39,7 +39,6 @@ import retrofit2.Response;
  */
 
 public class customer_maps extends Fragment implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
-    FragmentMapsBinding binding;
     private MapView mapView;
     private LatLng latLng;
     private GoogleMap googleMap;
@@ -62,7 +61,7 @@ public class customer_maps extends Fragment implements OnMapReadyCallback, Googl
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_maps, container, false);
+        return inflater.inflate(R.layout.fragment_map, container, false);
     }
 
     @Override
@@ -77,6 +76,7 @@ public class customer_maps extends Fragment implements OnMapReadyCallback, Googl
         recyclerView = getView().findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapterSellerMap);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         listInfo();
     }
 

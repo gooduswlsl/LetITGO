@@ -24,12 +24,11 @@ import retrofit2.http.Query;
  * 서버에 호출할 메소드를 선언하는 인터페이스
  */
 public interface RemoteService {
-    String BASE_URL = "http://192.168.10.85:3000";  //마이크임팩트
-    //String BASE_URL = "http://192.168.21.168:3000";  //학교
-    //String BASE_URL = "http://192.168.30.77:3000";  //집
-   // String BASE_URL = "http://192.168.0.24:3000";  //죽전
+    //String BASE_URL = "http://192.168.10.85:3000";  //마이크임팩트
+    String BASE_URL = "http://192.168.123.120:3000";  //학교
+    //String BASE_URL = "http://221.147.34.236:3000";  //집
+    // String BASE_URL = "http://192.168.0.24:3000";  //죽전
     //String BASE_URL = "http://192.168.53.81:3000";  //예원학교
-
 
 
     String CUSTOMER_IMG_URL = BASE_URL + "/customer/";
@@ -44,8 +43,10 @@ public interface RemoteService {
     //소비자
     @POST("/member/customer")
     Call<String> insertCustomerInfo(@Body Customer customer);
+
     @GET("/member/customer/{customer_seq}")
     Call<Customer> selectCustomerInfo(@Path("customer_seq") int seq);
+
     @Multipart
     @POST("/member/img_upload")
     Call<ResponseBody> uploadCustomerImg(@Part MultipartBody.Part file);
@@ -53,45 +54,53 @@ public interface RemoteService {
     //소비자 회원정보 수정, 탈퇴
     @POST("/member/changeProfile")
     Call<String> changeCustomerInfo(@Body Customer customer);
+
     @POST("/member/leaveMember")
     Call<String> leaveMember(@Query("seq") int seq);
 
     //매장정보얻어오기
     @GET("/menu/sellerList")
     Call<ArrayList<Seller>> listSellerInfo();
+
     @GET("/menu/sellerList/{sSeq}")
     Call<Seller> selectSeller(@Path("sSeq") int sSeq);
+
     @GET("/menu/sellerMap")
     Call<ArrayList<Seller>> listSellerMap(@Query("lat") double lat, @Query("lng") double lng);
 
     //메뉴정보얻어오기
     @GET("/menu/menuList")
     Call<ArrayList<Menu>> listMenuInfo();
+
     @GET("/menu/menuList/{mSeq}")
     Call<Menu> selectMenu(@Path("mSeq") int mSeq);
 
     //검색
     @GET("/menu/searchSeller")
     Call<ArrayList<Seller>> searchSeller(@Query("key") String key);
+
     @GET("/menu/searchMenu")
     Call<ArrayList<Menu>> searchMenu(@Query("key") String key);
 
     //즐겨찾기
     @GET("/menu/likedSeller")
     Call<ArrayList<Seller>> listLikedSeller(@Query("sSeqList") String sSeqList);
+
     @GET("/menu/likedMenu")
     Call<ArrayList<Menu>> listLikedMenu(@Query("mSeqList") String mSeqList);
-
 
 
     //판매자
     @POST("/member/seller")
     Call<String> insertSellerInfo(@Body Seller seller);
+
     @GET("/member/seller/{seller_seq}")
     Call<Seller> selectSellerInfo(@Path("seller_seq") int seq);
+
     @Multipart
     @POST("/member/img_upload2")
     Call<ResponseBody> uploadSellerImg(@Part MultipartBody.Part file);
+
     //매장 메뉴 등록, 추가, 수정
     @POST("/menu/update")
     Call<String> insertMenuInfo(@Body Menu menu);
@@ -120,6 +129,8 @@ public interface RemoteService {
     @GET("/order/getMonthSales")
     Call<ArrayList<Sales>> getMonthSales(@Query("seller_seq") int sellerSeq);
 
+    @GET("/order/myList")
+    Call<ArrayList<Order>> listMyOrder(@Query("cust_seq") int cust_seq, @Query("period") String period);
 
 
 }

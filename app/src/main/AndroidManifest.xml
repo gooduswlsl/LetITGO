@@ -69,7 +69,6 @@
         <activity
             android:name=".customer.customer_dialog_menu"
             android:theme="@android:style/Theme.Holo.Light.Dialog" />
-        "
 
 
         <activity android:name=".seller.Login" />

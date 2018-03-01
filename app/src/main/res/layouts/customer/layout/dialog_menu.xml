@@ -17,206 +17,229 @@
 
     <LinearLayout
         android:layout_width="300dp"
-        android:layout_height="440dp"
+        android:layout_height="450dp"
+        android:background="@android:color/transparent"
         android:orientation="vertical"
-        android:padding="10dp">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true">
-
-                <TextView
-                    android:id="@+id/tv_sName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{seller.getName}"
-                    android:textSize="16dp"
-                    android:textStyle="bold"
-                    tools:text="가게명" />
-
-                <TextView
-                    android:id="@+id/tv_sSite"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_sName"
-                    android:layout_centerHorizontal="true"
-                    android:text="@{seller.getSite}"
-                    android:textSize="13dp"
-                    tools:text="지점명" />
-            </RelativeLayout>
-
-
-            <ImageButton
-                android:id="@+id/btn_close"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_weight="1"
-                android:background="#00000000"
-                android:onClick="clickX"
-                android:padding="5dp"
-                android:src="@drawable/cancel" />
-
-
-        </RelativeLayout>
+        android:padding="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="20dp"
-            android:layout_weight="3"
-            android:orientation="horizontal"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp">
+            android:layout_height="match_parent"
+            android:background="@drawable/dialog_round"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-            <ImageView
-                android:id="@+id/img_mImg"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                app:menuImg="@{menu.getmImgUrl}" />
 
             <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="3"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
 
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true">
+
+                    <TextView
+                        android:id="@+id/tv_sName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@{seller.getName}"
+                        android:textSize="15dp"
+                        android:textStyle="bold"
+                        tools:text="가게명" />
+
+                    <TextView
+                        android:id="@+id/tv_sSite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_sName"
+                        android:gravity="center"
+                        android:text="@{seller.getSite}"
+                        android:textSize="13dp"
+                        tools:text="지점명" />
+                </RelativeLayout>
+
+
+                <ImageButton
+                    android:id="@+id/btn_close"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="1"
+                    android:background="#00000000"
+                    android:onClick="clickX"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/cancel" />
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="3"
+                android:orientation="horizontal"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp">
 
                 <ImageView
-                    android:id="@+id/img_star"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="-6dp"
-                    android:onClick="clickStar"
-                    android:src="@drawable/star_empty" />
+                    android:id="@+id/img_mImg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:scaleType="fitCenter"
+                    app:menuImg="@{menu.getmImgUrl}" />
 
-
-                <TextView
-                    android:id="@+id/tv_mName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:text="@{menu.getmName}"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    tools:text="메뉴명" />
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_mName"
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="3"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginRight="10dp"
-                        android:src="@drawable/won" />
 
                     <TextView
-                        android:id="@+id/tv_mPrice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="5dp"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="10dp"
-                        android:text="@{Integer.toString(menu.getmPrice)}"
-                        tools:text="가격" />
-
-                    <TextView
+                        android:id="@+id/tv_mName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="원" />
-                </LinearLayout>
+                        android:layout_marginBottom="15dp"
+                        android:text="@{menu.getmName}"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        tools:text="메뉴명" />
 
-            </RelativeLayout>
-        </LinearLayout>
+                    <ImageView
+                        android:id="@+id/img_star"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="-3dp"
+                        android:onClick="clickStar"
+                        android:src="@drawable/star_empty" />
 
-        <ImageView
-            android:id="@+id/imageView10"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:src="@drawable/divider" />
 
-        <TextView
-            android:id="@+id/textView19"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.5"
-            android:gravity="center"
-            android:paddingBottom="15dp"
-            android:text="@{menu.getmDetail}"
-            tools:text="디테일" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_mName"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingLeft="55dp"
-            android:paddingRight="55dp">
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_marginRight="10dp"
+                            android:src="@drawable/won_green" />
+
+                        <TextView
+                            android:id="@+id/tv_mPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="5dp"
+                            android:gravity="center_vertical"
+                            android:text="@{Integer.toString(menu.getmPrice)}"
+                            android:textColor="#49a54e"
+                            android:textSize="14sp"
+                            tools:text="가격" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="원"
+                            android:textColor="#49a54e"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView10"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:src="@drawable/divider" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:id="@+id/textView19"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.5"
                 android:gravity="center"
-                android:text="수량" />
+                android:paddingBottom="15dp"
+                android:text="@{menu.getmDetail}"
+                android:textSize="13sp"
+                tools:text="디테일" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.5"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="55dp"
+                android:paddingRight="55dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="수량"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <ImageButton
+                    android:id="@+id/btn_minus"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/btn_minus"
+                    android:onClick="clickMinus" />
+
+                <TextView
+                    android:id="@+id/tv_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textSize="15sp" />
+
+                <ImageButton
+                    android:id="@+id/btn_Plus"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/btn_plus"
+                    android:onClick="clickPlus" />
+
+            </LinearLayout>
 
             <Button
-                android:id="@+id/btn_minus"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:onClick="clickMinus"
-                android:text="ㅡ" />
-
-            <TextView
-                android:id="@+id/tv_num"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:gravity="center"
-                android:text="0" />
-
-            <Button
-                android:id="@+id/btn_Plus"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:onClick="clickPlus"
-                android:text="+" />
-
+                android:id="@+id/button12"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_weight="1"
+                android:background="#95c85b"
+                android:text="확 인"
+                android:textColor="@color/text_color_white"
+                android:textSize="13sp" />
         </LinearLayout>
-
-        <Button
-            android:id="@+id/button12"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="30dp"
-            android:layout_weight="1"
-            android:text="확 인" />
-
     </LinearLayout>
 </layout>

@@ -102,6 +102,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:text="@{seller.getAddress}"
+                    android:autoLink="map"
                     tools:text="매장 주소" />
             </LinearLayout>
 
@@ -119,6 +120,7 @@
                     android:id="@+id/tv_tel"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:autoLink="phone"
                     android:gravity="center_vertical"
                     android:text="@{seller.getTel}"
                     tools:text="매장 전화번호" />
@@ -139,6 +141,7 @@
                     android:id="@+id/tv_webpage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:autoLink="web"
                     android:gravity="center_vertical"
                     android:text="@{seller.getWebpage}"
                     tools:text="매장 홈페이지" />
