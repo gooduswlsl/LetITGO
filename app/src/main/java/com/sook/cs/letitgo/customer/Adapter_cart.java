@@ -1,20 +1,22 @@
 package com.sook.cs.letitgo.customer;
 
+import android.app.Activity;
 import android.content.Context;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.databinding.ItemCartBinding;
-import com.sook.cs.letitgo.databinding.ItemOrderBinding;
 import com.sook.cs.letitgo.item.Menu;
 import com.sook.cs.letitgo.item.Order;
 import com.sook.cs.letitgo.item.Seller;
@@ -34,6 +36,7 @@ public class Adapter_cart extends RecyclerView.Adapter<MyViewHolder> {
     private Menu menu;
     private Seller seller;
     private Context mContext;
+    private DBHelperCart cartHelper;
 
     public Adapter_cart(Context mContext, ArrayList<Order> cartArrayList) {
         this.cartArrayList = cartArrayList;
@@ -44,21 +47,76 @@ public class Adapter_cart extends RecyclerView.Adapter<MyViewHolder> {
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.item_cart, parent, false);
+        cartHelper = new DBHelperCart(mContext, "cart.db", null, 1);
         return new MyViewHolder((ItemCartBinding) binding);
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position) {          // 항목을 뷰홀더에 바인딩
-
+    public void onBindViewHolder(MyViewHolder holder, int position) {
         Order order = cartArrayList.get(position);
         holder.cBinding.setOrder(order);
-        setMenu(holder, order.getMenu_seq());
-        setSeller(holder, order.getSeller_seq());
+        int mSeq = order.getMenu_seq();
+        setMenu(holder, mSeq);
+        setSeller(holder, mSeq);
+        setOnClick(holder, position);
     }
 
-    public void addCartList(ArrayList<Order> cartArrayList) {
-        this.cartArrayList.addAll(cartArrayList);
-        notifyDataSetChanged();
+    private void setOnClick(final MyViewHolder holder, final int position) {
+
+        View.OnClickListener numClick = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int mSeq = holder.cBinding.getMenu().getmSeq();
+                int num = Integer.parseInt(holder.cBinding.tvNum.getText().toString());
+                if (v.getId() == R.id.btn_plus)
+                    num++;
+                else if (num > 1)
+                    num--;
+                holder.cBinding.tvNum.setText(String.valueOf(num));
+                holder.cBinding.tvPrice.setText(String.valueOf(holder.cBinding.getMenu().getmPrice() * num));
+                cartHelper.updateNum(mSeq, num);
+            }
+        };
+
+        View.OnClickListener cancleClick = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cartHelper.deleteCart(holder.cBinding.getMenu().getmSeq());
+                cartArrayList.remove(position);
+                notifyDataSetChanged();
+                if(cartArrayList.size()==0){
+                    ((customer_cart)mContext).empty();
+                }
+            }
+        };
+
+        View.OnKeyListener msgEdit = new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                int mSeq = holder.cBinding.getMenu().getmSeq();
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    cartHelper.updateMsg(mSeq, holder.cBinding.editMsg.getText().toString());
+                    return true;
+                }
+                return false;
+            }
+        };
+
+        View.OnClickListener timeClick = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int mSeq = holder.cBinding.getMenu().getmSeq();
+                customer_dialog_time timePicker = new customer_dialog_time();
+                timePicker.setValues(holder, cartHelper, mSeq);
+                timePicker.show(((Activity) mContext).getFragmentManager(), "time");
+            }
+        };
+
+        holder.cBinding.editMsg.setOnKeyListener(msgEdit);
+        holder.cBinding.btnPlus.setOnClickListener(numClick);
+        holder.cBinding.btnMinus.setOnClickListener(numClick);
+        holder.cBinding.btnCancel.setOnClickListener(cancleClick);
+        holder.cBinding.btnTime.setOnClickListener(timeClick);
     }
 
     public void setMenu(final MyViewHolder holder, int mSeq) {

@@ -3,26 +3,39 @@ var formidable = require('formidable');
 var db = require('../db')
 var router = express.Router();
 
+//order/myList
+router.get('/myList', function(req, res, next) {
+	var cust_seq = req.query.cust_seq;
+    var period = req.query.period;
+    
+    var sql =  "select * from `order` where cust_seq = ? and time_order > DATE_ADD(now(), INTERVAL "+period+")";   
+  
+    db.get().query(sql, cust_seq, function(err, rows) {
+
+		if (err)
+			console.log(err);
+        else{
+            console.log(JSON.stringify(rows));
+            res.status(200).json(rows);
+          }
+    });
+});
+
+
 //order/list
 router.get('/list', function(req, res, next) {
 	var seller_seq = req.query.seller_seq;
 
-	console.log("seller_seq는 " + seller_seq);
 
 	if (!seller_seq) {
 		return res.sendStatus(400);
 	}
 
 	var sql = "select * from `order` where seller_seq = ?;";
-
-	console.log("sql : " + sql);
-
 	db.get().query(sql, seller_seq, function(err, rows) {
 
 		if (err)
 			console.log(err);
-		console.log("rows : " + JSON.stringify(rows));
-		console.log("row.length : " + rows.length);
 		if (rows.length > 0) {
 			res.status(200).json(rows);
 		} else {

@@ -26,7 +26,7 @@ public class customer_dialog_store extends Activity implements OnMapReadyCallbac
     int seller_seq, position;
     MapView map;
     Seller seller;
-    MyDBHelpers helper;
+    DBHelperLiked helper;
 
     public customer_dialog_store() {
     }
@@ -56,7 +56,7 @@ public class customer_dialog_store extends Activity implements OnMapReadyCallbac
     }
 
     private void setStar() {
-        helper = new MyDBHelpers(this, "liked.db", null, 1);
+        helper = new DBHelperLiked(this, "liked.db", null, 1);
 
         if (helper.isLikedStore(seller_seq))
             binding.imgStar.setImageResource(R.drawable.star);

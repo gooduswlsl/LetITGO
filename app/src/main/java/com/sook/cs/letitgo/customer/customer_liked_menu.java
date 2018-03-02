@@ -27,7 +27,7 @@ public class customer_liked_menu extends Fragment {
     private FragmentLikedMenuBinding binding;
     private Adapter_menu_list recyclerAdapter;
     private RecyclerView recyclerView;
-    private MyDBHelpers helper;
+    private DBHelperLiked helper;
     private int RESULT_OK = -1;
 
     public customer_liked_menu() {
@@ -64,7 +64,7 @@ public class customer_liked_menu extends Fragment {
     }
 
     private void liked() {
-        helper = new MyDBHelpers(this.getContext(), "liked.db", null, 1);
+        helper = new DBHelperLiked(this.getContext(), "liked.db", null, 1);
         int[] mSeq = helper.getMenuList();
         String mSeqList = Arrays.toString(mSeq);
         mSeqList = mSeqList.replace("[", "(");

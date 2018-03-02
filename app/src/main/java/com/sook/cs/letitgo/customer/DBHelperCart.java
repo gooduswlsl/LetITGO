@@ -11,9 +11,9 @@ import com.sook.cs.letitgo.item.Order;
 
 import java.util.ArrayList;
 
-public class MyDBHelpers_cart extends SQLiteOpenHelper {
+public class DBHelperCart extends SQLiteOpenHelper {
 
-    public MyDBHelpers_cart(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public DBHelperCart(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
@@ -23,7 +23,9 @@ public class MyDBHelpers_cart extends SQLiteOpenHelper {
                 "seq INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "mSeq INTEGER NOT NULL," +
                 "sSeq INTEGER NOT NULL," +
-                "num INTEGER NOT NULL)";
+                "num INTEGER NOT NULL,"+
+                "tTime VARCHAR,"+
+                "msg VARCHAR)";
 
         db.execSQL(sql);
     }
@@ -31,6 +33,16 @@ public class MyDBHelpers_cart extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+    }
+
+    public boolean isInCart(int mSeq) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String sql = "select * from cart where mSeq=" + mSeq;
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor.getCount() != 0)
+            return true;
+        else
+            return false;
     }
 
     public void insertCart(int mSeq, int sSeq, int num) {
@@ -56,74 +68,36 @@ public class MyDBHelpers_cart extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void deleteStore(int sSeq) {
+    public void deleteCart(int mSeq) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete("likedStore", "sSeq=?", new String[]{String.valueOf(sSeq)});
+        db.delete("cart", "mSeq=?", new String[]{String.valueOf(mSeq)});
         db.close();
     }
 
-    public boolean isInCart(int mSeq) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        String sql = "select * from cart where mSeq=" + mSeq;
-        Cursor cursor = db.rawQuery(sql, null);
-        if (cursor.getCount() != 0)
-            return true;
-        else
-            return false;
-    }
-
-    public int[] getStoreList() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        String sql = "select sSeq from likedStore";
-        Cursor cursor = db.rawQuery(sql, null);
-        cursor.moveToFirst();
-        int length = cursor.getCount();
-        int[] sSeq = new int[length];
-        for (int i = 0; i < length; i++) {
-            sSeq[i] = cursor.getInt(0);
-            cursor.moveToNext();
-        }
-        return sSeq;
-
-    }
-
-    public void insertMenu(int mSeq) {
+    public void updateNum(int mSeq, int num){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("mSeq", mSeq);
-        db.insert("likedMenu", null, values);
+        values.put("num", num);
+        db.update("cart", values, "mSeq=?", new String[]{String.valueOf(mSeq)});
         db.close();
     }
 
-    public void deleteMenu(int mSeq) {
+    public void updateMsg(int mSeq, String msg){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete("likedMenu", "mSeq=?", new String[]{String.valueOf(mSeq)});
+        ContentValues values = new ContentValues();
+        values.put("msg", msg);
+        db.update("cart", values, "mSeq=?", new String[]{String.valueOf(mSeq)});
         db.close();
     }
 
-    public boolean isLikedMenu(int mSeq) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        String sql = "select * from likedMenu where mSeq=" + mSeq;
-        Cursor cursor = db.rawQuery(sql, null);
-        if (cursor.getCount() != 0)
-            return true;
-        else
-            return false;
+    public void updateTime(int mSeq, String tTime){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("tTime", tTime);
+        db.update("cart", values, "mSeq=?", new String[]{String.valueOf(mSeq)});
+        db.close();
     }
 
-    public int[] getMenuList() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        String sql = "select mSeq from cart";
-        Cursor cursor = db.rawQuery(sql, null);
-        cursor.moveToFirst();
-        int length = cursor.getCount();
-        int[] mSeq = new int[length];
-        for (int i = 0; i < length; i++) {
-            mSeq[i] = cursor.getInt(0);
-            cursor.moveToNext();
-        }
-        return mSeq;
-    }
 
     public ArrayList<Order> getCartList() {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -137,9 +111,10 @@ public class MyDBHelpers_cart extends SQLiteOpenHelper {
             item.setMenu_seq(cursor.getInt(cursor.getColumnIndex("mSeq")));
             item.setSeller_seq(cursor.getInt(cursor.getColumnIndex("sSeq")));
             item.setNum(cursor.getInt(cursor.getColumnIndex("num")));
-            Log.d("item", String.valueOf(item.getMenu_seq()));
-            orderList.add(item);
+            item.setMessage(cursor.getString(cursor.getColumnIndex("msg")));
+            item.setTime_take(cursor.getString(cursor.getColumnIndex("tTime")));
 
+            orderList.add(item);
             cursor.moveToNext();
         }
         cursor.close();

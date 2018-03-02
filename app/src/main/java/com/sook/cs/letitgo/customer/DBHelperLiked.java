@@ -6,9 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class MyDBHelpers extends SQLiteOpenHelper {
+public class DBHelperLiked extends SQLiteOpenHelper {
 
-    public MyDBHelpers(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public DBHelperLiked(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 

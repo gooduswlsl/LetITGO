@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import com.sook.cs.letitgo.databinding.FragmentLikedStoreBinding;
 import com.sook.cs.letitgo.item.Seller;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
-import com.sook.cs.letitgo.util.DataUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +27,7 @@ public class customer_liked_store extends Fragment {
     private FragmentLikedStoreBinding binding;
     private Adapter_seller_list recyclerAdapter;
     private RecyclerView recyclerView;
-    private MyDBHelpers helper;
+    private DBHelperLiked helper;
     private int RESULT_OK = -1, RESULT_CANCEL = 0;
 
     public customer_liked_store() {
@@ -65,7 +63,7 @@ public class customer_liked_store extends Fragment {
     }
 
     private void liked() {
-        helper = new MyDBHelpers(this.getContext(), "liked.db", null, 1);
+        helper = new DBHelperLiked(this.getContext(), "liked.db", null, 1);
         int[] sSeq = helper.getStoreList();
         if (sSeq.length == 0)
             return;

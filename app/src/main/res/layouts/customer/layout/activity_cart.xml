@@ -15,12 +15,24 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerview_cart"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="7" />
+            android:layout_weight="7">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview_cart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/tv_empty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="장바구니가 비었습니다!"
+                android:visibility="invisible" />
+        </RelativeLayout>
 
         <Button
             android:id="@+id/btn_order"

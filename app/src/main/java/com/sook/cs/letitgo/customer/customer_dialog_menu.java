@@ -12,7 +12,6 @@ import android.view.Window;
 import com.sook.cs.letitgo.item.Menu;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.databinding.DialogMenuBinding;
-import com.sook.cs.letitgo.item.Order;
 import com.sook.cs.letitgo.item.Seller;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
@@ -25,8 +24,8 @@ public class customer_dialog_menu extends Activity {
     DialogMenuBinding binding;
     int menu_seq, position, num;
     Menu menu;
-    MyDBHelpers helper;
-    MyDBHelpers_cart helperCart;
+    DBHelperLiked helper;
+    DBHelperCart helperCart;
 
     public customer_dialog_menu() {
     }
@@ -48,7 +47,7 @@ public class customer_dialog_menu extends Activity {
 
 
     private void setStar() {
-        helper = new MyDBHelpers(this, "liked.db", null, 1);
+        helper = new DBHelperLiked(this, "liked.db", null, 1);
 
         if (helper.isLikedMenu(menu_seq))
             binding.imgStar.setImageResource(R.drawable.star);
@@ -105,7 +104,7 @@ public class customer_dialog_menu extends Activity {
 
     public void clickOK(View v){
         num = Integer.parseInt(binding.tvNum.getText().toString());
-        helperCart = new MyDBHelpers_cart(this, "cart.db", null, 1);
+        helperCart = new DBHelperCart(this, "cart.db", null, 1);
         if(helperCart.isInCart(menu_seq)){
             Log.d("menudialog", "ok");
             helperCart.updateCart(menu_seq, num);
