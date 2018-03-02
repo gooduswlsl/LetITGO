@@ -8,7 +8,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.databinding.ActivityCustomerBinding;
@@ -52,7 +51,8 @@ public class customer_main extends AppCompatActivity {
     }
 
     public void cartClick(View v) {
-        Toast.makeText(getApplicationContext(), "CART", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, customer_cart.class);
+        startActivity(intent);
     }
 
     public void menuClick(View v) {

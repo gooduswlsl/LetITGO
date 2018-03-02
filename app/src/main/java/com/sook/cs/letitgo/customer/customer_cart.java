@@ -2,12 +2,15 @@ package com.sook.cs.letitgo.customer;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.databinding.ActivityCartBinding;
@@ -36,6 +39,11 @@ public class customer_cart extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        ab.setCustomView(R.layout.actionbar_center);
+        ((TextView) ab.getCustomView().findViewById(R.id.ab_title)).setText("장바구니");
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_cart);
         recyclerAdapter = new Adapter_cart(this, new ArrayList<Order>());
 
@@ -52,24 +60,26 @@ public class customer_cart extends AppCompatActivity {
         helper = new DBHelperCart(this, "cart.db", null, 1);
         orderArrayList = helper.getCartList();
 
-        if(orderArrayList.size()==0) {
+        if (orderArrayList.size() == 0) {
             binding.tvEmpty.setVisibility(View.VISIBLE);
             binding.btnOrder.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             binding.tvEmpty.setVisibility(View.INVISIBLE);
             recyclerAdapter = new Adapter_cart(this, orderArrayList);
             recyclerView.setAdapter(recyclerAdapter);
         }
     }
 
-    public void orderClick(View v) {
-
-    }
-
-    public void empty(){
+    public void empty() {
         binding.tvEmpty.setVisibility(View.VISIBLE);
         binding.btnOrder.setVisibility(View.GONE);
     }
 
+    public void orderClick(View v) {
+
+    }
+
+    public void backClick(View v) {
+        finish();
+    }
 }

@@ -105,7 +105,7 @@ public class DBHelperCart extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(sql, null);
         cursor.moveToFirst();
 
-        ArrayList<Order> orderList = new ArrayList<Order>();
+        ArrayList<Order> orderList = new ArrayList<>();
         for (int i = 0; i < cursor.getCount(); i++) {
             Order item = new Order();
             item.setMenu_seq(cursor.getInt(cursor.getColumnIndex("mSeq")));

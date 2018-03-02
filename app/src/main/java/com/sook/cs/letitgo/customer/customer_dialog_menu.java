@@ -73,9 +73,10 @@ public class customer_dialog_menu extends Activity {
 
     public void clickStar(View v) {
         Intent it = new Intent();
-        it.putExtra("position", position);
-        it.putExtra("menu_seq", menu_seq);
+       it.putExtra("position", position);
+      //  it.putExtra("menu_seq", menu_seq);
         if (helper.isLikedMenu(menu_seq)) {
+            Log.d("likeddialog", "click");
             binding.imgStar.setImageResource(R.drawable.star_empty);
             helper.deleteMenu(menu_seq);
             setResult(RESULT_OK, it);

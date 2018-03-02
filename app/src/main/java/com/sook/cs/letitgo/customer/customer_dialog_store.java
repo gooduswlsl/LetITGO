@@ -71,11 +71,9 @@ public class customer_dialog_store extends Activity implements OnMapReadyCallbac
         if (helper.isLikedStore(seller_seq)) {
             binding.imgStar.setImageResource(R.drawable.star_empty);
             helper.deleteStore(seller_seq);
-            setResult(RESULT_OK, it);
         } else {
             binding.imgStar.setImageResource(R.drawable.star);
             helper.insertStore(seller_seq);
-            setResult(RESULT_CANCELED, it);
         }
     }
 

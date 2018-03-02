@@ -7,25 +7,23 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.sook.cs.letitgo.MyApp;
-import com.sook.cs.letitgo.databinding.FragmentLikedMenuBinding;
 import com.sook.cs.letitgo.databinding.FragmentMyOrderBinding;
-import com.sook.cs.letitgo.item.Menu;
 import com.sook.cs.letitgo.item.Order;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.view.View.VISIBLE;
 
 public class customer_my_order extends Fragment {
     private FragmentMyOrderBinding binding;
@@ -68,6 +66,11 @@ public class customer_my_order extends Fragment {
             public void onResponse(Call<ArrayList<Order>> call, Response<ArrayList<Order>> response) {
                 ArrayList<Order> list = response.body();
                 if (response.isSuccessful() && list != null) {
+                    if (list.size() == 0)
+                        binding.tvEmpty.setVisibility(VISIBLE);
+                    else
+                        binding.tvEmpty.setVisibility(View.GONE);
+
                     recyclerAdapter = new Adapter_order(getActivity(), list);
                     recyclerView.setAdapter(recyclerAdapter);
                 }

@@ -59,7 +59,7 @@ public class Seller implements Serializable {
 
     public String getDistance() {
         LatLng latLng = GeoItem.getKnownLocation();
-        double lat, lng, distance = 0;
+        double lat, lng, distance;
 
         if (latLng != null) {
             lat = GeoItem.knownLatitude;

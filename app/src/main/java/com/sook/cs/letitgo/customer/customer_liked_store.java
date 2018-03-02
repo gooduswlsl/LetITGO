@@ -37,21 +37,26 @@ public class customer_liked_store extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        recyclerAdapter = new Adapter_seller_list(getActivity(), new ArrayList<Seller>());
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentLikedStoreBinding.inflate(inflater, container, false);
-        liked();
+        return binding.getRoot();
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        recyclerAdapter = new Adapter_seller_list(getActivity(), new ArrayList<Seller>());
         recyclerView = binding.recyclerviewStore;
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(recyclerAdapter);
-        return binding.getRoot();
+        liked();
     }
 
     @Override
@@ -84,6 +89,4 @@ public class customer_liked_store extends Fragment {
             }
         });
     }
-
-
 }
