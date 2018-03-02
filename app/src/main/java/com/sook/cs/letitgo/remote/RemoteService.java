@@ -24,7 +24,13 @@ import retrofit2.http.Query;
  * 서버에 호출할 메소드를 선언하는 인터페이스
  */
 public interface RemoteService {
-    String BASE_URL = "http://192.168.21.168:3000";  //집
+    String BASE_URL = "http://192.168.10.85:3000";  //마이크임팩트
+    //String BASE_URL = "http://192.168.21.168:3000";  //학교
+    //String BASE_URL = "http://192.168.30.77:3000";  //집
+   // String BASE_URL = "http://192.168.0.24:3000";  //죽전
+    //String BASE_URL = "http://192.168.53.81:3000";  //예원학교
+
+
 
     String CUSTOMER_IMG_URL = BASE_URL + "/customer/";
     String SELLER_IMG_URL = BASE_URL + "/seller/";
@@ -42,6 +48,8 @@ public interface RemoteService {
     @GET("/member/customer/{customer_seq}")
     Call<Customer> selectCustomerInfo(@Path("customer_seq") int seq);
 
+    @POST("/member/sendNewCustomerRegId")
+    Call<String> sendNewCustomerRegId(@Query("seq") int seq, @Query("regId") String regId);
     @Multipart
     @POST("/member/img_upload")
     Call<ResponseBody> uploadCustomerImg(@Part MultipartBody.Part file);
@@ -80,9 +88,9 @@ public interface RemoteService {
     //즐겨찾기
     @GET("/menu/likedSeller")
     Call<ArrayList<Seller>> listLikedSeller(@Query("sSeqList") String sSeqList);
-
     @GET("/menu/likedMenu")
     Call<ArrayList<Menu>> listLikedMenu(@Query("mSeqList") String mSeqList);
+
 
 
     //판매자
@@ -92,9 +100,18 @@ public interface RemoteService {
     @GET("/member/seller/{seller_seq}")
     Call<Seller> selectSellerInfo(@Path("seller_seq") int seq);
 
+    @POST("/member/sendNewSellerRegId")
+    Call<String> sendNewSellerRegId(@Query("seq") int seq, @Query("regId") String regId);
     @Multipart
     @POST("/member/img_upload2")
     Call<ResponseBody> uploadSellerImg(@Part MultipartBody.Part file);
+
+
+    //판매자 회원정보 수정, 탈퇴
+    @POST("/member/changeSellerInfo")
+    Call<String> changeSellerInfo(@Body Seller seller);
+    @POST("/member/leaveSeller")
+    Call<String> leaveSeller(@Query("seq") int seq);
 
     //매장 메뉴 등록, 추가, 수정
     @POST("/menu/update")

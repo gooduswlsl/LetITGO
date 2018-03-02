@@ -6,9 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.sook.cs.letitgo.MyApp;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.customer.customer_main;
@@ -48,7 +47,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     EditText sextypeEdit;
     EditText birthEdit;
     EditText phoneEdit;
-
+    String regId;
     Customer currentItem;
 
     /**
@@ -63,6 +62,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         currentItem = ((MyApp) getApplicationContext()).getCustomer();
         context = this;
+
+        regId = FirebaseInstanceId.getInstance().getToken();
+        currentItem.setRegId(regId);
+        Log.d("regId",currentItem.regId);
         setView();
     }
 
@@ -257,6 +260,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private void save() {
         final Customer newItem = getCustomerInfo();
         newItem.img = currentItem.img;
+        newItem.regId = currentItem.regId;
 
         if (isNoName(newItem)) {
             Toast.makeText(this, "이름", Toast.LENGTH_SHORT).show();
@@ -284,6 +288,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                     currentItem.name = newItem.name;
                     currentItem.sextype = newItem.sextype;
                     currentItem.birthday = newItem.birthday;
+                    currentItem.regId=newItem.regId;
 
                     ((MyApp) getApplicationContext()).setCustomer(currentItem);
                     Intent it = new Intent(ProfileActivity.this, customer_main.class);

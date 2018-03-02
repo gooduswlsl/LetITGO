@@ -1,4 +1,4 @@
-package com.sook.cs.letitgo.shared;
+package com.sook.cs.letitgo.seller;
 
 import android.Manifest;
 import android.content.ComponentName;
@@ -24,22 +24,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.sook.cs.letitgo.MyApp;
 import com.sook.cs.letitgo.R;
+import com.sook.cs.letitgo.customer.customer_leave;
 import com.sook.cs.letitgo.item.Seller;
-import com.sook.cs.letitgo.lib.EtcLib;
 import com.sook.cs.letitgo.lib.RemoteLib;
+import com.sook.cs.letitgo.lib.StringLib;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
+import com.sook.cs.letitgo.shared.Login_2_1_1_searchAddress;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,41 +47,29 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.sook.cs.letitgo.R.id.addressView;
-
-public class Login2_1_store_info extends AppCompatActivity{
+public class seller_edit_profile extends AppCompatActivity {
     Context context;
-    Seller currentItem;
+    Seller current_seller;
     File croppedFileName;
     String location;
     String imageName;
-    int type;
+
     private ImageView imgMain;
-    private Button addressbtn;
-    private TextView addressText;
-    private EditText nameEdit;
-    private EditText telEdit;
-    private EditText siteEdit;
-    private EditText webpageEdit;
-    private String regId;
+    private TextView addressText, leaveMember;
+    private EditText nameEdit, telEdit, siteEdit, webpageEdit;
 
     private static final int PICK_FROM_CAMERA = 1;
     private static final int PICK_FROM_ALBUM = 2;
     private static final int CROP_FROM_CAMERA = 3;
     private static final int GET_ADDRESS = 4;
 
-    private static final int KOREAN = 1;
-    private static final int CHINESE = 2;
-    private static final int JAPANESE = 3;
-    private static final int AMERICAN = 4;
-    private static final int SCHOOL_FOOD = 5;
-    private static final int CAFE = 6;
-    private static final int EXC = 7;
-
+    private boolean address_btn_clicked = false;
+    private boolean img_btn_clicked = false;
 
     private Uri photoUri;
     private String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -91,119 +78,93 @@ public class Login2_1_store_info extends AppCompatActivity{
     private static final int MULTIPLE_PERMISSIONS = 101;
 
     private String mCurrentPhotoPath;
-
-    Spinner spinner1;
-    AdapterSpinner adapterSpinner1;
-    List<String> data;
+    private final String TAG = this.getClass().getSimpleName();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        currentItem = ((MyApp) getApplication()).getSeller();
+        this.setTitle("회원 정보 수정");
+
+        current_seller = ((MyApp) getApplication()).getSeller();
         context = this;
 
-        regId = FirebaseInstanceId.getInstance().getToken();
-        currentItem.setRegId(regId);
-        Log.d("regId",currentItem.regId);
-
-        setContentView(R.layout.activity_main3);
+        setContentView(R.layout.seller_edit_profile);
         checkPermissions();
-
-        data = new ArrayList<>();
-        data.add("한식"); data.add("중식"); data.add("일식"); data.add("양식"); data.add("분식");
-        data.add("카페/베이커리"); data.add("기타");
         initView();
     }
 
     private void initView(){
         imgMain = (ImageView) findViewById(R.id.img_test);
-        addressbtn = (Button) findViewById(R.id.button4);
-        addressText = (TextView) findViewById(addressView);
+        addressText = (TextView) findViewById(R.id.addressView);
         nameEdit = (EditText) findViewById(R.id.nameEdit);
         telEdit = (EditText) findViewById(R.id.telEdit);
         siteEdit = (EditText) findViewById(R.id.siteEdit);
         webpageEdit = (EditText) findViewById(R.id.webpageEdit);
-        spinner1 = (Spinner)findViewById(R.id.spinner1);
+        leaveMember = (TextView) findViewById(R.id.leaveMember);
 
-        adapterSpinner1 = new AdapterSpinner(this, data);
-        spinner1.setAdapter(adapterSpinner1);
-        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        showPicture();
+        addressText.setText(current_seller.address);
+        nameEdit.setText(current_seller.name);
+        telEdit.setText(current_seller.tel);
+        siteEdit.setText(current_seller.site);
+        webpageEdit.setText(current_seller.webpage);
+
+        leaveMember.setOnClickListener(new View.OnClickListener() {  //회원탈퇴
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-               String str_type = (String) parent.getItemAtPosition(position);
-                switch (str_type){
-                    case "한식":
-                        type = KOREAN;
-                        break;
-                    case "중식":
-                        type = CHINESE;
-                        break;
-                    case "일식":
-                        type = JAPANESE;
-                        break;
-                    case "양식":
-                        type = AMERICAN;
-                        break;
-                    case "분식":
-                        type = SCHOOL_FOOD;
-                        break;
-                    case "카페/베이커리":
-                        type = CAFE;
-                        break;
-                    case "기타":
-                        type = EXC;
-                        break;
-                }
-                currentItem.type=type;
-            }
+            public void onClick(final View view) {
+                AlertDialog.Builder alert_confirm = new AlertDialog.Builder(seller_edit_profile.this);
+                alert_confirm.setMessage("정말 탈퇴하시겠습니까?").setCancelable(false).setPositiveButton("확인",
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) { //확인
+                                leaveSeller();
+                            }
 
+                        }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) { //취소
+                        return;
+                    }
+                });
+                AlertDialog alert = alert_confirm.create();
+                alert.show();
             }
         });
 
     }
 
-    private void save() {
+    public void save(View v) {
 
-        uploadProfileIcon();
-        getGeo();
+        if(img_btn_clicked)
+            uploadProfileIcon();
+        if(address_btn_clicked)
+            getGeo();
 
-        final Seller newItem = getSellerInfoItem();
-        newItem.regId = currentItem.regId;
+        current_seller.name = nameEdit.getText().toString();
+        current_seller.site = siteEdit.getText().toString();
+        current_seller.tel = telEdit.getText().toString();
+        current_seller.webpage = webpageEdit.getText().toString();
 
-        RemoteService remoteService =
-                ServiceGenerator.createService(RemoteService.class);
+        RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
 
-        Log.d("seller_store_info",newItem.toString());
-
-        Call<String> call = remoteService.insertSellerInfo(newItem);
+        Log.d(TAG,current_seller.toString());
+        Call<String> call = remoteService.changeSellerInfo(current_seller);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful()) {
-                    String seq = response.body();
-                    try {
-                        currentItem.seq = Integer.parseInt(seq);
-                        if (currentItem.seq == 0) {
-                            Toast.makeText(context, R.string.member_insert_fail_message, Toast.LENGTH_SHORT);
-                            return;
-                        }
-                    } catch (Exception e) {
-                        Toast.makeText(context, R.string.member_insert_fail_message, Toast.LENGTH_SHORT);
-                        return;
-                    }
-                    currentItem.name = newItem.name;
-                    currentItem.site = newItem.site;
-                    currentItem.tel = newItem.tel;
-                    currentItem.address = newItem.address;
-                    currentItem.webpage = newItem.webpage;
-
-                    finish();
+                    Log.d(TAG,"seller회원정보 수정 성공");
+                    Toast.makeText(getApplicationContext(),"회원정보 수정 완료!",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), Seller_main.class);
+                    startActivity(intent);
                 }
+                else
+                    Log.d(TAG,"seller 회원정보 수정 실패");
+
             }
 
             @Override
@@ -212,16 +173,12 @@ public class Login2_1_store_info extends AppCompatActivity{
         });
     }
 
-    public void nextbtn(View v){
-        save();
-        Intent intent = new Intent(getApplicationContext(),Login_finish.class);
-        startActivity(intent);
-    }
-
     public void getGeo(){
         final Geocoder geocoder = new Geocoder(this);
         List<Address> list = null;
 
+
+        Log.d(TAG,"location:"+location);
         String address = location;
 
         try{
@@ -235,31 +192,11 @@ public class Login2_1_store_info extends AppCompatActivity{
             if (list.size() == 0){
                 Toast.makeText(getApplicationContext(),"해당되는 주소가 없습니다.",Toast.LENGTH_SHORT).show();
             }else {
-                currentItem.latitude = list.get(0).getLatitude();
-                currentItem.longitude = list.get(0).getLongitude();
-
-                Toast.makeText(getApplicationContext(), currentItem.latitude + "/" + currentItem.longitude, Toast.LENGTH_LONG).show();
+                current_seller.latitude = list.get(0).getLatitude();
+                current_seller.longitude = list.get(0).getLongitude();
             }
         }
 
-    }
-
-
-
-    private Seller getSellerInfoItem(){
-        Seller item = new Seller();
-        item.phone= EtcLib.getInstance().getPhoneNumber(context);
-        item.name = nameEdit.getText().toString();
-        item.site = siteEdit.getText().toString();
-        item.tel = telEdit.getText().toString();
-        item.address = addressText.getText().toString();
-        item.webpage = webpageEdit.getText().toString();
-        item.img = currentItem.img;
-        item.latitude = currentItem.latitude;
-        item.longitude = currentItem.longitude;
-        item.type = currentItem.type;
-
-        return item;
     }
 
     public void selectPicture(View v){
@@ -304,12 +241,12 @@ public class Login2_1_store_info extends AppCompatActivity{
         try {
             photoFile = createImageFile();
         } catch (IOException e) {
-            Toast.makeText(Login2_1_store_info.this, "이미지 처리 오류! 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(seller_edit_profile.this, "이미지 처리 오류! 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
             finish();
             e.printStackTrace();
         }
         if (photoFile != null) {
-            photoUri = FileProvider.getUriForFile(Login2_1_store_info.this,
+            photoUri = FileProvider.getUriForFile(seller_edit_profile.this,
                     "com.sook.cs.letitgo.provider", photoFile);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
             startActivityForResult(intent, PICK_FROM_CAMERA);
@@ -384,28 +321,32 @@ public class Login2_1_store_info extends AppCompatActivity{
         }
 
         if (requestCode == PICK_FROM_ALBUM) {
+            img_btn_clicked=true;
             if (data == null) {
                 return;
             }
             photoUri = data.getData();
             cropImage();
         } else if (requestCode == PICK_FROM_CAMERA) {
+            img_btn_clicked=true;
             cropImage();
             // 갤러리에 나타나게
-            MediaScannerConnection.scanFile(Login2_1_store_info.this,
+            MediaScannerConnection.scanFile(seller_edit_profile.this,
                     new String[]{photoUri.getPath()}, null,
                     new MediaScannerConnection.OnScanCompletedListener() {
                         public void onScanCompleted(String path, Uri uri) {
                         }
                     });
         } else if (requestCode == CROP_FROM_CAMERA) {
+            img_btn_clicked=true;
             imgMain.setImageURI(null);
             imgMain.setImageURI(photoUri);
 
         }else if (requestCode == GET_ADDRESS){ //주소 찾아오기 버튼 눌러서 주소 받아온 후
-            String address = data.getStringExtra("address");
+            address_btn_clicked=true;
+            current_seller.address = data.getStringExtra("address");
             location = data.getStringExtra("location");
-            addressText.setText(Html.fromHtml("<u>" + address + "</u>"));
+            addressText.setText(Html.fromHtml("<u>" + current_seller.address + "</u>"));
         }
     }
 
@@ -447,7 +388,7 @@ public class Login2_1_store_info extends AppCompatActivity{
             File folder = new File(Environment.getExternalStorageDirectory() + "/NOSTest/");
             File tempFile = new File(folder.toString(), croppedFileName.getName());
 
-            photoUri = FileProvider.getUriForFile(Login2_1_store_info.this,
+            photoUri = FileProvider.getUriForFile(seller_edit_profile.this,
                     "com.sook.cs.letitgo.provider", tempFile);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -478,8 +419,46 @@ public class Login2_1_store_info extends AppCompatActivity{
      */
     private void uploadProfileIcon() {
         RemoteLib.getInstance().uploadSellerImg(croppedFileName);
-        currentItem.img =  imageName;
+        current_seller.img =  imageName;
 
     }
+
+    private void showPicture(){
+        if (StringLib.getInstance().isBlank(current_seller.img)) {
+            Picasso.with(this).load(R.drawable.noimage).into(imgMain);
+        } else {
+            Picasso.with(this)
+                    .load(RemoteService.SELLER_IMG_URL + current_seller.img)
+                    .into(imgMain);
+        }
+    }
+
+    // 회원 탈퇴
+    private void leaveSeller() {
+        Log.d(TAG, current_seller.toString());
+        RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
+        Call<String> call = remoteService.leaveSeller(current_seller.getSeq());
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    Intent intent = new Intent(getApplicationContext(), customer_leave.class);
+                    startActivity(intent);
+
+                } else {
+                    int statusCode = response.code();
+                    ResponseBody errorBody = response.errorBody();
+                    Log.d(TAG, "fail " + statusCode + errorBody.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.d(TAG, "no internet connectivity");
+                Log.d(TAG, t.toString());
+            }
+        });
+    }
+
 
 }

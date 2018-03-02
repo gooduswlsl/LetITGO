@@ -25,5 +25,12 @@ android:layout_height="match_parent">
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
+        <TextView
+            android:id="@+id/first_visit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="사장님, 첫 방문이시군요?\n플러스를 눌러 메뉴를 추가해 주세요"/>
+
     </RelativeLayout>
 </LinearLayout>

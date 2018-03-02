@@ -6,11 +6,22 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.sook.cs.letitgo.MyApp;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.databinding.ActivityCustomerBinding;
+import com.sook.cs.letitgo.item.Customer;
+import com.sook.cs.letitgo.remote.RemoteService;
+import com.sook.cs.letitgo.remote.ServiceGenerator;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -22,11 +33,22 @@ public class customer_main extends AppCompatActivity {
     android.support.v4.app.Fragment fragment;
     TextView title;
     int REQUEST_SELLER = 0, REQUEST_MENU = 1, REQUEST_PROFILE = 100;
+    private final String TAG = this.getClass().getSimpleName();
+    Customer current_customer;
+    String compare_regId;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //regId가 동일한지 체크
+        current_customer = ((MyApp) getApplicationContext()).getCustomer();
+        compare_regId = FirebaseInstanceId.getInstance().getToken();
+        if(!compare_regId.equals(current_customer.getRegId())){
+            sendNewCustomerRegId(current_customer.getSeq(), compare_regId);
+        }
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_customer);
         binding.setActivity(this);
 
@@ -37,7 +59,26 @@ public class customer_main extends AppCompatActivity {
 
         callFragment(1);
         setImages(1);
+
+        //푸시 메시지를 클릭한 경우
+        String str = getIntent().getStringExtra("particularFragment");
+        if(str !=null)
+        {
+            if(str.equals("goToCustomer_my"))
+            {
+                callFragment(5);
+            }
+        }
+        else
+            callFragment(1);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.actionbar_actions, menu);
+        return true;
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -126,5 +167,27 @@ public class customer_main extends AppCompatActivity {
                 title.setText("마이페이지");
                 break;
         }
+    }
+
+    private void sendNewCustomerRegId(int seq, String regId) {
+        RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
+        Call<String> call = remoteService.sendNewCustomerRegId(seq, regId);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    Log.d(TAG,"sending new regId successful");
+                }
+                else{
+                    Log.d(TAG,"response not successful");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.d(TAG, "no internet connectivity");
+                Log.d(TAG, t.toString());
+            }
+        });
     }
 }

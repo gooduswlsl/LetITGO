@@ -134,8 +134,7 @@ public class IndexActivity extends AppCompatActivity {
 
                     if (response.code() == 201) // 소비자
                         setCustomer(seq);
-                    else {
-                        //Log.d("ok", "store");
+                    else { // 판매자
                         setSeller(seq);
                     }
                 } else {//번호없음
@@ -161,6 +160,17 @@ public class IndexActivity extends AppCompatActivity {
                     ((MyApp) getApplicationContext()).setCustomer(response.body());
 
                     Intent it = new Intent(IndexActivity.this, customer_main.class);
+
+                    //MyFirebaseMessagingService.class로부터 보내온 intent
+                    String str = getIntent().getStringExtra("particularFragment");
+                    if(str !=null)
+                    {
+                        if(str.equals("goToCustomer_my"))
+                        {
+                            it.putExtra("particularFragment", "goToCustomer_my");
+                        }
+                    }
+
                     startActivity(it);
                 } else {
                     Log.d("ok", "set customer unsuccessful");
@@ -185,6 +195,17 @@ public class IndexActivity extends AppCompatActivity {
                     Log.d("ok", "seller success");
 
                     Intent it = new Intent(IndexActivity.this, Seller_main.class);
+
+                    //MyFirebaseMessagingService.class로부터 보내온 intent
+                   String str = getIntent().getStringExtra("particularFragment");
+                    if(str !=null)
+                    {
+                        if(str.equals("goToSeller_order"))
+                        {
+                            it.putExtra("particularFragment", "goToSeller_order");
+                        }
+                    }
+
                     startActivity(it);
                 } else {
                     Log.d("ok", "set seller unsuccessful");
@@ -196,8 +217,6 @@ public class IndexActivity extends AppCompatActivity {
                 Log.d("ok", "failure");
             }
         });
-
-
     }
 
 

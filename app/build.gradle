@@ -61,5 +61,12 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     testCompile 'junit:junit:4.12'
 
+    // FCM 사용을 위해 추가
+    compile 'com.google.firebase:firebase-messaging:11.0.4'
+    // 데이터 송신을 위해 추가
+    compile 'com.android.volley:volley:1.0.0'
+
 
 }
+// FCM 사용을 위해 추가
+apply plugin: 'com.google.gms.google-services'

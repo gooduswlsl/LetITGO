@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.Volley;
 import com.sook.cs.letitgo.MyApp;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.item.Customer;
@@ -36,6 +37,7 @@ public class seller_order extends Fragment {
     Seller current_seller;
     private final String TAG = this.getClass().getSimpleName();
     Order_ListViewAdapter adapter;
+    private TextView no_order;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class seller_order extends Fragment {
         current_seller = ((MyApp) getActivity().getApplicationContext()).getSeller();
 
         adapter = new Order_ListViewAdapter();
+        adapter.queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
         // 리스트뷰 참조 및 Adapter달기
         final ListView listview;
@@ -57,6 +60,7 @@ public class seller_order extends Fragment {
         swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipeRefreshLo);
         listview = (ListView) getView().findViewById(R.id.listview);
         listview.setAdapter(adapter);
+        no_order = getView().findViewById(R.id.no_order);
         showOrderList(current_seller.getSeq());
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -151,6 +155,7 @@ public class seller_order extends Fragment {
                     if (list.size() == 0) {
 
                     } else {
+                        no_order.setVisibility(View.GONE);
                         adapter.setItemList(list);
                     }
                 } else {
