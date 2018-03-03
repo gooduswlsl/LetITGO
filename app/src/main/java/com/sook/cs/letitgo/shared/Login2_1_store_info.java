@@ -24,15 +24,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.sook.cs.letitgo.MyApp;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.item.Seller;
@@ -54,13 +51,13 @@ import retrofit2.Response;
 
 import static com.sook.cs.letitgo.R.id.addressView;
 
-public class Login2_1_store_info extends AppCompatActivity{
+public class Login2_1_store_info extends AppCompatActivity {
     Context context;
     Seller currentItem;
     File croppedFileName;
     String location;
     String imageName;
-    int type;
+
     private ImageView imgMain;
     private Button addressbtn;
     private TextView addressText;
@@ -68,21 +65,11 @@ public class Login2_1_store_info extends AppCompatActivity{
     private EditText telEdit;
     private EditText siteEdit;
     private EditText webpageEdit;
-    private String regId;
 
     private static final int PICK_FROM_CAMERA = 1;
     private static final int PICK_FROM_ALBUM = 2;
     private static final int CROP_FROM_CAMERA = 3;
     private static final int GET_ADDRESS = 4;
-
-    private static final int KOREAN = 1;
-    private static final int CHINESE = 2;
-    private static final int JAPANESE = 3;
-    private static final int AMERICAN = 4;
-    private static final int SCHOOL_FOOD = 5;
-    private static final int CAFE = 6;
-    private static final int EXC = 7;
-
 
     private Uri photoUri;
     private String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -92,10 +79,6 @@ public class Login2_1_store_info extends AppCompatActivity{
 
     private String mCurrentPhotoPath;
 
-    Spinner spinner1;
-    AdapterSpinner adapterSpinner1;
-    List<String> data;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,17 +87,17 @@ public class Login2_1_store_info extends AppCompatActivity{
         currentItem = ((MyApp) getApplication()).getSeller();
         context = this;
 
-        regId = FirebaseInstanceId.getInstance().getToken();
-        currentItem.setRegId(regId);
-        Log.d("regId",currentItem.regId);
 
         setContentView(R.layout.activity_main3);
         checkPermissions();
-
-        data = new ArrayList<>();
-        data.add("한식"); data.add("중식"); data.add("일식"); data.add("양식"); data.add("분식");
-        data.add("카페/베이커리"); data.add("기타");
         initView();
+
+        imgMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectPicture();
+            }
+        });
     }
 
     private void initView(){
@@ -125,46 +108,6 @@ public class Login2_1_store_info extends AppCompatActivity{
         telEdit = (EditText) findViewById(R.id.telEdit);
         siteEdit = (EditText) findViewById(R.id.siteEdit);
         webpageEdit = (EditText) findViewById(R.id.webpageEdit);
-        spinner1 = (Spinner)findViewById(R.id.spinner1);
-
-        adapterSpinner1 = new AdapterSpinner(this, data);
-        spinner1.setAdapter(adapterSpinner1);
-        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-               String str_type = (String) parent.getItemAtPosition(position);
-                switch (str_type){
-                    case "한식":
-                        type = KOREAN;
-                        break;
-                    case "중식":
-                        type = CHINESE;
-                        break;
-                    case "일식":
-                        type = JAPANESE;
-                        break;
-                    case "양식":
-                        type = AMERICAN;
-                        break;
-                    case "분식":
-                        type = SCHOOL_FOOD;
-                        break;
-                    case "카페/베이커리":
-                        type = CAFE;
-                        break;
-                    case "기타":
-                        type = EXC;
-                        break;
-                }
-                currentItem.type=type;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
     }
 
     private void save() {
@@ -173,12 +116,9 @@ public class Login2_1_store_info extends AppCompatActivity{
         getGeo();
 
         final Seller newItem = getSellerInfoItem();
-        newItem.regId = currentItem.regId;
 
         RemoteService remoteService =
                 ServiceGenerator.createService(RemoteService.class);
-
-        Log.d("seller_store_info",newItem.toString());
 
         Call<String> call = remoteService.insertSellerInfo(newItem);
         call.enqueue(new Callback<String>() {
@@ -237,8 +177,6 @@ public class Login2_1_store_info extends AppCompatActivity{
             }else {
                 currentItem.latitude = list.get(0).getLatitude();
                 currentItem.longitude = list.get(0).getLongitude();
-
-                Toast.makeText(getApplicationContext(), currentItem.latitude + "/" + currentItem.longitude, Toast.LENGTH_LONG).show();
             }
         }
 
@@ -248,6 +186,7 @@ public class Login2_1_store_info extends AppCompatActivity{
 
     private Seller getSellerInfoItem(){
         Seller item = new Seller();
+        // item.phone = EtcLib.getInstance().getPhoneNumber(context);
         item.phone= EtcLib.getInstance().getPhoneNumber(context);
         item.name = nameEdit.getText().toString();
         item.site = siteEdit.getText().toString();
@@ -257,12 +196,11 @@ public class Login2_1_store_info extends AppCompatActivity{
         item.img = currentItem.img;
         item.latitude = currentItem.latitude;
         item.longitude = currentItem.longitude;
-        item.type = currentItem.type;
 
         return item;
     }
 
-    public void selectPicture(View v){
+    public void selectPicture(){
         final String items[] = {"카메라로 촬영","갤러리에서 가져오기"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("선택하세요")
@@ -481,5 +419,7 @@ public class Login2_1_store_info extends AppCompatActivity{
         currentItem.img =  imageName;
 
     }
+
+
 
 }

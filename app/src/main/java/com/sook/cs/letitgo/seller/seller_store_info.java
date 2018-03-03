@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,7 +31,7 @@ public class seller_store_info extends Fragment implements OnMapReadyCallback {
     private MapView mapView = null;
     private TextView name, tel, site, address, webpage;
     private ImageView img;
-    private ImageView edit;
+    private Button edit;
 
     Seller current_seller;
     private final String TAG = this.getClass().getSimpleName();
@@ -113,7 +114,7 @@ public class seller_store_info extends Fragment implements OnMapReadyCallback {
         address.setText(current_seller.getAddress());
         webpage.setText(current_seller.getWebpage());
 
-         showPicture();
+        showPicture();
 
         edit.setOnClickListener(new View.OnClickListener() {  //매장정보 수정
             @Override
