@@ -2,32 +2,15 @@ package com.sook.cs.letitgo.customer;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.KeyEvent;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
-
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.databinding.FragmentSellerBinding;
-import com.sook.cs.letitgo.item.Seller;
-import com.sook.cs.letitgo.remote.RemoteService;
-import com.sook.cs.letitgo.remote.ServiceGenerator;
-
-import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by YEONJIN on 2018-01-08.
@@ -35,9 +18,8 @@ import retrofit2.Response;
 
 public class customer_store extends Fragment {
     private FragmentSellerBinding binding;
-    private Adapter_seller_img adapterSellerImg;
-    private Adapter_seller_list adapterSellerList;
-    private RecyclerView recyclerView;
+    private TabLayout tab;
+    private ViewPager pager;
 
     public customer_store() {
 
@@ -46,7 +28,6 @@ public class customer_store extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapterSellerImg = new Adapter_seller_img(getActivity(), new ArrayList<Seller>());
     }
 
 
@@ -55,88 +36,40 @@ public class customer_store extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_seller, container, false);
         binding.setFragment(this);
-        binding.editSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                switch (actionId) {
-                    case EditorInfo.IME_ACTION_SEARCH:
-                        Log.d("search", "search click");
-                        searchClick(v);
-                        break;
-                    default:
-                        searchClick(v);
-                        return false;
-                }
-                return true;
-            }
-        });
 
-        recyclerView = binding.recyclerviewStore;
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 5);
-        recyclerView.setLayoutManager(layoutManager);
+        tab = binding.tab;
+        pager = binding.viewPager;
 
-        recyclerView.setAdapter(adapterSellerImg);
-        listInfo();
-
-
+        pager.setAdapter(new FragmentAdapterSeller(getFragmentManager()));
+        tab.addTab(tab.newTab().setText("ALL"),0,true);
+        tab.addTab(tab.newTab().setText("KOREAN"),1);
+        tab.addTab(tab.newTab().setText("CHINESE"),2);
+        tab.addTab(tab.newTab().setText("JAPANESE"),3);
+        tab.addTab(tab.newTab().setText("AMERICAN"),4);
+        tab.addTab(tab.newTab().setText("SNACK"),5);
+        tab.addTab(tab.newTab().setText("CAFE"),6);
+        tab.addTab(tab.newTab().setText("ETC"),7);
+        tab.addOnTabSelectedListener(listener);
+        pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab));
         return binding.getRoot();
     }
 
-    private void listInfo() {
-        RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
-        Call<ArrayList<Seller>> call = remoteService.listSellerInfo();
-        call.enqueue(new Callback<ArrayList<Seller>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Seller>> call, Response<ArrayList<Seller>> response) {
-                ArrayList<Seller> list = response.body();
-                if (response.isSuccessful() && list != null) {
-                    adapterSellerImg.addSellerList(list);
-                }
-            }
+    TabLayout.OnTabSelectedListener listener = new TabLayout.OnTabSelectedListener(){
 
-            @Override
-            public void onFailure(Call<ArrayList<Seller>> call, Throwable t) {
-                Log.d("storelist", t.toString());
-            }
-        });
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-    }
-
-
-    public void searchClick(View v) {
-        final String key = binding.editSearch.getText().toString();
-        Log.d("search", "search click method");
-        if (!key.equals("")) {
-            recyclerView.removeAllViews();
-            RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
-            Call<ArrayList<Seller>> call = remoteService.searchSeller(key);
-            call.enqueue(new Callback<ArrayList<Seller>>() {
-                @Override
-                public void onResponse(Call<ArrayList<Seller>> call, Response<ArrayList<Seller>> response) {
-                    ArrayList<Seller> list = response.body();
-                    if (response.isSuccessful() && list != null) {
-                        adapterSellerList = new Adapter_seller_list(getActivity(), list);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-                        recyclerView.setAdapter(adapterSellerList);
-
-                        binding.tvCount.setText(key + "에 대한 검색 결과가 " + list.size() + "건이 있습니다.");
-                        binding.tvCount.setVisibility(View.VISIBLE);
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ArrayList<Seller>> call, Throwable t) {
-
-                }
-            });
+        @Override
+        public void onTabSelected(TabLayout.Tab tab) {
+            pager.setCurrentItem(tab.getPosition());
         }
 
-    }
+        @Override
+        public void onTabUnselected(TabLayout.Tab tab) {
+
+        }
+
+        @Override
+        public void onTabReselected(TabLayout.Tab tab) {
+
+        }
+    };
 
 }

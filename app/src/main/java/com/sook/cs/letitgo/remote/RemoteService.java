@@ -24,8 +24,8 @@ import retrofit2.http.Query;
  * 서버에 호출할 메소드를 선언하는 인터페이스
  */
 public interface RemoteService {
-    String BASE_URL = "http://192.168.10.85:3000";  //마이크임팩트
-    //String BASE_URL = "http://192.168.21.168:3000";  //학교
+    //String BASE_URL = "http://192.168.10.85:3000";  //마이크임팩트
+    String BASE_URL = "http://192.168.0.24:3000";  //학교
     //String BASE_URL = "http://192.168.30.77:3000";  //집
    // String BASE_URL = "http://192.168.0.24:3000";  //죽전
     //String BASE_URL = "http://192.168.53.81:3000";  //예원학교
@@ -63,7 +63,7 @@ public interface RemoteService {
 
     //매장정보얻어오기
     @GET("/menu/sellerList")
-    Call<ArrayList<Seller>> listSellerInfo();
+    Call<ArrayList<Seller>> listSellerInfo(@Query("type") int type);
 
     @GET("/menu/sellerList/{sSeq}")
     Call<Seller> selectSeller(@Path("sSeq") int sSeq);
@@ -73,24 +73,22 @@ public interface RemoteService {
 
     //메뉴정보얻어오기
     @GET("/menu/menuList")
-    Call<ArrayList<Menu>> listMenuInfo();
+    Call<ArrayList<Menu>> listMenuInfo(@Query("type") int type);
 
     @GET("/menu/menuList/{mSeq}")
     Call<Menu> selectMenu(@Path("mSeq") int mSeq);
 
     //검색
     @GET("/menu/searchSeller")
-    Call<ArrayList<Seller>> searchSeller(@Query("key") String key);
-
+    Call<ArrayList<Seller>> searchSeller(@Query("key") String key, @Query("type") int type);
     @GET("/menu/searchMenu")
-    Call<ArrayList<Menu>> searchMenu(@Query("key") String key);
+    Call<ArrayList<Menu>> searchMenu(@Query("key") String key, @Query("type") int type);
 
     //즐겨찾기
     @GET("/menu/likedSeller")
     Call<ArrayList<Seller>> listLikedSeller(@Query("sSeqList") String sSeqList);
     @GET("/menu/likedMenu")
     Call<ArrayList<Menu>> listLikedMenu(@Query("mSeqList") String mSeqList);
-
 
 
     //판매자

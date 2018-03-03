@@ -97,7 +97,12 @@ form.parse(req);
 
 //menu/sellerList
 router.get('/sellerList', function(req, res){
+    var type = req.query.type;
     var sql = "select * from seller";
+    
+    if(type!=0)
+        sql+=" where type = "+type;
+    
     db.get().query(sql, function(err, rows){
         if(rows.length>0)
             res.status(200).json(rows);
@@ -143,7 +148,10 @@ router.get('/sellerMap', function(req, res){
 
 //menu/menuList
 router.get('/menuList', function(req, res){
+    var type = req.query.type;
     var sql = "select * from menu";
+    if(type!=0)
+        sql+=" where exists (select seq from seller where seller.seq = menu.seller_seq and seller.type = "+type+")";
     db.get().query(sql, function(err, rows){
         if(rows.length>0)
             res.status(200).json(rows);
@@ -204,7 +212,12 @@ router.get('/likedSeller',function(req, res){
 //menu/searchSeller
 router.get('/searchSeller', function(req, res){
     var key = req.query.key;
-    var sql = "select * from seller where name Like ?";
+    var type = req.query.type;
+    var sql = "select * from seller where CONCAT(name, site) Like ?";
+    
+    if(type!=0)
+        sql+=" and type = "+type;
+    
     db.get().query(sql, "%"+key+"%", function(err, rows){
         if(err)
             console.log(err);
@@ -212,11 +225,18 @@ router.get('/searchSeller', function(req, res){
     });
  });
 
+
 //menu/searchMenu
 router.get('/searchMenu', function(req, res){
     var key = req.query.key;
-    var sql = "select * from menu where mName Like ?";
-    
+    var type = req.query.type;
+    var sql = "select * from menu";
+   
+    if(type!=0)
+        sql+=" where exists (select seq from seller where seller.seq = menu.seller_seq and seller.type = "+type+" and menu.mName Like ?)";
+    else
+        sql+=" where mName Like ?";
+        
      db.get().query(sql,"%"+key+"%" , function(err, rows){
          if(err)
              console.log(err);
