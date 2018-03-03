@@ -30,7 +30,7 @@ import retrofit2.Response;
 public class seller_sales extends Fragment {
 
     private WebView webview = null;
-    private TextView jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec;
+    private TextView jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec, title;
     Seller current_seller;
     ArrayList<Sales> month_sales = new ArrayList<>();
 
@@ -44,6 +44,7 @@ public class seller_sales extends Fragment {
 
         initView(view);
 
+        title.setText(current_seller.getName()+" "+current_seller.getSite()+" 매출 그래프");
         getMonthSales(current_seller.getSeq());
 
         WebSettings websetting = webview.getSettings();
@@ -128,6 +129,7 @@ public class seller_sales extends Fragment {
         oct=(TextView) view. findViewById(R.id.oct);
         nov=(TextView) view. findViewById(R.id.nov);
         dec=(TextView) view. findViewById(R.id.dec);
+        title=(TextView) view.findViewById(R.id.title);
     }
 
     private void showMonthSales(ArrayList<Sales> month_sales){
@@ -135,40 +137,40 @@ public class seller_sales extends Fragment {
         for(i=0; i<month_sales.size(); i++){
             switch(month_sales.get(i).getMonth()){
                 case 1:
-                    jan.setText(String.valueOf(month_sales.get(i).getSales()));
+                    jan.setText("\uFFE6"+String.format("%,d",month_sales.get(i).getSales()));
                     break;
                 case 2:
-                    feb.setText(String.valueOf(month_sales.get(i).getSales()));
+                    feb.setText("\uFFE6"+String.format("%,d",month_sales.get(i).getSales()));
                     break;
                 case 3:
-                    mar.setText(String.valueOf(month_sales.get(i).getSales()));
+                    mar.setText("\uFFE6"+String.format("%,d",month_sales.get(i).getSales()));
                     break;
                 case 4:
-                    apr.setText(String.valueOf(month_sales.get(i).getSales()));
+                    apr.setText("\uFFE6"+String.format("%,d",month_sales.get(i).getSales()));
                     break;
                 case 5:
-                    mar.setText(String.valueOf(month_sales.get(i).getSales()));
+                    mar.setText("\uFFE6"+String.format("%,d",month_sales.get(i).getSales()));
                     break;
                 case 6:
-                    jun.setText(String.valueOf(month_sales.get(i).getSales()));
+                    jun.setText("\uFFE6"+String.format("%,d",month_sales.get(i).getSales()));
                     break;
                 case 7:
-                    jul.setText(String.valueOf(month_sales.get(i).getSales()));
+                    jul.setText("\uFFE6"+String.format("%,d",month_sales.get(i).getSales()));
                     break;
                 case 8:
-                    aug.setText(String.valueOf(month_sales.get(i).getSales()));
+                    aug.setText("\uFFE6"+String.format("%,d",month_sales.get(i).getSales()));
                     break;
                 case 9:
-                    sep.setText(String.valueOf(month_sales.get(i).getSales()));
+                    sep.setText("\uFFE6"+String.format("%,d",month_sales.get(i).getSales()));
                     break;
                 case 10:
-                    oct.setText(String.valueOf(month_sales.get(i).getSales()));
+                    oct.setText("\uFFE6"+String.format("%,d",month_sales.get(i).getSales()));
                     break;
                 case 11:
-                    nov.setText(String.valueOf(month_sales.get(i).getSales()));
+                    nov.setText("\uFFE6"+String.format("%,d",month_sales.get(i).getSales()));
                     break;
                 case 12:
-                    dec.setText(String.valueOf(month_sales.get(i).getSales()));
+                    dec.setText("\uFFE6"+String.format("%,d",month_sales.get(i).getSales()));
                     break;
             }
         }

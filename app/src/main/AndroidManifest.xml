@@ -52,24 +52,32 @@
         </provider>
 
 
-        <activity android:name=".shared.PermissionActivity">
+        <activity android:name=".shared.PermissionActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".shared.ProfileActivity" />
-        <activity android:name=".shared.ProfileIconActivity" />
+        <activity android:name=".shared.ProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".shared.ProfileIconActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".shared.IndexActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Toolbar"/>
-        <activity android:name=".customer.MainActivity" />
+        <activity android:name=".customer.MainActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".customer.customer_main"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".customer.customer_dialog_store" />
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".customer.customer_dialog_store"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".customer.customer_dialog_menu"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.Light.Dialog" />
         <activity
             android:name=".customer.customer_dialog_cart"
@@ -77,36 +85,49 @@
         <activity android:name=".customer.customer_cart"/>
 
 
-        <activity android:name=".seller.Login" />
+        <activity android:name=".seller.Login"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".seller.Seller_main"
-            android:theme="@style/Toolbar" />
+            android:theme="@style/Toolbar"
+            android:screenOrientation="portrait"/>
         <activity
+            android:screenOrientation="portrait"
             android:name=".shared.Login1"
             android:label="회원가입" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".shared.Login2"
             android:label="이메일로 회원가입" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".shared.Login2_1_store_info"
             android:label="매장 정보" />
         <activity android:name=".shared.GroupActivity"
+            android:screenOrientation="portrait"
                   android:theme="@style/Toolbar"/>
 
 
         <activity
             android:name=".shared.Login_2_1_1_searchAddress"
             android:label="주소 찾기"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Dialog" />
-        <activity android:name=".shared.Login_finish" />
-        <activity android:name=".seller.MenuPicAddActivity" />
-        <activity android:name=".seller.MenuPicEditActivity" />
+        <activity android:name=".shared.Login_finish"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".seller.MenuPicAddActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".seller.MenuPicEditActivity"
+            android:screenOrientation="portrait"/>
 
 
-        <activity android:name=".customer.customer_store_detail"></activity>
+        <activity android:name=".customer.customer_store_detail"
+            android:screenOrientation="portrait"></activity>
 
-        <activity android:name=".customer.customer_leave"></activity>
-        <activity android:name=".customer.customer_changePic"></activity>
+        <activity android:name=".customer.customer_leave"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".customer.customer_changePic"
+            android:screenOrientation="portrait"></activity>
         <service
             android:name=".MyFirebaseMessagingService"
             android:enabled="true"

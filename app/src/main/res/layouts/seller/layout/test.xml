@@ -5,20 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="1"
-    tools:context="com.sook.cs.letitgo.shared.Login2_1_store_info">
+    tools:context="com.sook.cs.letitgo.shared.Login2_1_store_info"
+    android:weightSum="1">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="@color/bg_default">
+        android:background="@color/bg_default"
+        android:layout_height="187dp">
 
         <ImageView
             android:id="@+id/img_searchStore"
             android:layout_width="0dp"
-            android:layout_height="100dp"
+            android:layout_height="116dp"
             android:background="@color/colorPrimary"
-            android:onClick="selectPicture"
             app:layout_constraintHorizontal_bias="0.461"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -26,14 +25,13 @@
 
         <ImageView
             android:id="@+id/img_test"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginTop="31dp"
+            android:layout_width="142dp"
+            android:layout_height="140dp"
+            android:layout_marginTop="48dp"
             android:src="@drawable/noimage"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0.498" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 
@@ -41,8 +39,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bg_default"
         android:orientation="vertical"
+        android:background="@color/bg_default"
         android:padding="13dp"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="210dp">
@@ -50,8 +48,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="17dp"
             android:layout_weight="1"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <TextView
@@ -59,10 +57,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginBottom="0dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
                 android:layout_weight="1"
                 android:text="매장명"
                 android:textAlignment="center"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.088"
@@ -109,7 +113,7 @@
                 android:layout_weight="1"
                 android:text="지점명"
                 android:textAlignment="center"
-                android:textSize="14dp"
+                android:textSize="16dp"
                 android:textStyle="bold" />
 
             <EditText
@@ -124,9 +128,9 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_weight="2"
-                android:background="@drawable/tv_circle"
                 android:ems="10"
                 android:inputType="textPersonName"
+                android:background="@drawable/tv_circle"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.123"
@@ -155,10 +159,10 @@
                 android:layout_marginRight="0dp"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="0dp"
-                android:layout_weight="0.98"
+                android:layout_weight="1"
                 android:text="매장주소"
                 android:textAlignment="center"
-                android:textSize="14sp"
+                android:textSize="16dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.136"
@@ -170,7 +174,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2.1"
+                android:layout_weight="2"
                 android:orientation="horizontal">
 
                 <TextView
@@ -211,7 +215,7 @@
                     android:gravity="center"
                     android:onClick="getAddress"
                     android:text="찾아보기"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintHorizontal_bias="0.939"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -242,7 +246,7 @@
                 android:layout_weight="1"
                 android:text="매장전화번호"
                 android:textAlignment="center"
-                android:textSize="14dp"
+                android:textSize="16dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.727"
@@ -263,9 +267,9 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_weight="2"
-                android:background="@drawable/tv_circle"
                 android:ems="10"
                 android:inputType="textPersonName"
+                android:background="@drawable/tv_circle"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.123"
@@ -290,7 +294,7 @@
                 android:layout_weight="1"
                 android:text="홈페이지주소"
                 android:textAlignment="center"
-                android:textSize="14dp"
+                android:textSize="16dp"
                 android:textStyle="bold" />
 
             <EditText
@@ -323,15 +327,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bg_default"
         android:gravity="center_horizontal|bottom"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/bg_default">
 
         <TextView
             android:id="@+id/leaveMember"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="혹시 탈퇴하고 싶은신가요?" />
+            android:layout_marginTop="80dp"
+            android:text="혹시 탈퇴하고 싶은신가요?"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/webpageEdit" />
 
         <Button
             android:id="@+id/button7"
