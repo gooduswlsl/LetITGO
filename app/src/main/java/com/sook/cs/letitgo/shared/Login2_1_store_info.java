@@ -115,6 +115,13 @@ public class Login2_1_store_info extends AppCompatActivity{
         data.add("한식"); data.add("중식"); data.add("일식"); data.add("양식"); data.add("분식");
         data.add("카페/베이커리"); data.add("기타");
         initView();
+
+        imgMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectPicture();
+            }
+        });
     }
 
     private void initView(){
@@ -132,7 +139,7 @@ public class Login2_1_store_info extends AppCompatActivity{
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-               String str_type = (String) parent.getItemAtPosition(position);
+                String str_type = (String) parent.getItemAtPosition(position);
                 switch (str_type){
                     case "한식":
                         type = KOREAN;
@@ -262,7 +269,7 @@ public class Login2_1_store_info extends AppCompatActivity{
         return item;
     }
 
-    public void selectPicture(View v){
+    public void selectPicture(){
         final String items[] = {"카메라로 촬영","갤러리에서 가져오기"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("선택하세요")

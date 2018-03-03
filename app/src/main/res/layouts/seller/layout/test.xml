@@ -10,18 +10,15 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="187dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-4dp">
+        android:background="@color/bg_default"
+        android:layout_height="187dp">
 
         <ImageView
             android:id="@+id/img_searchStore"
-            android:layout_width="398dp"
+            android:layout_width="0dp"
             android:layout_height="116dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginStart="0dp"
-            android:background="@color/text_color_green"
-            app:layout_constraintHorizontal_bias="0.4"
+            android:background="@color/colorPrimary"
+            app:layout_constraintHorizontal_bias="0.461"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -44,6 +41,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@color/bg_default"
+        android:padding="13dp"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="210dp">
 
@@ -51,6 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <TextView
@@ -68,6 +67,7 @@
                 android:text="매장명"
                 android:textAlignment="center"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.088"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -114,7 +114,7 @@
                 android:text="지점명"
                 android:textAlignment="center"
                 android:textSize="16dp"
-                />
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/siteEdit"
@@ -163,7 +163,7 @@
                 android:text="매장주소"
                 android:textAlignment="center"
                 android:textSize="16dp"
-
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.136"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -174,7 +174,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2.1"
+                android:layout_weight="2"
                 android:orientation="horizontal">
 
                 <TextView
@@ -193,7 +193,6 @@
                     android:ems="10"
                     android:inputType="textPersonName"
                     android:textSize="14sp"
-                    android:maxLines="2"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintHorizontal_bias="0.123"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -248,7 +247,7 @@
                 android:text="매장전화번호"
                 android:textAlignment="center"
                 android:textSize="16dp"
-
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.727"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -296,7 +295,7 @@
                 android:text="홈페이지주소"
                 android:textAlignment="center"
                 android:textSize="16dp"
-                 />
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/webpageEdit"
@@ -310,16 +309,16 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_weight="2"
+                android:background="@drawable/tv_circle"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:background="@drawable/tv_circle"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.123"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.377"/>
+                app:layout_constraintVertical_bias="0.377" />
 
         </LinearLayout>
 
@@ -327,38 +326,40 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="34dp"
-        android:orientation="horizontal"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal|bottom"
+        android:orientation="vertical"
+        android:background="@color/bg_default">
 
-        ></LinearLayout>
+        <TextView
+            android:id="@+id/leaveMember"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:text="혹시 탈퇴하고 싶은신가요?"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/webpageEdit" />
 
+        <Button
+            android:id="@+id/button7"
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="15dp"
+            android:background="#95c85b"
+            android:onClick="save"
+            android:text="수정  완료"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/button7"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
-        android:layout_weight="0"
-        android:onClick="nextbtn"
-        android:text="다  음"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-
-    <Spinner
-        android:id="@+id/spinner1"
-        android:background="@drawable/spinner_spinner1"
-        android:layout_width="154dp"
-        android:layout_height="30dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="92dp"
-        app:layout_constraintHorizontal_bias="0.2" />
 
 </LinearLayout>

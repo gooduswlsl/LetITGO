@@ -8,12 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -48,6 +48,7 @@ public class Order_ListViewAdapter extends BaseAdapter {
     private static final int DECLINE_ORDER = -1;
     private static final int ORDER_FINISHED = 2;
 
+    public ImageView imgAndroid;
     RequestQueue queue;
 
     // Order_ListViewAdapter의 생성자
@@ -65,7 +66,6 @@ public class Order_ListViewAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         final Context context = parent.getContext();
-
         // "order_listview_item" Layout을 inflate하여 convertView 참조 획득.
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -149,8 +149,8 @@ public class Order_ListViewAdapter extends BaseAdapter {
 
                 // 아이템 내 각 위젯에 데이터 반영
                 textView1.setText(c_list.get(position).getName()+" (" + c_list.get(position).getPhone()+") ");
-                textView2.setText("주문 메뉴: "+m_list.get(position).getmName()+" "+listViewItem.getNum()+"개");
-                textView3.setText("예약 날짜: "+date+"\n"+"예약 시간: "+time);
+                textView2.setText(m_list.get(position).getmName()+" "+listViewItem.getNum()+"개");
+                textView3.setText("예약 일자: "+time+" ("+date+")");
 
 
                 switch(listViewItem.getPermit()){
@@ -175,7 +175,8 @@ public class Order_ListViewAdapter extends BaseAdapter {
                     default:
                         break;
                 }
-
+                imgAndroid.clearAnimation();
+                imgAndroid.setVisibility(View.GONE);
             }
         }, 1000);
 

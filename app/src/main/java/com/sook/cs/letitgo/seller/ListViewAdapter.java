@@ -54,12 +54,12 @@ public class ListViewAdapter extends BaseAdapter {
 
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
         ImageView iconImageView = (ImageView) convertView.findViewById(R.id.imageView1) ;
-        TextView titleTextView = (TextView) convertView.findViewById(R.id.text1) ;
+        TextView titleTextView = (TextView) convertView.findViewById(R.id.textView1) ;
         TextView descTextView = (TextView) convertView.findViewById(R.id.textView2) ;
-        TextView priceTextView = (TextView) convertView.findViewById(R.id.textView3) ;
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
         Menu listViewItem = listViewItemList.get(position);
+
 
         // 아이템 내 각 위젯에 데이터 반영
         if (StringLib.getInstance().isBlank(listViewItem.mImgUrl)) {
@@ -70,8 +70,7 @@ public class ListViewAdapter extends BaseAdapter {
                     .into(iconImageView);
         }
         titleTextView.setText(listViewItem.getmName());
-        descTextView.setText(listViewItem.getmDetail());
-        priceTextView.setText(String.valueOf(listViewItem.getmPrice()));
+        descTextView.setText(listViewItem.getmDetail()+" ("+String.valueOf(listViewItem.getmPrice())+"원)");
 
         return convertView;
     }

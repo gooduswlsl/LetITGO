@@ -2,12 +2,14 @@ package com.sook.cs.letitgo.shared;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sook.cs.letitgo.MyApp;
@@ -16,7 +18,6 @@ import com.sook.cs.letitgo.customer.customer_main;
 import com.sook.cs.letitgo.item.Customer;
 import com.sook.cs.letitgo.item.Seller;
 import com.sook.cs.letitgo.lib.EtcLib;
-import com.sook.cs.letitgo.lib.GeoLib;
 import com.sook.cs.letitgo.lib.RemoteLib;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
@@ -35,7 +36,8 @@ import retrofit2.Response;
 public class IndexActivity extends AppCompatActivity {
     int count = 0;
     Context context;
-    // Member currentMember;
+    AnimationDrawable frameAnimation;
+
 
     /**
      * 레이아웃을 설정하고 인터넷에 연결되어 있는지를 확인한다.
@@ -50,12 +52,26 @@ public class IndexActivity extends AppCompatActivity {
 
         context = this;
 
+        ImageView view = (ImageView) findViewById(R.id.imageAnimation);
+        view.setBackgroundResource(R.drawable.splash_main);
+        frameAnimation = (AnimationDrawable) view.getDrawable();
+
         if (!RemoteLib.getInstance().isConnected(context)) {
             showNoService();
             return;
         }
+
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus){
+            frameAnimation.start();
+        }else {
+            frameAnimation.stop();
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -82,7 +98,7 @@ public class IndexActivity extends AppCompatActivity {
                 if (count != 1)
                     startTask();
             }
-        }, 1200);
+        }, 2000);
     }
 
     /**
@@ -110,7 +126,6 @@ public class IndexActivity extends AppCompatActivity {
     public void startTask() {
         String phone = EtcLib.getInstance().getPhoneNumber(this);
         selectMemberInfo(phone);
-        GeoLib.getInstance().setLastKnownLocation(this);
     }
 
     /**
@@ -134,7 +149,8 @@ public class IndexActivity extends AppCompatActivity {
 
                     if (response.code() == 201) // 소비자
                         setCustomer(seq);
-                    else { // 판매자
+                    else {
+                        //Log.d("ok", "store");
                         setSeller(seq);
                     }
                 } else {//번호없음
@@ -160,17 +176,6 @@ public class IndexActivity extends AppCompatActivity {
                     ((MyApp) getApplicationContext()).setCustomer(response.body());
 
                     Intent it = new Intent(IndexActivity.this, customer_main.class);
-
-                    //MyFirebaseMessagingService.class로부터 보내온 intent
-                    String str = getIntent().getStringExtra("particularFragment");
-                    if(str !=null)
-                    {
-                        if(str.equals("goToCustomer_my"))
-                        {
-                            it.putExtra("particularFragment", "goToCustomer_my");
-                        }
-                    }
-
                     startActivity(it);
                 } else {
                     Log.d("ok", "set customer unsuccessful");
@@ -195,17 +200,6 @@ public class IndexActivity extends AppCompatActivity {
                     Log.d("ok", "seller success");
 
                     Intent it = new Intent(IndexActivity.this, Seller_main.class);
-
-                    //MyFirebaseMessagingService.class로부터 보내온 intent
-                   String str = getIntent().getStringExtra("particularFragment");
-                    if(str !=null)
-                    {
-                        if(str.equals("goToSeller_order"))
-                        {
-                            it.putExtra("particularFragment", "goToSeller_order");
-                        }
-                    }
-
                     startActivity(it);
                 } else {
                     Log.d("ok", "set seller unsuccessful");
@@ -217,6 +211,8 @@ public class IndexActivity extends AppCompatActivity {
                 Log.d("ok", "failure");
             }
         });
+
+
     }
 
 

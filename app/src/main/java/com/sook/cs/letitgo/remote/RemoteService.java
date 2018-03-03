@@ -91,6 +91,7 @@ public interface RemoteService {
     Call<ArrayList<Menu>> listLikedMenu(@Query("mSeqList") String mSeqList);
 
 
+
     //판매자
     @POST("/member/seller")
     Call<String> insertSellerInfo(@Body Seller seller);

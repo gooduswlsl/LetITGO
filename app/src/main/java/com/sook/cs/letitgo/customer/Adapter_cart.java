@@ -75,7 +75,7 @@ public class Adapter_cart extends RecyclerView.Adapter<MyViewHolder> {
             }
         };
 
-        View.OnClickListener cancleClick = new View.OnClickListener() {
+        View.OnClickListener cancelClick = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cartHelper.deleteCart(holder.cBinding.getMenu().getmSeq());
@@ -112,7 +112,7 @@ public class Adapter_cart extends RecyclerView.Adapter<MyViewHolder> {
         holder.cBinding.editMsg.setOnKeyListener(msgEdit);
         holder.cBinding.btnPlus.setOnClickListener(numClick);
         holder.cBinding.btnMinus.setOnClickListener(numClick);
-        holder.cBinding.btnCancel.setOnClickListener(cancleClick);
+        holder.cBinding.btnCancel.setOnClickListener(cancelClick);
         holder.cBinding.btnTime.setOnClickListener(timeClick);
     }
 
