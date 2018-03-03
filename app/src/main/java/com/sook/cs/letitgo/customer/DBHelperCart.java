@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.sook.cs.letitgo.item.Order;
 
@@ -122,4 +121,19 @@ public class DBHelperCart extends SQLiteOpenHelper {
         return orderList;
     }
 
+    public void flushDB(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql_drop = "DROP TABLE Cart";
+
+        String sql_create = "CREATE TABLE cart(" +
+                "seq INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "mSeq INTEGER NOT NULL," +
+                "sSeq INTEGER NOT NULL," +
+                "num INTEGER NOT NULL,"+
+                "tTime VARCHAR,"+
+                "msg VARCHAR)";
+
+        db.execSQL(sql_drop);
+        db.execSQL(sql_create);
+    }
 }

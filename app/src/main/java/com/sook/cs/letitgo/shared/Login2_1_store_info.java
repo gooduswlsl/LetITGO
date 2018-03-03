@@ -91,9 +91,16 @@ public class Login2_1_store_info extends AppCompatActivity {
         setContentView(R.layout.activity_main3);
         checkPermissions();
         initView();
+
+        imgMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectPicture();
+            }
+        });
     }
 
-    private void initView(){
+    private void initView() {
         imgMain = (ImageView) findViewById(R.id.img_test);
         addressbtn = (Button) findViewById(R.id.button4);
         addressText = (TextView) findViewById(addressView);
@@ -145,44 +152,56 @@ public class Login2_1_store_info extends AppCompatActivity {
         });
     }
 
-    public void nextbtn(View v){
-        save();
-        Intent intent = new Intent(getApplicationContext(),Login_finish.class);
-        startActivity(intent);
+    public void nextbtn(View v) {
+        if (nameEdit.equals("") || siteEdit.equals("") || (addressText.getText().toString()).equals("")) {
+            if (nameEdit.equals("")) {
+                Toast.makeText(getApplicationContext(), "매장이름을 입력하세요", Toast.LENGTH_SHORT).show();
+            }
+
+            if (siteEdit.equals("")) {
+                Toast.makeText(getApplicationContext(), "지점명을 입력하세요", Toast.LENGTH_SHORT).show();
+            }
+
+            if ((addressText.getText().toString()).equals("")) {
+                Toast.makeText(getApplicationContext(), "주소를 입력하세요", Toast.LENGTH_SHORT).show();
+            }
+
+        } else {
+            save();
+            Intent intent = new Intent(getApplicationContext(), Login_finish.class);
+            startActivity(intent);
+        }
     }
 
-    public void getGeo(){
+    public void getGeo() {
         final Geocoder geocoder = new Geocoder(this);
         List<Address> list = null;
 
         String address = location;
 
-        try{
-            list = geocoder.getFromLocationName(address,5);
-        }catch(IOException e){
+        try {
+            list = geocoder.getFromLocationName(address, 5);
+        } catch (IOException e) {
             e.printStackTrace();
-            Log.d("test","주소를 좌표로 변환시 에러");
+            Log.d("test", "주소를 좌표로 변환시 에러");
         }
 
-        if (list != null){
-            if (list.size() == 0){
-                Toast.makeText(getApplicationContext(),"해당되는 주소가 없습니다.",Toast.LENGTH_SHORT).show();
-            }else {
+        if (list != null) {
+            if (list.size() == 0) {
+                Toast.makeText(getApplicationContext(), "해당되는 주소가 없습니다.", Toast.LENGTH_SHORT).show();
+            } else {
                 currentItem.latitude = list.get(0).getLatitude();
                 currentItem.longitude = list.get(0).getLongitude();
-
-                Toast.makeText(getApplicationContext(), currentItem.latitude + "/" + currentItem.longitude, Toast.LENGTH_LONG).show();
             }
         }
 
     }
 
 
-
-    private Seller getSellerInfoItem(){
+    private Seller getSellerInfoItem() {
         Seller item = new Seller();
         // item.phone = EtcLib.getInstance().getPhoneNumber(context);
-        item.phone= EtcLib.getInstance().getPhoneNumber(context);
+        item.phone = EtcLib.getInstance().getPhoneNumber(context);
         item.name = nameEdit.getText().toString();
         item.site = siteEdit.getText().toString();
         item.tel = telEdit.getText().toString();
@@ -195,16 +214,16 @@ public class Login2_1_store_info extends AppCompatActivity {
         return item;
     }
 
-    public void selectPicture(View v){
-        final String items[] = {"카메라로 촬영","갤러리에서 가져오기"};
+    public void selectPicture() {
+        final String items[] = {"카메라로 촬영", "갤러리에서 가져오기"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("선택하세요")
                 .setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(which == 0){ //카메라로 촬영
+                        if (which == 0) { //카메라로 촬영
                             takePhoto();
-                        }else if(which == 1){ //갤러리에서 가져오기
+                        } else if (which == 1) { //갤러리에서 가져오기
                             goToAlbum();
                         }
                     }
@@ -304,9 +323,9 @@ public class Login2_1_store_info extends AppCompatActivity {
         finish();
     }
 
-    public void getAddress(View v){
-        Intent intent = new Intent(getApplicationContext(),Login_2_1_1_searchAddress.class);
-        startActivityForResult(intent,GET_ADDRESS);
+    public void getAddress(View v) {
+        Intent intent = new Intent(getApplicationContext(), Login_2_1_1_searchAddress.class);
+        startActivityForResult(intent, GET_ADDRESS);
     }
 
     @Override
@@ -335,7 +354,7 @@ public class Login2_1_store_info extends AppCompatActivity {
             imgMain.setImageURI(null);
             imgMain.setImageURI(photoUri);
 
-        }else if (requestCode == GET_ADDRESS){ //주소 찾아오기 버튼 눌러서 주소 받아온 후
+        } else if (requestCode == GET_ADDRESS) { //주소 찾아오기 버튼 눌러서 주소 받아온 후
             String address = data.getStringExtra("address");
             location = data.getStringExtra("location");
             addressText.setText(Html.fromHtml("<u>" + address + "</u>"));
@@ -411,10 +430,9 @@ public class Login2_1_store_info extends AppCompatActivity {
      */
     private void uploadProfileIcon() {
         RemoteLib.getInstance().uploadSellerImg(croppedFileName);
-        currentItem.img =  imageName;
+        currentItem.img = imageName;
 
     }
-
 
 
 }

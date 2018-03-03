@@ -29,6 +29,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -40,6 +41,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.sook.cs.letitgo.provider"
@@ -50,7 +52,6 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-
         <activity android:name=".shared.PermissionActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -60,7 +61,9 @@
         </activity>
         <activity android:name=".shared.ProfileActivity" />
         <activity android:name=".shared.ProfileIconActivity" />
-        <activity android:name=".shared.IndexActivity" />
+        <activity
+            android:name=".shared.IndexActivity"
+            android:theme="@style/Toolbar" />
         <activity android:name=".customer.MainActivity" />
         <activity
             android:name=".customer.customer_main"
@@ -72,9 +75,7 @@
         <activity
             android:name=".customer.customer_dialog_cart"
             android:theme="@android:style/Theme.Holo.Light.Dialog" />
-        <activity android:name=".customer.customer_cart"/>
-
-
+        <activity android:name=".customer.customer_cart" />
         <activity android:name=".seller.Login" />
         <activity
             android:name=".seller.Seller_main"
@@ -89,8 +90,6 @@
             android:name=".shared.Login2_1_store_info"
             android:label="매장 정보" />
         <activity android:name=".shared.GroupActivity" />
-
-
         <activity
             android:name=".shared.Login_2_1_1_searchAddress"
             android:label="주소 찾기"
@@ -98,12 +97,11 @@
         <activity android:name=".shared.Login_finish" />
         <activity android:name=".seller.MenuPicAddActivity" />
         <activity android:name=".seller.MenuPicEditActivity" />
-
-
-        <activity android:name=".customer.customer_store_detail"></activity>
-
-        <activity android:name=".customer.customer_leave"></activity>
-        <activity android:name=".customer.customer_changePic"></activity>
+        <activity android:name=".customer.customer_store_detail" />
+        <activity android:name=".customer.customer_leave" />
+        <activity android:name=".customer.customer_changePic" />
+        <activity android:name=".customer.customer_payment"
+            android:label="결제하기"></activity>
     </application>
 
 </manifest>

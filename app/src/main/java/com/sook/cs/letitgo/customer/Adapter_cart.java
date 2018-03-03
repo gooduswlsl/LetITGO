@@ -6,14 +6,11 @@ import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.databinding.ItemCartBinding;
@@ -78,7 +75,7 @@ public class Adapter_cart extends RecyclerView.Adapter<MyViewHolder> {
             }
         };
 
-        View.OnClickListener cancleClick = new View.OnClickListener() {
+        View.OnClickListener cancelClick = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cartHelper.deleteCart(holder.cBinding.getMenu().getmSeq());
@@ -115,7 +112,7 @@ public class Adapter_cart extends RecyclerView.Adapter<MyViewHolder> {
         holder.cBinding.editMsg.setOnKeyListener(msgEdit);
         holder.cBinding.btnPlus.setOnClickListener(numClick);
         holder.cBinding.btnMinus.setOnClickListener(numClick);
-        holder.cBinding.btnCancel.setOnClickListener(cancleClick);
+        holder.cBinding.btnCancel.setOnClickListener(cancelClick);
         holder.cBinding.btnTime.setOnClickListener(timeClick);
     }
 

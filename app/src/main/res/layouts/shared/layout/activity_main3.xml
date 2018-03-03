@@ -1,231 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sook.cs.letitgo.shared.Login2_1_store_info">
+    android:background="@color/bg_default"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/img_test"
-        android:layout_width="126dp"
-        android:layout_height="114dp"
-        android:layout_marginTop="20dp"
-        android:src="@mipmap/ic_launcher"
-        app:layout_constraintHorizontal_bias="0.183"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <RelativeLayout
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/spacing_large"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
+        <ImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/img_test"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_gravity="top"
+            android:src="@drawable/image_border"
+            android:background="@drawable/noimage"/>
+
+        <ImageView
+            android:id="@+id/profile_icon_change"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="4dp"
+            android:layout_marginRight="4dp"
+            android:background="@drawable/button_circle"
+            android:elevation="4dp"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_camera" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:text="매장명"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.603"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.054"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        android:background="@android:color/white"
+        android:padding="@dimen/spacing_medium">
 
-    <EditText
-        android:id="@+id/nameEdit"
-        android:layout_width="133dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.872"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.094"
-        tools:text="정재원" />
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/spacing_medium"
+            android:gravity="start"
+            android:text="매장명 *"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/nameEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="start"
+            android:maxLines="1"
+            android:maxLength="7"
+            android:textSize="@dimen/text_size_medium" />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="60dp"
+        android:background="#55AAAAAA" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="192dp"
-        tools:layout_editor_absoluteY="104dp" />
+        android:background="@android:color/white"
+        android:padding="@dimen/spacing_medium">
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/spacing_medium"
+            android:gravity="start"
+            android:text="지점명 *"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/siteEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="start"
+            android:textSize="@dimen/text_size_medium" />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="60dp"
+        android:background="#55AAAAAA" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="매장전화번호"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.691"
-        app:layout_constraintVertical_bias="0.2"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        android:background="@android:color/white"
+        android:padding="@dimen/spacing_medium">
 
-    <EditText
-        android:id="@+id/telEdit"
-        android:layout_width="133dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="textPhonetic"
-        android:text="Name"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.872"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.248" />
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/spacing_medium"
+            android:gravity="start"
+            android:text="전화번호"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/siteEdit"
-        android:layout_width="202dp"
-        android:layout_height="51dp"
-        android:hint="지점명"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.552"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.234" />
+        <EditText
+            android:id="@+id/telEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="start"
+            android:textSize="@dimen/text_size_medium" />
 
-    <EditText
-        android:id="@+id/webpageEdit"
-        android:layout_width="202dp"
-        android:layout_height="51dp"
-        android:hint="홈페이지"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.698"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.234" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:text="매장 주소"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.123"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.378"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        android:background="@android:color/white"
+        android:padding="@dimen/spacing_medium">
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="88dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:onClick="getAddress"
-        android:text="찾아보기"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.914"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.434"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/spacing_medium"
+            android:gravity="start"
+            android:text="홈페이지"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="126dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:onClick="selectPicture"
-        android:text="사진 추가"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.162"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_test"
-        app:layout_constraintVertical_bias="0.0"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        <EditText
+            android:id="@+id/webpageEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="start"
+            android:textSize="@dimen/text_size_medium" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:padding="@dimen/spacing_medium">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="77dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/spacing_medium"
+            android:gravity="start"
+            android:text="매장주소 *"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/addressView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:enabled="false"
+            android:gravity="start"
+            android:maxLines="2"
+            android:textSize="@dimen/text_size_medium" />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:gravity="center"
+            android:onClick="getAddress"
+            android:text="찾기"
+            android:textSize="13sp"
+            android:layout_weight="0.10" />
+
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/addressView"
-        android:layout_width="198dp"
-        android:layout_height="44dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:maxLines="2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.243"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.436" />
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="60dp"
+        android:background="#55AAAAAA" />
 
     <Button
         android:id="@+id/button7"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:onClick="nextbtn"
-        android:text="다  음"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="47dp"
-        tools:layout_editor_absoluteY="347dp" />
+        android:text="회 원 가 입" />
 
-</android.support.constraint.ConstraintLayout>
+
+</LinearLayout>

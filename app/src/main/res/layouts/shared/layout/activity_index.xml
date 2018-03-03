@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="#9CCC65"
+    >
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
         android:gravity="center"
         android:text="Hi!"
-        android:layout_marginTop="150dp"
-        android:textSize="50sp" />
+        android:textSize="50sp"
+        android:visibility="gone"
+        android:id="@+id/textView16" />
 
     <TextView
         android:id="@+id/message"
@@ -20,7 +24,7 @@
         android:gravity="center"
         android:text="네크워크에 연결되어 있지 않습니다.\n확인후 다시 실행해주세요."
         android:visibility="gone"
-         />
+        />
 
     <Button
         android:id="@+id/close"
@@ -30,6 +34,29 @@
         android:layout_gravity="center"
         android:text="확인"
         android:visibility="gone"
-       />
+        />
 
-</LinearLayout>
+    <ImageView
+
+        android:id="@+id/imageAnimation"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/splash_main"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:srcCompat="@drawable/take_eat_white"
+        android:layout_marginBottom="154dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+</RelativeLayout>
