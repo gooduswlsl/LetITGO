@@ -9,11 +9,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.Volley;
 import com.sook.cs.letitgo.MyApp;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.item.Customer;
@@ -36,6 +39,9 @@ public class seller_order extends Fragment {
     Seller current_seller;
     private final String TAG = this.getClass().getSimpleName();
     Order_ListViewAdapter adapter;
+    private TextView no_order;
+    private ImageView imgAndroid;
+    private Animation anim;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,6 +55,7 @@ public class seller_order extends Fragment {
         current_seller = ((MyApp) getActivity().getApplicationContext()).getSeller();
 
         adapter = new Order_ListViewAdapter();
+        adapter.queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
         // 리스트뷰 참조 및 Adapter달기
         final ListView listview;
@@ -57,6 +64,11 @@ public class seller_order extends Fragment {
         swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipeRefreshLo);
         listview = (ListView) getView().findViewById(R.id.listview);
         listview.setAdapter(adapter);
+        imgAndroid = getView().findViewById(R.id.img_android);
+        progressDialog();
+
+
+        no_order = getView().findViewById(R.id.no_order);
         showOrderList(current_seller.getSeq());
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -143,14 +155,17 @@ public class seller_order extends Fragment {
                 ArrayList<Order> list = response.body();
 
                 if (list == null) {
+                    imgAndroid.clearAnimation();
+                    imgAndroid.setVisibility(View.GONE);
                     list = new ArrayList<>();
                 }
 
                 if (response.isSuccessful()) {
                     Log.d(TAG, "list size " + list.size());
                     if (list.size() == 0) {
-
                     } else {
+                        no_order.setVisibility(View.GONE);
+                        adapter.imgAndroid=imgAndroid;
                         adapter.setItemList(list);
                     }
                 } else {
@@ -167,4 +182,8 @@ public class seller_order extends Fragment {
 
     }
 
+    public void progressDialog(){
+        anim = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.loading);
+        imgAndroid.setAnimation(anim);
+    }
 }

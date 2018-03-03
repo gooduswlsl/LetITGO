@@ -4,10 +4,11 @@ android:orientation="vertical" android:layout_width="match_parent"
 android:layout_height="match_parent">
 
     <ImageView
+        android:layout_gravity="center_horizontal"
         android:id="@+id/addListItem"
         android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:src="@drawable/add"/>
 
     <RelativeLayout
@@ -24,6 +25,13 @@ android:layout_height="match_parent">
             android:id="@+id/listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/first_visit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="사장님, 첫 방문이시군요?\n플러스를 눌러 메뉴를 추가해 주세요"/>
 
     </RelativeLayout>
 </LinearLayout>

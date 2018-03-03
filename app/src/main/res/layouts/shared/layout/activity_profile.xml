@@ -23,7 +23,10 @@
             android:layout_gravity="top"
             android:src="@drawable/ic_person"
             app:civ_border_color="#AAAAAA"
-            app:civ_border_width="2dp" />
+            app:civ_border_width="2dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/profile_icon_change"
+            android:layout_alignEnd="@+id/profile_icon_change" />
 
         <ImageView
             android:id="@+id/profile_icon_change"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -7,9 +8,6 @@
             name="fragment"
             type="com.sook.cs.letitgo.customer.customer_menu" />
 
-        <variable
-            name="activity"
-            type="com.sook.cs.letitgo.customer.customer_store_detail" />
     </data>
 
     <LinearLayout
@@ -17,62 +15,23 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <RelativeLayout
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingBottom="5dp"
-            android:paddingLeft="60dp"
-            android:paddingRight="60dp"
-            android:paddingTop="5dp">
+            android:layout_height="wrap_content"
+            android:background="#66BB6A"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="#66BB6A"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="#000000"
+            app:tabTextColor="#ffffff" />
 
-
-            <EditText
-                android:id="@+id/edit_search"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/edit_search"
-                android:gravity="center"
-                android:hint="검색"
-                android:imeOptions="actionSearch"
-                android:inputType="text"
-                android:textSize="12sp" />
-
-
-            <ImageView
-                android:id="@+id/img_search"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:background="@drawable/search" />
-
-        </RelativeLayout>
-
-        <LinearLayout
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="8"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_count"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="@color/text_color_gray"
-                android:textSize="10sp"
-                android:visibility="gone" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerview_menu"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="10dp" />
-        </LinearLayout>
+            android:layout_height="match_parent"
+            android:gravity="center" />
 
     </LinearLayout>
 </layout>

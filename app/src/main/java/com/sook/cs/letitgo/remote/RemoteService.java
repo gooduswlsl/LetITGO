@@ -42,6 +42,8 @@ public interface RemoteService {
     @GET("/member/customer/{customer_seq}")
     Call<Customer> selectCustomerInfo(@Path("customer_seq") int seq);
 
+    @POST("/member/sendNewCustomerRegId")
+    Call<String> sendNewCustomerRegId(@Query("seq") int seq, @Query("regId") String regId);
     @Multipart
     @POST("/member/img_upload")
     Call<ResponseBody> uploadCustomerImg(@Part MultipartBody.Part file);
@@ -55,7 +57,7 @@ public interface RemoteService {
 
     //매장정보얻어오기
     @GET("/menu/sellerList")
-    Call<ArrayList<Seller>> listSellerInfo();
+    Call<ArrayList<Seller>> listSellerInfo(@Query("type") int type);
 
     @GET("/menu/sellerList/{sSeq}")
     Call<Seller> selectSeller(@Path("sSeq") int sSeq);
@@ -65,17 +67,16 @@ public interface RemoteService {
 
     //메뉴정보얻어오기
     @GET("/menu/menuList")
-    Call<ArrayList<Menu>> listMenuInfo();
+    Call<ArrayList<Menu>> listMenuInfo(@Query("type") int type);
 
     @GET("/menu/menuList/{mSeq}")
     Call<Menu> selectMenu(@Path("mSeq") int mSeq);
 
     //검색
     @GET("/menu/searchSeller")
-    Call<ArrayList<Seller>> searchSeller(@Query("key") String key);
-
+    Call<ArrayList<Seller>> searchSeller(@Query("key") String key, @Query("type") int type);
     @GET("/menu/searchMenu")
-    Call<ArrayList<Menu>> searchMenu(@Query("key") String key);
+    Call<ArrayList<Menu>> searchMenu(@Query("key") String key, @Query("type") int type);
 
     //즐겨찾기
     @GET("/menu/likedSeller")
@@ -92,9 +93,18 @@ public interface RemoteService {
     @GET("/member/seller/{seller_seq}")
     Call<Seller> selectSellerInfo(@Path("seller_seq") int seq);
 
+    @POST("/member/sendNewSellerRegId")
+    Call<String> sendNewSellerRegId(@Query("seq") int seq, @Query("regId") String regId);
     @Multipart
     @POST("/member/img_upload2")
     Call<ResponseBody> uploadSellerImg(@Part MultipartBody.Part file);
+
+
+    //판매자 회원정보 수정, 탈퇴
+    @POST("/member/changeSellerInfo")
+    Call<String> changeSellerInfo(@Body Seller seller);
+    @POST("/member/leaveSeller")
+    Call<String> leaveSeller(@Query("seq") int seq);
 
     //매장 메뉴 등록, 추가, 수정
     @POST("/menu/update")

@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.databinding.FragmentMenuBinding;
+import com.sook.cs.letitgo.databinding.FragmentMenuTypeBinding;
 import com.sook.cs.letitgo.item.Menu;
 import com.sook.cs.letitgo.item.Seller;
 import com.sook.cs.letitgo.remote.RemoteService;
@@ -34,7 +35,7 @@ import retrofit2.Response;
  */
 
 public class customer_store_detail extends AppCompatActivity {
-    private FragmentMenuBinding binding;
+    private FragmentMenuTypeBinding binding;
     private Adapter_menu_img adapterMenuImg;
     private Adapter_menu_list adapterMenuList;
     private RecyclerView recyclerView;
@@ -55,11 +56,6 @@ public class customer_store_detail extends AppCompatActivity {
         setView();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(android.view.Menu menu) {
-        getMenuInflater().inflate(R.menu.actionbar_actions, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -79,7 +75,7 @@ public class customer_store_detail extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.fragment_menu);
+        binding = DataBindingUtil.setContentView(this, R.layout.fragment_menu_type);
         binding.setActivity(this);
         binding.editSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -147,7 +143,7 @@ public class customer_store_detail extends AppCompatActivity {
         if (!key.equals("")) {
             recyclerView.removeAllViews();
             RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
-            Call<ArrayList<Menu>> call = remoteService.searchMenu(key);
+            Call<ArrayList<Menu>> call = remoteService.searchMenu(key, 0);
             call.enqueue(new Callback<ArrayList<Menu>>() {
                 @Override
                 public void onResponse(Call<ArrayList<Menu>> call, Response<ArrayList<Menu>> response) {

@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sook.cs.letitgo.MyApp;
@@ -50,6 +51,7 @@ public class seller_menu extends Fragment {
     public ImageView image;
     public ImageView image2;
     private String add_img_name;
+    private TextView first_visit;
 
     private final String TAG = this.getClass().getSimpleName();
     Menu menu_item;
@@ -105,6 +107,7 @@ public class seller_menu extends Fragment {
         ListView listview;
         listview = (ListView) getView().findViewById(R.id.listview);
         listview.setAdapter(adapter);
+        first_visit = (TextView) getView().findViewById(R.id.first_visit);
         showMenuList(memberSeq);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -119,12 +122,11 @@ public class seller_menu extends Fragment {
 
                 // TODO : use item data.
                 LayoutInflater inflater = getLayoutInflater(null);
-                View alertLayout = inflater.inflate(R.layout.popup_activity, null);
+                View alertLayout = inflater.inflate(R.layout.additem_popup_activity, null);
                 final EditText name = alertLayout.findViewById(R.id.name);
                 final EditText details = alertLayout.findViewById(R.id.details);
                 final EditText price = alertLayout.findViewById(R.id.price);
                 image = (ImageView) alertLayout.findViewById(R.id.img);
-                final Button getPicture = (Button) alertLayout.findViewById(R.id.getPicture);
 
                 final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
                 alert.setView(alertLayout);
@@ -142,7 +144,6 @@ public class seller_menu extends Fragment {
                 details.setClickable(false);
                 price.setFocusable(false);
                 price.setClickable(false);
-                getPicture.setEnabled(false);
 
                 alert.setNeutralButton("삭제하기", new DialogInterface.OnClickListener() {
                     @Override
@@ -151,8 +152,8 @@ public class seller_menu extends Fragment {
                         menu_item = new Menu();
 
                         final AlertDialog.Builder check_alert = new AlertDialog.Builder(getActivity());
-                        check_alert.setMessage("삭제하시겠습니까?")
-                                .setPositiveButton("삭제", new DialogInterface.OnClickListener() {
+                        check_alert.setMessage("이 메뉴를 삭제하시겠습니까?")
+                                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         adapter.deleteItem(position);
@@ -164,7 +165,7 @@ public class seller_menu extends Fragment {
                                         Toast.makeText(getActivity().getApplicationContext(), "삭제되었습니다", Toast.LENGTH_SHORT).show();
                                     }
                                 })
-                                .setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+                                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                     }
@@ -178,13 +179,13 @@ public class seller_menu extends Fragment {
                     }
                 });
 
-                alert.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                alert.setNegativeButton("닫기", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     }
                 });
 
-                getPicture.setOnClickListener(new Button.OnClickListener() { //사진 불러오기
+                image.setOnClickListener(new Button.OnClickListener() { //사진 불러오기
                     @Override
                     public void onClick(View view) { //메뉴 수정(사진찍기)
 
@@ -243,7 +244,6 @@ public class seller_menu extends Fragment {
                             price.setFocusableInTouchMode(true);
                             price.setClickable(true);
                             price.setFocusable(true);
-                            getPicture.setEnabled(true);
                             wantToCloseDialog = true;
                             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setText("확인");
                         }
@@ -266,20 +266,17 @@ public class seller_menu extends Fragment {
                 final EditText details = alertLayout.findViewById(R.id.details);
                 final EditText price = alertLayout.findViewById(R.id.price);
                 image2 = (ImageView) alertLayout.findViewById(R.id.img);
-                final Button getPicture = (Button) alertLayout.findViewById(R.id.getPicture);
 
-                getPicture.setOnClickListener( //메뉴 추가(사진찍기)
+                image2.setOnClickListener( //메뉴 추가(사진찍기)
                         new Button.OnClickListener() {
                             public void onClick(View v) {
                                 Intent intent = new Intent(getActivity().getApplicationContext(), MenuPicAddActivity.class);
-
                                 startActivityForResult(intent, ADD_PICTURE_MENU);
                             }
                         }
                 );
 
                 final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-                alert.setTitle("메뉴 추가하기");
                 alert.setView(alertLayout);
                 alert.setCancelable(false);
 
@@ -394,6 +391,7 @@ public class seller_menu extends Fragment {
                     if (list.size() == 0) {
 
                     } else {
+                        first_visit.setVisibility(View.GONE);
                         adapter.setItemList(list);
                     }
                 } else {

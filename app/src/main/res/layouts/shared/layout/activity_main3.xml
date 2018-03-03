@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -40,6 +41,12 @@
 
     </RelativeLayout>
 
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/bg_white"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -61,7 +68,6 @@
             android:layout_height="wrap_content"
             android:background="@android:color/white"
             android:gravity="start"
-            android:maxLines="1"
             android:maxLength="7"
             android:textSize="@dimen/text_size_medium" />
     </LinearLayout>
@@ -204,6 +210,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="회 원 가 입" />
-
 
 </LinearLayout>

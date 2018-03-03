@@ -10,6 +10,7 @@ public class Customer implements Serializable {
     public String sextype;
     public String birthday;
     public String img;
+    public String regId;
 
     public int getSeq() {
         return seq;
@@ -32,6 +33,8 @@ public class Customer implements Serializable {
     public void setSextype(String sextype) { this.sextype = sextype; }
     public void setBirthday(String birthday) { this.birthday = birthday; }
     public void setImg(String img) { this.img = img; }
+    public String getRegId() { return regId; }
+    public void setRegId(String regId) { this.regId = regId; }
 
     @Override
     public String toString() {

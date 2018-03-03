@@ -7,6 +7,7 @@
     android:weightSum="1"
     tools:context="com.sook.cs.letitgo.customer.customer_dialog_cart">
 
+
     <TextView
         android:id="@+id/textView18"
         android:layout_width="match_parent"
