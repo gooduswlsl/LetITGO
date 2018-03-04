@@ -2,11 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="250dp"
-    android:layout_height="100dp"
+    android:layout_height="123dp"
+    android:background="@android:color/transparent"
+    android:padding="2dp"
     android:orientation="vertical"
     android:weightSum="1"
     tools:context="com.sook.cs.letitgo.customer.customer_dialog_cart">
 
+    <LinearLayout
+        android:layout_width="245dp"
+        android:layout_height="118dp"
+        android:padding="15dp"
+        android:background="@drawable/dialog_round"
+        android:orientation="vertical">
 
     <TextView
         android:id="@+id/textView18"
@@ -24,9 +32,10 @@
             android:id="@+id/btn_cart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="2.5dp"
+            android:layout_marginRight="3dp"
             android:layout_weight="1"
-            android:background="#95C85b"
+            android:background="#95c85b"
+            android:textColor="#FFFFFF"
             android:onClick="clickCart"
             android:text="장바구니로 이동"
             android:textSize="12sp" />
@@ -35,11 +44,13 @@
             android:id="@+id/btn_shop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="2.5dp"
+            android:layout_marginLeft="3dp"
             android:layout_weight="1"
             android:background="#95C85b"
+            android:textColor="#FFFFFF"
             android:onClick="clickShop"
             android:text="계속 쇼핑하기"
             android:textSize="12sp" />
     </LinearLayout>
 </LinearLayout>
+    </LinearLayout>

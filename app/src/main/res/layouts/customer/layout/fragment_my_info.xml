@@ -105,7 +105,8 @@
                     android:layout_weight="5"
                     android:background="@drawable/tv_circle"
                     android:enabled="false"
-                    android:gravity="center"
+                    android:focusable="false"
+                    android:focusableInTouchMode="true"
                     android:paddingLeft="15dp"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -130,11 +131,13 @@
 
                 <EditText
                     android:id="@+id/profile_birth"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:focusable="false"
+                    android:focusableInTouchMode="true"
                     android:background="@drawable/tv_circle"
                     android:enabled="false"
-                    android:gravity="start"
                     android:paddingLeft="15dp"
                     android:textSize="13sp" />
 

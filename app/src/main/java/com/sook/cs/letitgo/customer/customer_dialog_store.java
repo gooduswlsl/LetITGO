@@ -95,4 +95,5 @@ public class customer_dialog_store extends Activity implements OnMapReadyCallbac
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ZOOMIN.getCenter(), 16));
         googleMap.addMarker(markerOptions).showInfoWindow();
     }
+    @Override public void onBackPressed() { finish();}
 }

@@ -1,5 +1,6 @@
 package com.sook.cs.letitgo.customer;
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +26,9 @@ import com.sook.cs.letitgo.lib.StringLib;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
 import com.squareup.picasso.Picasso;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -36,7 +42,8 @@ import retrofit2.Response;
 public class customer_my_info extends Fragment {
     private final String TAG = this.getClass().getSimpleName();
     private ImageView profile_icon, profile_icon_change;
-    private TextView profile_name, profile_sextype, profile_birth, profile_phone, leaveMember;
+    private EditText profile_name, profile_sextype, profile_birth, profile_phone;
+    private TextView leaveMember;
     private Button changeProfile;
     Customer current_customer;
 
@@ -67,7 +74,19 @@ public class customer_my_info extends Fragment {
 
         profile_name.setText(current_customer.name);
         profile_sextype.setText(current_customer.sextype);
+        profile_sextype.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setSexTypeDialog();
+            }
+        });
         profile_birth.setText(current_customer.birthday);
+        profile_birth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setBirthdayDialog();
+            }
+        });
         profile_phone.setText(current_customer.phone);
 
         profile_icon_change.setOnClickListener(new View.OnClickListener() {  //회원정보 수정
@@ -202,4 +221,59 @@ public class customer_my_info extends Fragment {
                     .into(profile_icon);
         }
     }
+
+    /**
+     * 성별을 선택할 수 있는 다이얼로그를 보여준다.
+     */
+    private void setSexTypeDialog() {
+        final String[] sexTypes = new String[2];
+        sexTypes[0] = getResources().getString(R.string.sex_woman);
+        sexTypes[1] = getResources().getString(R.string.sex_man);
+
+        new AlertDialog.Builder(getActivity())
+                .setItems(sexTypes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which >= 0) {
+                            profile_sextype.setText(sexTypes[which]);
+                            current_customer.sextype=sexTypes[which];
+                        }
+                        dialog.dismiss();
+                    }
+                }).show();
+    }
+
+    /**
+     * 생일을 선택할 수 있는 다이얼로그를 보여준다.
+     */
+    private void setBirthdayDialog() {
+        GregorianCalendar calendar = new GregorianCalendar();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                String myMonth;
+                if (monthOfYear + 1 < 10) {
+                    myMonth = "0" + (monthOfYear + 1);
+                } else {
+                    myMonth = "" + (monthOfYear + 1);
+                }
+
+                String myDay;
+                if (dayOfMonth < 10) {
+                    myDay = "0" + dayOfMonth;
+                } else {
+                    myDay = "" + dayOfMonth;
+                }
+
+                String date = year + " " + myMonth + " " + myDay;
+                profile_birth.setText(date);
+                current_customer.birthday=date;
+            }
+        }, year, month, day).show();
+    }
+
 }
