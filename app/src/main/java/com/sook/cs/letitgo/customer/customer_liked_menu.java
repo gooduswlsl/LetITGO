@@ -38,7 +38,7 @@ public class customer_liked_menu extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        recyclerAdapter = new Adapter_menu_list(getContext(), new ArrayList<Menu>());
+        recyclerAdapter = new Adapter_menu_list(getContext(), new ArrayList<Menu>(), true);
     }
 
     @Nullable

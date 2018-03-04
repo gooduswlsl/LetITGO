@@ -100,7 +100,7 @@ public class DBHelperCart extends SQLiteOpenHelper {
 
     public ArrayList<Order> getCartList() {
         SQLiteDatabase db = this.getReadableDatabase();
-        String sql = "select * from cart";
+        String sql = "select * from cart order by sSeq, seq";
         Cursor cursor = db.rawQuery(sql, null);
         cursor.moveToFirst();
 

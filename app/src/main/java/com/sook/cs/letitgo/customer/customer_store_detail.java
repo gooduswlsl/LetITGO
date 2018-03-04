@@ -51,8 +51,7 @@ public class customer_store_detail extends AppCompatActivity {
         adapterMenuImg = new Adapter_menu_img(this, new ArrayList<Menu>());
 
         seller_seq = getIntent().getIntExtra("seller_seq", 0);
-        if (seller_seq != 0)
-            setTitle();
+        setTitle();
         setView();
     }
 
@@ -60,9 +59,6 @@ public class customer_store_detail extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_cart:
-                Toast.makeText(getApplicationContext(), "CART", Toast.LENGTH_SHORT).show();
-                break;
             case android.R.id.home:
                 finish();
                 break;
@@ -149,7 +145,7 @@ public class customer_store_detail extends AppCompatActivity {
                 public void onResponse(Call<ArrayList<Menu>> call, Response<ArrayList<Menu>> response) {
                     ArrayList<Menu> list = response.body();
                     if (response.isSuccessful() && list != null) {
-                        adapterMenuList = new Adapter_menu_list(customer_store_detail.this, list);
+                        adapterMenuList = new Adapter_menu_list(customer_store_detail.this, list, false);
                         recyclerView.setLayoutManager(new LinearLayoutManager(customer_store_detail.this));
                         recyclerView.setAdapter(adapterMenuList);
 

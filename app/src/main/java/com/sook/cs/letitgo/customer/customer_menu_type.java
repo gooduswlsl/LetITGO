@@ -48,7 +48,6 @@ public class customer_menu_type extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         adapterMenuImg = new Adapter_menu_img(getActivity(), new ArrayList<Menu>());
-
     }
 
     @Nullable
@@ -109,7 +108,7 @@ public class customer_menu_type extends Fragment {
                 public void onResponse(Call<ArrayList<Menu>> call, Response<ArrayList<Menu>> response) {
                     ArrayList<Menu> list = response.body();
                     if (response.isSuccessful() && list != null) {
-                        adapterMenuList = new Adapter_menu_list(getActivity(), list);
+                        adapterMenuList = new Adapter_menu_list(getActivity(), list, false);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
                         recyclerView.setAdapter(adapterMenuList);

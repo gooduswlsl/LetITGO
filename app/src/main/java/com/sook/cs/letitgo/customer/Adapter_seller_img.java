@@ -1,5 +1,6 @@
 package com.sook.cs.letitgo.customer;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.BindingAdapter;
@@ -27,6 +28,7 @@ public class Adapter_seller_img extends RecyclerView.Adapter<MyViewHolder> {
     private ViewDataBinding binding;
     private ArrayList<Seller> sellerArrayList;
     private Context mContext;
+    int REQUEST_SELLER = 0;
 
     public Adapter_seller_img(Context mContext, ArrayList<Seller> sellerArrayList) {
         this.sellerArrayList = sellerArrayList;
@@ -50,6 +52,7 @@ public class Adapter_seller_img extends RecyclerView.Adapter<MyViewHolder> {
                 Intent it = new Intent(mContext, customer_dialog_store.class);
                 it.putExtra("seller", seller);
                 (mContext).startActivity(it);
+                //((Activity) (mContext)).startActivityForResult(it, REQUEST_SELLER);
             }
         });
     }

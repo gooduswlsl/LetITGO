@@ -74,7 +74,7 @@ public class customer_main extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_SELLER || requestCode == REQUEST_MENU) {
+        if ((requestCode == REQUEST_SELLER || requestCode == REQUEST_MENU) ) {
             fragment = getSupportFragmentManager().findFragmentByTag("fragment_liked");
             fragment.onActivityResult(requestCode, resultCode, data);
         } else if (resultCode == REQUEST_PROFILE) {

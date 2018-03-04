@@ -41,7 +41,7 @@ public class customer_dialog_menu extends Activity {
         position = getIntent().getIntExtra("position", 0);
         menu_seq = menu.getmSeq();
 
-        setSeller(menu.seller_seq);
+        setSeller(menu.getSeller_seq());
         setStar();
     }
 
@@ -107,10 +107,8 @@ public class customer_dialog_menu extends Activity {
         num = Integer.parseInt(binding.tvNum.getText().toString());
         helperCart = new DBHelperCart(this, "cart.db", null, 1);
         if(helperCart.isInCart(menu_seq)){
-            Log.d("menudialog", "ok");
             helperCart.updateCart(menu_seq, num);
         }else{
-            Log.d("menudialog", "no");
             helperCart.insertCart(menu_seq, menu.getSeller_seq(), num);
         }
 

@@ -1,5 +1,6 @@
 package com.sook.cs.letitgo.customer;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.BindingAdapter;
@@ -7,6 +8,7 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +26,7 @@ public class Adapter_menu_img extends RecyclerView.Adapter<MyViewHolder> {
     private ViewDataBinding binding;
     private ArrayList<Menu> menuArrayList;
     private Context mContext;
+    int REQUEST_MENU = 1;
 
     public Adapter_menu_img(Context mContext, ArrayList<Menu> menuArrayList) {
         this.menuArrayList = menuArrayList;
@@ -41,12 +44,14 @@ public class Adapter_menu_img extends RecyclerView.Adapter<MyViewHolder> {
     public void onBindViewHolder(MyViewHolder holder, int position) {          // 항목을 뷰홀더에 바인딩
         final Menu menu = menuArrayList.get(position);
         holder.mimgBinding.setMenu(menu);
+        Log.d("sellerp", String.valueOf(menu.getSeller_seq()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("menu", String.valueOf(menu.getSeller_seq()));
                 Intent it = new Intent(mContext, customer_dialog_menu.class);
                 it.putExtra("menu", menu);
-                (mContext).startActivity(it);
+                mContext.startActivity(it);
             }
         });
     }
