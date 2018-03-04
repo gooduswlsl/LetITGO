@@ -32,10 +32,12 @@ public class Adapter_menu_list extends RecyclerView.Adapter<MyViewHolder> {
     ArrayList<Menu> menuArrayList;
     Context mContext;
     int REQUEST_MENU = 1;
+    boolean isliked;
 
-    public Adapter_menu_list(Context mContext, ArrayList<Menu> menuArrayList) {
+    public Adapter_menu_list(Context mContext, ArrayList<Menu> menuArrayList, boolean isliked) {
         this.menuArrayList = menuArrayList;
         this.mContext = mContext;
+        this.isliked = isliked;
     }
 
     @Override
@@ -55,7 +57,10 @@ public class Adapter_menu_list extends RecyclerView.Adapter<MyViewHolder> {
                 Intent it = new Intent(mContext, customer_dialog_menu.class);
                 it.putExtra("menu", menu);
                 it.putExtra("position", position);
-                ((Activity) (mContext)).startActivityForResult(it, REQUEST_MENU);
+                if (isliked)
+                    ((Activity) (mContext)).startActivityForResult(it, REQUEST_MENU);
+                else
+                    mContext.startActivity(it);
             }
         });
 

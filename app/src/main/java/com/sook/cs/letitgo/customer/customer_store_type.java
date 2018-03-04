@@ -120,7 +120,7 @@ public class customer_store_type extends Fragment {
                 public void onResponse(Call<ArrayList<Seller>> call, Response<ArrayList<Seller>> response) {
                     ArrayList<Seller> list = response.body();
                     if (response.isSuccessful() && list != null) {
-                        adapterSellerList = new Adapter_seller_list(getActivity(), list);
+                        adapterSellerList = new Adapter_seller_list(getActivity(), list, false);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
                         recyclerView.setAdapter(adapterSellerList);

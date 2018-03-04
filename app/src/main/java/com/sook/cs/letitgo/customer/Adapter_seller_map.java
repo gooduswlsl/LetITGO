@@ -49,7 +49,7 @@ public class Adapter_seller_map extends RecyclerView.Adapter<MyViewHolder> {
             public void onClick(View v) {
                 Intent it = new Intent(mContext, customer_dialog_store.class);
                 it.putExtra("seller", seller);
-                ((Activity) (mContext)).startActivityForResult(it, REQUEST_SELLER);
+                mContext.startActivity(it);
             }
         });
     }

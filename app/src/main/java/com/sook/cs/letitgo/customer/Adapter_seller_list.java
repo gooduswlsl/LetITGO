@@ -29,10 +29,12 @@ public class Adapter_seller_list extends RecyclerView.Adapter<MyViewHolder> {
     ArrayList<Seller> sellerArrayList;
     Context mContext;
     int REQUEST_SELLER = 0;
+    boolean isliked;
 
-    public Adapter_seller_list(Context mContext, ArrayList<Seller> sellerArrayList) {
+    public Adapter_seller_list(Context mContext, ArrayList<Seller> sellerArrayList, boolean isliked) {
         this.sellerArrayList = sellerArrayList;
         this.mContext = mContext;
+        this.isliked = isliked;
     }
 
     @Override
@@ -51,7 +53,10 @@ public class Adapter_seller_list extends RecyclerView.Adapter<MyViewHolder> {
             public void onClick(View v) {
                 Intent it = new Intent(mContext, customer_dialog_store.class);
                 it.putExtra("seller", seller);
-                ((Activity) (mContext)).startActivityForResult(it, REQUEST_SELLER);
+                if (isliked)
+                    ((Activity) (mContext)).startActivityForResult(it, REQUEST_SELLER);
+                else
+                    mContext.startActivity(it);
             }
         });
     }

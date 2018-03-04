@@ -50,7 +50,7 @@ public class customer_liked_store extends Fragment {
     public void onResume() {
         super.onResume();
 
-        recyclerAdapter = new Adapter_seller_list(getActivity(), new ArrayList<Seller>());
+        recyclerAdapter = new Adapter_seller_list(getActivity(), new ArrayList<Seller>(), true);
         recyclerView = binding.recyclerviewStore;
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
