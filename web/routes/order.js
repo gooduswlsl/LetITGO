@@ -109,4 +109,24 @@ router.get('/getMonthSales', function(req, res, next) {
 	});
 });
 
+//order/sendOrder
+router.post('/sendOrder', function(req, res){
+
+    var cust_seq = req.body.cust_seq;
+    var menu_seq = req.body.menu_seq;
+    var seller_seq = req.body.seller_seq;
+    var num = req.body.num;
+    var message = req.body.message;
+    var time_take = req.body.time_take;
+
+    var sql = "insert into `order` (cust_seq,menu_seq,seller_seq,num,message,time_take) values(?,?,?,?,?,?);";
+
+    console.log("sql : " + sql);
+
+    db.get().query(sql,[cust_seq,menu_seq,seller_seq,num,message,time_take], function(err, result){
+       if (err) return res.sendStatus(400);
+         res.status(200).send('' + result.insertId);
+       });
+ });
+
 module.exports = router;
