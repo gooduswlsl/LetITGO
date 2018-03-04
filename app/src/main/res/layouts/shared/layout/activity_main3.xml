@@ -10,20 +10,18 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_width="128dp"
-        android:layout_height="128dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_gravity="center"
         android:layout_margin="@dimen/spacing_large"
         android:orientation="vertical">
 
-        <ImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <ImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/img_test"
             android:layout_width="128dp"
             android:layout_height="128dp"
             android:layout_gravity="top"
-            android:src="@drawable/image_border"
-            android:background="@drawable/noimage"/>
+            android:src="@drawable/image_border" />
 
         <ImageView
             android:id="@+id/profile_icon_change"
@@ -44,8 +42,8 @@
     <Spinner
         android:id="@+id/spinner1"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="@color/bg_white"/>
+        android:layout_height="30dp"
+        android:background="@color/colorPrimaryDark" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -162,6 +160,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
+        android:orientation="horizontal"
         android:padding="@dimen/spacing_medium">
 
         <TextView
@@ -188,13 +187,14 @@
         <Button
             android:id="@+id/button4"
             android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_weight="0.10"
+            android:background="@color/colorPrimaryDark"
             android:gravity="center"
             android:onClick="getAddress"
-            android:text="찾기"
-            android:textSize="13sp"
-            android:layout_weight="0.10" />
+            android:text="search"
+            android:textSize="9sp" />
 
     </LinearLayout>
 
@@ -203,12 +203,5 @@
         android:layout_height="1dp"
         android:layout_marginLeft="60dp"
         android:background="#55AAAAAA" />
-
-    <Button
-        android:id="@+id/button7"
-        android:onClick="nextbtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="회 원 가 입" />
 
 </LinearLayout>

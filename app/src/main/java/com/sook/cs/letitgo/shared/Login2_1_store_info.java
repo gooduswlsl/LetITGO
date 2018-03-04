@@ -23,6 +23,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -69,6 +71,7 @@ public class Login2_1_store_info extends AppCompatActivity{
     private EditText siteEdit;
     private EditText webpageEdit;
     private String regId;
+    private String mCurrentPhotoPath;
 
     private static final int PICK_FROM_CAMERA = 1;
     private static final int PICK_FROM_ALBUM = 2;
@@ -83,14 +86,11 @@ public class Login2_1_store_info extends AppCompatActivity{
     private static final int CAFE = 6;
     private static final int ETC = 7;
 
-
     private Uri photoUri;
     private String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA};
     private static final int MULTIPLE_PERMISSIONS = 101;
-
-    private String mCurrentPhotoPath;
 
     Spinner spinner1;
     AdapterSpinner adapterSpinner1;
@@ -122,6 +122,53 @@ public class Login2_1_store_info extends AppCompatActivity{
                 selectPicture();
             }
         });
+    }
+
+    /**
+     * 오른쪽 상단 메뉴를 구성한다.
+     *
+     * @param menu 메뉴 객체
+     * @return 메뉴를 보여준다면 true, 보여주지 않는다면 false
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.actionbar_profile, menu);
+        return true;
+    }
+
+    /**
+     * 오른쪽 상단 확인 메뉴를 클릭했을 때의 동작을 지정한다.
+     * 여기서는 모든 버튼이 액티비티를 종료한다.
+     *
+     * @param item 메뉴 아이템 객체
+     * @return 메뉴를 처리했다면 true, 그렇지 않다면 false
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_submit:
+                if (nameEdit.equals("") || siteEdit.equals("") || (addressText.getText().toString()).equals("")) {
+                    if (nameEdit.equals("")) {
+                        Toast.makeText(getApplicationContext(), "매장이름을 입력하세요", Toast.LENGTH_SHORT).show();
+                    }
+
+                    if (siteEdit.equals("")) {
+                        Toast.makeText(getApplicationContext(), "지점명을 입력하세요", Toast.LENGTH_SHORT).show();
+                    }
+
+                    if ((addressText.getText().toString()).equals("")) {
+                        Toast.makeText(getApplicationContext(), "주소를 입력하세요", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    save();
+                    Intent intent = new Intent(getApplicationContext(), Login_finish.class);
+                    startActivity(intent);
+                }
+                break;
+        }
+
+        return true;
     }
 
     private void initView(){
@@ -219,27 +266,6 @@ public class Login2_1_store_info extends AppCompatActivity{
         });
     }
 
-    public void nextbtn(View v) {
-        if (nameEdit.equals("") || siteEdit.equals("") || (addressText.getText().toString()).equals("")) {
-            if (nameEdit.equals("")) {
-                Toast.makeText(getApplicationContext(), "매장이름을 입력하세요", Toast.LENGTH_SHORT).show();
-            }
-
-            if (siteEdit.equals("")) {
-                Toast.makeText(getApplicationContext(), "지점명을 입력하세요", Toast.LENGTH_SHORT).show();
-            }
-
-            if ((addressText.getText().toString()).equals("")) {
-                Toast.makeText(getApplicationContext(), "주소를 입력하세요", Toast.LENGTH_SHORT).show();
-            }
-
-        } else {
-            save();
-            Intent intent = new Intent(getApplicationContext(), Login_finish.class);
-            startActivity(intent);
-        }
-    }
-
 
     public void getGeo(){
         final Geocoder geocoder = new Geocoder(this);
@@ -264,8 +290,6 @@ public class Login2_1_store_info extends AppCompatActivity{
         }
 
     }
-
-
 
     private Seller getSellerInfoItem(){
         Seller item = new Seller();
