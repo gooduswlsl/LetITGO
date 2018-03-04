@@ -51,6 +51,8 @@ public class Order_ListViewAdapter extends BaseAdapter {
     public ImageView imgAndroid;
     RequestQueue queue;
 
+    public TextView loading_bg;
+
     // Order_ListViewAdapter의 생성자
     public Order_ListViewAdapter() {
     }
@@ -177,6 +179,7 @@ public class Order_ListViewAdapter extends BaseAdapter {
                 }
                 imgAndroid.clearAnimation();
                 imgAndroid.setVisibility(View.GONE);
+                loading_bg.setVisibility(View.GONE);
             }
         }, 1000);
 

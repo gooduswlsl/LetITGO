@@ -24,7 +24,7 @@ import retrofit2.http.Query;
  * 서버에 호출할 메소드를 선언하는 인터페이스
  */
 public interface RemoteService {
-    String BASE_URL = "http://192.168.219.109:3000";  //집
+    String BASE_URL = "http://172.30.1.14:3000";  //집
 
     String CUSTOMER_IMG_URL = BASE_URL + "/customer/";
     String SELLER_IMG_URL = BASE_URL + "/seller/";
@@ -44,6 +44,7 @@ public interface RemoteService {
 
     @POST("/member/sendNewCustomerRegId")
     Call<String> sendNewCustomerRegId(@Query("seq") int seq, @Query("regId") String regId);
+
     @Multipart
     @POST("/member/img_upload")
     Call<ResponseBody> uploadCustomerImg(@Part MultipartBody.Part file);
@@ -95,10 +96,13 @@ public interface RemoteService {
 
     @POST("/member/sendNewSellerRegId")
     Call<String> sendNewSellerRegId(@Query("seq") int seq, @Query("regId") String regId);
+
     @Multipart
     @POST("/member/img_upload2")
     Call<ResponseBody> uploadSellerImg(@Part MultipartBody.Part file);
 
+    @GET("/member/getRegId/{seller_seq}")
+    Call<String> getRegId(@Path("seller_seq") int seq);
 
     //판매자 회원정보 수정, 탈퇴
     @POST("/member/changeSellerInfo")

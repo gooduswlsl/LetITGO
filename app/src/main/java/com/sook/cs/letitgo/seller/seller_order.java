@@ -39,7 +39,7 @@ public class seller_order extends Fragment {
     Seller current_seller;
     private final String TAG = this.getClass().getSimpleName();
     Order_ListViewAdapter adapter;
-    private TextView no_order;
+    private TextView no_order, loading_bg;
     private ImageView imgAndroid;
     private Animation anim;
 
@@ -65,6 +65,7 @@ public class seller_order extends Fragment {
         listview = (ListView) getView().findViewById(R.id.listview);
         listview.setAdapter(adapter);
         imgAndroid = getView().findViewById(R.id.img_android);
+        loading_bg = getView().findViewById(R.id.loading_bg);
         progressDialog();
 
 
@@ -155,6 +156,7 @@ public class seller_order extends Fragment {
                 ArrayList<Order> list = response.body();
 
                 if (list == null) {
+                    loading_bg.setVisibility(View.GONE);
                     imgAndroid.clearAnimation();
                     imgAndroid.setVisibility(View.GONE);
                     list = new ArrayList<>();
@@ -166,6 +168,7 @@ public class seller_order extends Fragment {
                     } else {
                         no_order.setVisibility(View.GONE);
                         adapter.imgAndroid=imgAndroid;
+                        adapter. loading_bg= loading_bg;
                         adapter.setItemList(list);
                     }
                 } else {

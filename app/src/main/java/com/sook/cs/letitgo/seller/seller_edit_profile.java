@@ -24,8 +24,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +39,7 @@ import com.sook.cs.letitgo.lib.RemoteLib;
 import com.sook.cs.letitgo.lib.StringLib;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
+import com.sook.cs.letitgo.shared.AdapterSpinner;
 import com.sook.cs.letitgo.shared.Login_2_1_1_searchAddress;
 import com.squareup.picasso.Picasso;
 
@@ -68,6 +71,15 @@ public class seller_edit_profile extends AppCompatActivity {
     private static final int CROP_FROM_CAMERA = 3;
     private static final int GET_ADDRESS = 4;
 
+    private static final int KOREAN = 1;
+    private static final int CHINESE = 2;
+    private static final int JAPANESE = 3;
+    private static final int AMERICAN = 4;
+    private static final int SCHOOL_FOOD = 5;
+    private static final int CAFE = 6;
+    private static final int ETC = 7;
+    int type;
+
     private boolean address_btn_clicked = false;
     private boolean img_btn_clicked = false;
 
@@ -79,6 +91,10 @@ public class seller_edit_profile extends AppCompatActivity {
 
     private String mCurrentPhotoPath;
     private final String TAG = this.getClass().getSimpleName();
+    Spinner spinner1;
+    AdapterSpinner adapterSpinner1;
+    List<String> data;
+
 
 
     @Override
@@ -92,6 +108,10 @@ public class seller_edit_profile extends AppCompatActivity {
 
         setContentView(R.layout.seller_edit_profile);
         checkPermissions();
+
+        data = new ArrayList<>();
+        data.add("한식"); data.add("중식"); data.add("일식"); data.add("양식"); data.add("분식");
+        data.add("카페/베이커리"); data.add("기타");
         initView();
     }
 
@@ -103,6 +123,7 @@ public class seller_edit_profile extends AppCompatActivity {
         siteEdit = (EditText) findViewById(R.id.siteEdit);
         webpageEdit = (EditText) findViewById(R.id.webpageEdit);
         leaveMember = (TextView) findViewById(R.id.leaveMember);
+        spinner1 = (Spinner)findViewById(R.id.spinner1);
 
         showPicture();
         addressText.setText(current_seller.address);
@@ -134,6 +155,45 @@ public class seller_edit_profile extends AppCompatActivity {
                 alert.show();
             }
         });
+
+        adapterSpinner1 = new AdapterSpinner(this, data);
+        spinner1.setAdapter(adapterSpinner1);
+        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String str_type = (String) parent.getItemAtPosition(position);
+                switch (str_type){
+                    case "한식":
+                        type = KOREAN;
+                        break;
+                    case "중식":
+                        type = CHINESE;
+                        break;
+                    case "일식":
+                        type = JAPANESE;
+                        break;
+                    case "양식":
+                        type = AMERICAN;
+                        break;
+                    case "분식":
+                        type = SCHOOL_FOOD;
+                        break;
+                    case "카페/베이커리":
+                        type = CAFE;
+                        break;
+                    case "기타":
+                        type = ETC;
+                        break;
+                }
+                current_seller.type=type;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
     }
 

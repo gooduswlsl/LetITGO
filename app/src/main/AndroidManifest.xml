@@ -144,7 +144,7 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <activity android:name=".Please"></activity>
+
         <activity android:name=".seller.seller_edit_profile"></activity>
     </application>
 

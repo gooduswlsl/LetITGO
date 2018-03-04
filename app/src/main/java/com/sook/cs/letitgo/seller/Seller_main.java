@@ -78,7 +78,7 @@ public class Seller_main extends AppCompatActivity {
         {
             if(str.equals("goToSeller_order"))
             {
-                //seller_order fragment로 바로 이동
+                viewPager.setCurrentItem(1);
             }
         }
 

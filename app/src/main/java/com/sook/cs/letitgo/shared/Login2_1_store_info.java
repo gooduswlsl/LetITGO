@@ -81,7 +81,7 @@ public class Login2_1_store_info extends AppCompatActivity{
     private static final int AMERICAN = 4;
     private static final int SCHOOL_FOOD = 5;
     private static final int CAFE = 6;
-    private static final int EXC = 7;
+    private static final int ETC = 7;
 
 
     private Uri photoUri;
@@ -160,7 +160,7 @@ public class Login2_1_store_info extends AppCompatActivity{
                         type = CAFE;
                         break;
                     case "기타":
-                        type = EXC;
+                        type = ETC;
                         break;
                 }
                 currentItem.type=type;

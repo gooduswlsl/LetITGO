@@ -157,5 +157,4 @@ public class Adapter_cart extends RecyclerView.Adapter<MyViewHolder> {
     public static void loadImg(ImageView imageView, String fileName) {
         Picasso.with(imageView.getContext()).load(RemoteService.MENU_IMG_URL + fileName).into(imageView);
     }
-
 }

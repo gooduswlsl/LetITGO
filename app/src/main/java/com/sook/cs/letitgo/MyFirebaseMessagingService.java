@@ -53,7 +53,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("렛잇고")
+                .setContentTitle("테이크잇")
                 .setContentIntent(contentIntent)
                 .setContentText(contents)
                 .setAutoCancel(true)
@@ -77,7 +77,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("렛잇고")
+                .setContentTitle("테이크잇")
                 .setContentIntent(contentIntent)
                 .setContentText(contents)
                 .setAutoCancel(true)
