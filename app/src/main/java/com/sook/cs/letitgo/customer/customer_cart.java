@@ -19,8 +19,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.sook.cs.letitgo.MyApp;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.databinding.ActivityCartBinding;
+import com.sook.cs.letitgo.item.Customer;
 import com.sook.cs.letitgo.item.Order;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
@@ -43,6 +45,7 @@ public class customer_cart extends AppCompatActivity {
     private DBHelperCart helper;
     private ArrayList<Order> orderArrayList;
     RequestQueue queue;
+    Customer current_customer;
     private final String TAG = this.getClass().getSimpleName();
 
     public customer_cart() {
@@ -57,6 +60,8 @@ public class customer_cart extends AppCompatActivity {
         ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         ab.setCustomView(R.layout.actionbar_center);
         ((TextView) ab.getCustomView().findViewById(R.id.ab_title)).setText("장바구니");
+
+        current_customer = ((MyApp) getApplicationContext()).getCustomer();
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_cart);
         recyclerAdapter = new Adapter_cart(this, new ArrayList<Order>());
@@ -93,7 +98,6 @@ public class customer_cart extends AppCompatActivity {
         } else {
             for (int i = 0; i < orderArrayList.size(); i++) {
                 upload(orderArrayList.get(i));
-                Log.d(TAG,"seq:"+orderArrayList.get(i).getSeller_seq());
                 getRegId(orderArrayList.get(i).getSeller_seq());
                 helper.flushDB();
                 Intent intent = new Intent(getApplicationContext(),customer_payment.class);
@@ -105,6 +109,7 @@ public class customer_cart extends AppCompatActivity {
 
     public void upload(Order order) {
         RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
+        order.cust_seq=current_customer.getSeq();
         Call<String> call = remoteService.sendOrder(order);
 
         call.enqueue(new Callback<String>() {

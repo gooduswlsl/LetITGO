@@ -112,7 +112,7 @@ public class customer_main extends AppCompatActivity {
 
             case 3:
                 customer_maps fragment3 = new customer_maps();
-                transaction.replace(R.id.fragment_container, fragment3);
+                transaction.replace(R.id.fragment_container, fragment3, "fragment_map");
                 transaction.commit();
                 break;
 
