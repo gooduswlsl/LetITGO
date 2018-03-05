@@ -116,9 +116,9 @@ public class customer_cart extends AppCompatActivity {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful()) {
-                    Log.d("ok", "sendOrder successful");
+                    Log.d(TAG, "sendOrder successful");
                 } else {
-                    Log.d("ok", "sendOrder unsuccessful");
+                    Log.d(TAG, "sendOrder unsuccessful");
                 }
             }
             @Override

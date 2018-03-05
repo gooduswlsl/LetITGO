@@ -101,8 +101,11 @@ public interface RemoteService {
     @POST("/member/img_upload2")
     Call<ResponseBody> uploadSellerImg(@Part MultipartBody.Part file);
 
-    @GET("/member/getRegId/{seller_seq}")
+    @GET("/member/getSellerRegId/{seller_seq}")
     Call<String> getRegId(@Path("seller_seq") int seq);
+
+    @GET("/member/getCustomerRegId/{customer_seq}")
+    Call<String> getCustomerRegId(@Path("customer_seq") int customer_seq);
 
     //판매자 회원정보 수정, 탈퇴
     @POST("/member/changeSellerInfo")

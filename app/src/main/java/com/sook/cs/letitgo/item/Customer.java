@@ -45,6 +45,7 @@ public class Customer implements Serializable {
                 ", sextype='" + sextype + '\'' +
                 ", birthday='" + birthday + '\'' +
                 ", img='" + img + '\'' +
+                ", regId='" + regId + '\'' +
                 '}';
     }
 }
