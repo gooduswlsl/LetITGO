@@ -18,8 +18,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.sook.cs.letitgo.R;
-import com.sook.cs.letitgo.item.Seller;
 import com.sook.cs.letitgo.databinding.DialogSellerBinding;
+import com.sook.cs.letitgo.item.Seller;
 
 public class customer_dialog_store extends Activity implements OnMapReadyCallback {
     DialogSellerBinding binding;
@@ -95,5 +95,8 @@ public class customer_dialog_store extends Activity implements OnMapReadyCallbac
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ZOOMIN.getCenter(), 16));
         googleMap.addMarker(markerOptions).showInfoWindow();
     }
-    @Override public void onBackPressed() { finish();}
+
+    @Override public void onBackPressed() {
+        finish();
+    }
 }

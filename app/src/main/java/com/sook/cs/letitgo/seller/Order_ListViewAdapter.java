@@ -17,7 +17,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.item.Customer;
 import com.sook.cs.letitgo.item.Menu;
@@ -95,7 +94,7 @@ public class Order_ListViewAdapter extends BaseAdapter {
                 btn_finished.setClickable(true);
                 sendPermit(listViewItemList.get(position).getSeq(),ACCEPT_ORDER, position);
                 sendTotal_price(listViewItemList.get(position).getSeq(),m_list.get(position).getmPrice()*listViewItemList.get(position).getNum());
-                send("고객님의 주문이 수락되었습니다.", position);
+                getCustomerRegId(c_list.get(position).getSeq(),ACCEPT_ORDER);
 
                 Toast.makeText(view.getContext(), c_list.get(position).getName()+"님의 주문을 수락하였습니다.", Toast.LENGTH_SHORT).show();
             }
@@ -109,8 +108,7 @@ public class Order_ListViewAdapter extends BaseAdapter {
                 declineStr.setVisibility(View.VISIBLE);
                 btn_accept.setClickable(false);
                 sendPermit(listViewItemList.get(position).getSeq(),DECLINE_ORDER, position);
-                send("고객님의 주문이 거절되었습니다.", position);
-                queue = Volley.newRequestQueue(context.getApplicationContext());
+                getCustomerRegId(c_list.get(position).getSeq(),DECLINE_ORDER);
 
                 Toast.makeText(view.getContext(), c_list.get(position).getName()+"님의 주문을 거절하였습니다.", Toast.LENGTH_SHORT).show();
             }
@@ -123,7 +121,7 @@ public class Order_ListViewAdapter extends BaseAdapter {
                 btn_finished.setVisibility(View.GONE);
                 acceptStr.setVisibility(View.VISIBLE);
                 sendPermit(listViewItemList.get(position).getSeq(),ORDER_FINISHED, position);
-                send("고객님의 주문완료! 오늘도 좋은 하루 되세요", position);
+                getCustomerRegId(c_list.get(position).getSeq(), ORDER_FINISHED);
 
                 Toast.makeText(view.getContext(), c_list.get(position).getName()+"님의 주문을 완료하였습니다.", Toast.LENGTH_SHORT).show();
 
@@ -342,7 +340,7 @@ public class Order_ListViewAdapter extends BaseAdapter {
     /*customer 핸드폰에 푸시메시지 보내기
     클라우드 서버에 메시지 전송하기 위해 Volley 라이브러리 이용
     메시지는 JSON객체로 묶음.*/
-    public void send(String input, int position) {
+    public void send(String input, String regId) {
 
         //전송정보 담아둘 JSONObject 객체 생성
         JSONObject requestData = new JSONObject();
@@ -355,8 +353,7 @@ public class Order_ListViewAdapter extends BaseAdapter {
             requestData.put("data", dataObj);
 
             JSONArray idArray = new JSONArray();
-            idArray.put(0, c_list.get(position).regId);
-            Log.d(TAG, c_list.get(position).regId);
+            idArray.put(0, regId);
             requestData.put("registration_ids", idArray);
 
         } catch(Exception e) {
@@ -429,5 +426,39 @@ public class Order_ListViewAdapter extends BaseAdapter {
         request.setShouldCache(false);
         listener.onRequestStarted();
         queue.add(request);
+    }
+
+    private void getCustomerRegId(int seq, final int type) {
+        RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
+        Call<String> call = remoteService.getCustomerRegId(seq);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    String regId=response.body();
+                    Log.d(TAG,"이번regId:"+regId);
+                    switch(type){
+                        case ACCEPT_ORDER:
+                            send("고객님의 주문이 수락되었습니다.", regId);
+                            break;
+                        case DECLINE_ORDER:
+                            send("고객님의 주문이 거절되었습니다.", regId);
+                            break;
+                        case ORDER_FINISHED:
+                            send("고객님의 주문완료! 오늘도 좋은 하루 되세요", regId);
+                            break;
+
+                    }
+
+                } else {
+                    Log.d(TAG, "getRegId unsuccessful");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.d(TAG,t.toString());
+            }
+        });
     }
 }

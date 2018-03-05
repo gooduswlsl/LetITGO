@@ -4,6 +4,7 @@ import android.content.Context;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,6 +53,20 @@ public class Adapter_order extends RecyclerView.Adapter<MyViewHolder> {
         holder.oBinding.setOrder(order);
         setMenu(holder, order.getMenu_seq());
         setSeller(holder, order.getSeller_seq());
+        switch (order.getPermit()){
+            case -1:
+                holder.oBinding.tvStatus.setText("주문거절");
+                holder.oBinding.tvStatus.setTextColor(Color.parseColor("#FFA7A7"));
+                break;
+            case 1:
+                holder.oBinding.tvStatus.setText("주문수락");
+                holder.oBinding.tvStatus.setTextColor(Color.parseColor("#4374D9"));
+                break;
+            case 2:
+                holder.oBinding.tvStatus.setText("수령완료");
+                holder.oBinding.tvStatus.setTextColor(Color.parseColor("#8C8C8C"));
+                break;
+        }
 
         holder.oBinding.btnMore.setOnClickListener(new View.OnClickListener() {
             @Override
