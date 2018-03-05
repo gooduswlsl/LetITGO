@@ -73,8 +73,8 @@ public class customer_dialog_menu extends Activity {
 
     public void clickStar(View v) {
         Intent it = new Intent();
-       it.putExtra("position", position);
-      //  it.putExtra("menu_seq", menu_seq);
+        it.putExtra("position", position);
+        //  it.putExtra("menu_seq", menu_seq);
         if (helper.isLikedMenu(menu_seq)) {
             Log.d("likeddialog", "click");
             binding.imgStar.setImageResource(R.drawable.star_empty);
@@ -103,17 +103,18 @@ public class customer_dialog_menu extends Activity {
         finish();
     }
 
-    public void clickOK(View v){
+    public void clickOK(View v) {
         num = Integer.parseInt(binding.tvNum.getText().toString());
         helperCart = new DBHelperCart(this, "cart.db", null, 1);
-        if(helperCart.isInCart(menu_seq)){
+        if (helperCart.isInCart(menu_seq)) {
             helperCart.updateCart(menu_seq, num);
-        }else{
-            helperCart.insertCart(menu_seq, menu.getSeller_seq(), num);
+        } else {
+            helperCart.insertCart(menu_seq, menu.getSeller_seq(), num, menu.getmPrice());
+            Log.d("cart", String.valueOf(menu.getSeller_seq()));
         }
 
         Intent intent = new Intent(getApplicationContext(), customer_dialog_cart.class);
-        intent.putExtra("num",num);
+        intent.putExtra("num", num);
         intent.putExtra("menu", menu);
         startActivity(intent);
         finish();

@@ -39,6 +39,7 @@ public class customer_store_detail extends AppCompatActivity {
     private Adapter_menu_img adapterMenuImg;
     private Adapter_menu_list adapterMenuList;
     private RecyclerView recyclerView;
+    private ActionBar ab;
     int seller_seq;
 
     public customer_store_detail() {
@@ -49,6 +50,10 @@ public class customer_store_detail extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         adapterMenuImg = new Adapter_menu_img(this, new ArrayList<Menu>());
+
+        ab = getSupportActionBar();
+        ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        ab.setCustomView(R.layout.actionbar_center);
 
         seller_seq = getIntent().getIntExtra("seller_seq", 0);
         setTitle();
@@ -103,6 +108,7 @@ public class customer_store_detail extends AppCompatActivity {
             @Override
             public void onResponse(Call<Seller> call, Response<Seller> response) {
                 Seller seller = response.body();
+                ((TextView) ab.getCustomView().findViewById(R.id.ab_title)).setText(seller.getName());
                 setTitle(seller.getName());
             }
 

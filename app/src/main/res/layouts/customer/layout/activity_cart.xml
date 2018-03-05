@@ -10,38 +10,48 @@
             type="com.sook.cs.letitgo.customer.customer_my_order" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:gravity="center">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="7">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerview_cart"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="0dp"
+                android:layout_weight="9">
 
-            <TextView
-                android:id="@+id/tv_empty"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerview_cart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:id="@+id/tv_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="장바구니가 비었습니다!"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_order"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="장바구니가 비었습니다!"
-                android:visibility="invisible" />
-        </RelativeLayout>
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="#95c85b"
+                android:onClick="orderClick"
+                android:text="주문하기"
+                android:textColor="#ffffff"
+                android:textSize="15sp" />
 
-        <Button
-            android:id="@+id/btn_order"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:onClick="orderClick"
-            android:text="주문하기" />
+        </LinearLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </layout>

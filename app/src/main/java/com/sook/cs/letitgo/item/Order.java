@@ -9,6 +9,7 @@ public class Order implements Serializable {
     public int seller_seq;
     public int menu_seq;
     public int num;
+    public int price;
     public String time_order;
     public String time_take;
     public int permit;
@@ -84,6 +85,14 @@ public class Order implements Serializable {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public int getPrice() {
+        return price;
     }
 
     public String getTimeOrder() {

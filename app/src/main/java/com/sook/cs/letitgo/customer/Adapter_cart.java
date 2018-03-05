@@ -2,24 +2,22 @@ package com.sook.cs.letitgo.customer;
 
 import android.app.Activity;
 import android.content.Context;
-import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.databinding.ItemCartBinding;
-import com.sook.cs.letitgo.item.Menu;
 import com.sook.cs.letitgo.item.Order;
 import com.sook.cs.letitgo.item.Seller;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -29,15 +27,17 @@ import retrofit2.Response;
 
 public class Adapter_cart extends RecyclerView.Adapter<MyViewHolder> {
     private ViewDataBinding binding;
-    private ArrayList<Order> cartArrayList;
-    private Menu menu;
+    public ArrayList<Order> cartList;
     private Seller seller;
+    private int cSeq;
     private Context mContext;
     private DBHelperCart cartHelper;
+    public Adapter_cart_menu adapterCartMenu;
 
-    public Adapter_cart(Context mContext, ArrayList<Order> cartArrayList) {
-        this.cartArrayList = cartArrayList;
+    public Adapter_cart(Context mContext, ArrayList<Order> cartList, int cSeq) {
+        this.cartList = cartList;
         this.mContext = mContext;
+        this.cSeq = cSeq;
     }
 
     @Override
@@ -50,49 +50,45 @@ public class Adapter_cart extends RecyclerView.Adapter<MyViewHolder> {
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Order order = cartArrayList.get(position);
+        Order order = cartList.get(position);
+        int sSeq = order.getSeller_seq();
+        RecyclerView recyclerView = holder.cBinding.recyclerview;
+        adapterCartMenu = new Adapter_cart_menu(mContext, cartHelper.getCartList(sSeq, cSeq), position);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mContext);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
+        recyclerView.setAdapter(adapterCartMenu);
+
         holder.cBinding.setOrder(order);
-        int mSeq = order.getMenu_seq();
-        setMenu(holder, mSeq);
-        setSeller(holder, mSeq);
-        setOnClick(holder, position);
+        setSeller(holder, sSeq);
+        setOnClick(holder);
     }
 
-    private void setOnClick(final MyViewHolder holder, final int position) {
+    private void setOnClick(final MyViewHolder holder) {
 
-        View.OnClickListener numClick = new View.OnClickListener() {
+        View.OnClickListener showView = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int mSeq = holder.cBinding.getMenu().getmSeq();
-                int num = Integer.parseInt(holder.cBinding.tvNum.getText().toString());
-                if (v.getId() == R.id.btn_plus)
-                    num++;
-                else if (num > 1)
-                    num--;
-                holder.cBinding.tvNum.setText(String.valueOf(num));
-                holder.cBinding.tvPrice.setText(String.valueOf(holder.cBinding.getMenu().getmPrice() * num));
-                cartHelper.updateNum(mSeq, num);
+                holder.cBinding.layout.setVisibility(View.VISIBLE);
+                holder.cBinding.tvDown.setVisibility(View.GONE);
             }
         };
 
-        View.OnClickListener cancelClick = new View.OnClickListener() {
+        View.OnClickListener hideView = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cartHelper.deleteCart(holder.cBinding.getMenu().getmSeq());
-                cartArrayList.remove(position);
-                notifyDataSetChanged();
-                if(cartArrayList.size()==0){
-                    ((customer_cart)mContext).empty();
-                }
+                holder.cBinding.layout.setVisibility(View.GONE);
+                holder.cBinding.tvDown.setVisibility(View.VISIBLE);
             }
         };
 
         View.OnKeyListener msgEdit = new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                int mSeq = holder.cBinding.getMenu().getmSeq();
+                int sSeq = holder.cBinding.getSeller().getSeq();
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    cartHelper.updateMsg(mSeq, holder.cBinding.editMsg.getText().toString());
+                    cartHelper.updateMsg(sSeq, holder.cBinding.editMsg.getText().toString());
                     return true;
                 }
                 return false;
@@ -102,34 +98,17 @@ public class Adapter_cart extends RecyclerView.Adapter<MyViewHolder> {
         View.OnClickListener timeClick = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int mSeq = holder.cBinding.getMenu().getmSeq();
+                int sSeq = holder.cBinding.getSeller().getSeq();
                 customer_dialog_time timePicker = new customer_dialog_time();
-                timePicker.setValues(holder, cartHelper, mSeq);
+                timePicker.setValues(holder, cartHelper, sSeq);
                 timePicker.show(((Activity) mContext).getFragmentManager(), "time");
             }
         };
 
+        holder.cBinding.tvDown.setOnClickListener(showView);
+        holder.cBinding.tvUp.setOnClickListener(hideView);
         holder.cBinding.editMsg.setOnKeyListener(msgEdit);
-        holder.cBinding.btnPlus.setOnClickListener(numClick);
-        holder.cBinding.btnMinus.setOnClickListener(numClick);
-        holder.cBinding.btnCancel.setOnClickListener(cancelClick);
         holder.cBinding.btnTime.setOnClickListener(timeClick);
-    }
-
-    public void setMenu(final MyViewHolder holder, int mSeq) {
-        RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
-        Call<Menu> call = remoteService.selectMenu(mSeq);
-        call.enqueue(new Callback<Menu>() {
-            @Override
-            public void onResponse(Call<Menu> call, Response<Menu> response) {
-                menu = response.body();
-                holder.cBinding.setMenu(menu);
-            }
-
-            @Override
-            public void onFailure(Call<Menu> call, Throwable t) {
-            }
-        });
     }
 
     public void setSeller(final MyViewHolder holder, int sSeq) {
@@ -150,11 +129,7 @@ public class Adapter_cart extends RecyclerView.Adapter<MyViewHolder> {
 
     @Override
     public int getItemCount() {
-        return cartArrayList.size();
+        return cartList.size();
     }
 
-    @BindingAdapter({"bind:menuImg"})
-    public static void loadImg(ImageView imageView, String fileName) {
-        Picasso.with(imageView.getContext()).load(RemoteService.MENU_IMG_URL + fileName).into(imageView);
-    }
 }

@@ -17,7 +17,7 @@
 
     <LinearLayout
         android:layout_width="300dp"
-        android:layout_height="450dp"
+        android:layout_height="430dp"
         android:background="@android:color/transparent"
         android:orientation="vertical"
         android:padding="5dp">
@@ -173,7 +173,7 @@
                 android:id="@+id/textView19"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1.5"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:paddingBottom="15dp"
                 android:text="@{menu.getmDetail}"
@@ -238,7 +238,7 @@
                 android:layout_weight="1"
                 android:background="#95c85b"
                 android:onClick="clickOK"
-                android:text="확 인"
+                android:text="장바구니에 추가"
                 android:textColor="@color/text_color_white"
                 android:textSize="13sp" />
         </LinearLayout>

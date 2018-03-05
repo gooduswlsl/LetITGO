@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class Menu implements Serializable {
-
     public String mName;
     public int mPrice;
     public String mDetail;
@@ -55,14 +54,10 @@ public class Menu implements Serializable {
         this.mDetail = mDetail;
     }
 
-
     public int getSeller_seq() {
-        return seller_seq;
+        return this.seller_seq;
     }
 
-    public void setSeller_seq(int seller_seq) {
-        this.seller_seq = seller_seq;
-    }
 
     @Override
     public String toString() {

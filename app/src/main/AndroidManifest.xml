@@ -126,8 +126,7 @@
             android:screenOrientation="portrait"></activity>
         <activity android:name=".customer.customer_changePic"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".customer.customer_payment"
-            android:label="결제하기"></activity>
+        <activity android:name=".customer.customer_payment"></activity>
         <service
             android:name=".MyFirebaseMessagingService"
             android:enabled="true"
