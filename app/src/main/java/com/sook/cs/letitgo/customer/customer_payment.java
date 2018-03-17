@@ -15,6 +15,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.sook.cs.letitgo.MyApp;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.item.Menu;
 import com.sook.cs.letitgo.item.Order;
@@ -74,14 +75,14 @@ public class customer_payment extends AppCompatActivity {
         }
         helper.flushDB();
 
-        Intent it = new Intent(getApplicationContext(), customer_main.class);
+        Intent it = new Intent(getApplicationContext(), customer_dialog_order.class);
         startActivity(it);
-        finish();
+
     }
 
     public void upload(Order order) {
         RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
-        Call<String> call = remoteService.sendOrder(order);
+        Call<String> call = remoteService.sendOrder(order, ((MyApp)getApplicationContext()).getCustomer().getSeq());
 
         call.enqueue(new Callback<String>() {
             @Override

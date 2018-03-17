@@ -70,7 +70,7 @@ public class customer_menu_type extends Fragment {
             }
         });
         recyclerView = binding.recyclerviewMenu;
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 5);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 4);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapterMenuImg);
         listInfo();

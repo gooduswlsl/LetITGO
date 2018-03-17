@@ -45,13 +45,14 @@
                 android:layout_toRightOf="@id/img_sImg"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:gravity="center_vertical">
 
                     <TextView
+                        android:id="@+id/tv_sName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
@@ -64,21 +65,22 @@
                         android:id="@+id/tv_sSite"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/tv_sName"
                         android:text="@{seller.getSite}"
                         android:textSize="11sp"
                         tools:text="지점명" />
 
                     <TextView
                         android:id="@+id/tv_status"
-                        android:layout_marginLeft="155dp"
-                        android:layout_gravity="right"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
                         android:textSize="11sp"
-                        tools:text="수락거절여부"/>
+                        android:layout_marginRight="5dp"
+                        tools:text="수락거절여부" />
 
 
-                </LinearLayout>
+                </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

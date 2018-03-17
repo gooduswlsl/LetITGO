@@ -73,12 +73,11 @@ public class customer_store_type extends Fragment {
         });
 
         recyclerView = binding.recyclerviewStore;
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 5);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 4);
         recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.setAdapter(adapterSellerImg);
         listInfo();
-
 
         return binding.getRoot();
     }

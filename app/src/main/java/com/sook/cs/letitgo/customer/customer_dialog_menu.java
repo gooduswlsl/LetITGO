@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -40,6 +41,7 @@ public class customer_dialog_menu extends Activity {
 
         position = getIntent().getIntExtra("position", 0);
         menu_seq = menu.getmSeq();
+        binding.tvMDetail.setMovementMethod(ScrollingMovementMethod.getInstance());
 
         setSeller(menu.getSeller_seq());
         setStar();
@@ -74,7 +76,6 @@ public class customer_dialog_menu extends Activity {
     public void clickStar(View v) {
         Intent it = new Intent();
         it.putExtra("position", position);
-        //  it.putExtra("menu_seq", menu_seq);
         if (helper.isLikedMenu(menu_seq)) {
             Log.d("likeddialog", "click");
             binding.imgStar.setImageResource(R.drawable.star_empty);

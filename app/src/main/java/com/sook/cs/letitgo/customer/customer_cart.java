@@ -95,7 +95,6 @@ public class customer_cart extends AppCompatActivity {
     }
 
     public void orderClick(View v) {
-        Handler delayHandler = new Handler();
         orderList = helper.getCartList(-1, cSeq);
         price = 0;
 

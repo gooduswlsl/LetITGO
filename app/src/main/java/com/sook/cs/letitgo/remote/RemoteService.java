@@ -1,6 +1,5 @@
 package com.sook.cs.letitgo.remote;
 
-
 import com.sook.cs.letitgo.item.Customer;
 import com.sook.cs.letitgo.item.Menu;
 import com.sook.cs.letitgo.item.Order;
@@ -24,7 +23,7 @@ import retrofit2.http.Query;
  * 서버에 호출할 메소드를 선언하는 인터페이스
  */
 public interface RemoteService {
-    String BASE_URL = "http://192.168.21.168:3000";  //집
+    String BASE_URL = "http://192.168.0.248:3000";  //집
 
     String CUSTOMER_IMG_URL = BASE_URL + "/customer/";
     String SELLER_IMG_URL = BASE_URL + "/seller/";
@@ -128,7 +127,7 @@ public interface RemoteService {
 
     //소비자가 주문하기 눌렀을 경우
     @POST("/order/sendOrder")
-    Call<String> sendOrder(@Body Order order);
+    Call<String> sendOrder(@Body Order order, @Query("cSeq") int cSeq);
 
     //매장 주문 리스트
     @GET("/order/list")

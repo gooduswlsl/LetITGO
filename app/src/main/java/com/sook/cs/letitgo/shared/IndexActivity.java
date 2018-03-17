@@ -18,6 +18,7 @@ import com.sook.cs.letitgo.customer.customer_main;
 import com.sook.cs.letitgo.item.Customer;
 import com.sook.cs.letitgo.item.Seller;
 import com.sook.cs.letitgo.lib.EtcLib;
+import com.sook.cs.letitgo.lib.GeoLib;
 import com.sook.cs.letitgo.lib.RemoteLib;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
@@ -27,7 +28,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-//import com.sook.cs.letitgo.item.Member;
 
 /**
  * 시작 액티비티이며 이 액티비티에서 사용자 정보를 조회해서
@@ -66,9 +66,9 @@ public class IndexActivity extends AppCompatActivity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if (hasFocus){
+        if (hasFocus) {
             frameAnimation.start();
-        }else {
+        } else {
             frameAnimation.stop();
         }
     }
@@ -126,6 +126,8 @@ public class IndexActivity extends AppCompatActivity {
     public void startTask() {
         String phone = EtcLib.getInstance().getPhoneNumber(this);
         selectMemberInfo(phone);
+
+        GeoLib.getInstance().setLastKnownLocation(this);
     }
 
     /**
@@ -177,8 +179,10 @@ public class IndexActivity extends AppCompatActivity {
                     Intent it = new Intent(IndexActivity.this, customer_main.class);
 
                     String str = getIntent().getStringExtra("particularFragment");
-                    if(str !=null) {
-                        if(str.equals("goToCustomer_my"))  { it.putExtra("particularFragment", "goToCustomer_my");}
+                    if (str != null) {
+                        if (str.equals("goToCustomer_my")) {
+                            it.putExtra("particularFragment", "goToCustomer_my");
+                        }
                     }
 
                     startActivity(it);
@@ -206,8 +210,10 @@ public class IndexActivity extends AppCompatActivity {
 
                     Intent it = new Intent(IndexActivity.this, Seller_main.class);
                     String str = getIntent().getStringExtra("particularFragment");
-                    if(str !=null) {
-                        if(str.equals("goToSeller_order")) { it.putExtra("particularFragment", "goToSeller_order");}
+                    if (str != null) {
+                        if (str.equals("goToSeller_order")) {
+                            it.putExtra("particularFragment", "goToSeller_order");
+                        }
                     }
 
                     startActivity(it);
