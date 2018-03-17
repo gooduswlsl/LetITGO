@@ -112,7 +112,7 @@ router.get('/getMonthSales', function(req, res, next) {
 //order/sendOrder
 router.post('/sendOrder', function(req, res){
 
-    var cust_seq = req.body.cust_seq;
+    var cust_seq = req.query.cSeq;
     var menu_seq = req.body.menu_seq;
     var seller_seq = req.body.seller_seq;
     var num = req.body.num;
