@@ -37,8 +37,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="40dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="15dp"
                 android:textColor="@color/text_color_red"
                 tools:text="가격" />
         </RelativeLayout>

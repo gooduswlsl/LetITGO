@@ -60,6 +60,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".shared.ProfileActivity"
+            android:label="회원가입"
             android:screenOrientation="portrait"/>
         <activity android:name=".shared.ProfileIconActivity"
             android:screenOrientation="portrait"/>
@@ -112,6 +113,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".shared.Login_finish"
+            android:theme="@android:style/Theme.Dialog"
             android:screenOrientation="portrait"/>
         <activity android:name=".seller.MenuPicAddActivity"
             android:screenOrientation="portrait"/>

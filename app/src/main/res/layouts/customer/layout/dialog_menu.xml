@@ -177,7 +177,7 @@
                 android:gravity="center"
                 android:paddingBottom="15dp"
                 android:text="@{menu.getmDetail}"
-                android:textSize="13sp"
+                android:textSize="11sp"
                 tools:text="디테일" />
 
             <LinearLayout
