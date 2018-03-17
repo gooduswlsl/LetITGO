@@ -66,9 +66,7 @@ console.log(seller_seq);
 
 if(!seller_seq) { return res.sendStatus(400); } 
 
-var sql = "select mSeq, mName, mImgUrl, mPrice, mDetail " +
-         "from menu " + 
-         "where seller_seq = ?;";
+var sql = "select * from menu where seller_seq = ?;";
 
 console.log("sql : " + sql);     
 

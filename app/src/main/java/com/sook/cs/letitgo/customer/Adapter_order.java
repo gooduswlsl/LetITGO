@@ -58,6 +58,10 @@ public class Adapter_order extends RecyclerView.Adapter<MyViewHolder> {
                 holder.oBinding.tvStatus.setText("주문거절");
                 holder.oBinding.tvStatus.setTextColor(Color.parseColor("#FFA7A7"));
                 break;
+            case 0:
+                holder.oBinding.tvStatus.setText("수락대기");
+                holder.oBinding.tvStatus.setTextColor(Color.parseColor("#BDBDBD"));
+                break;
             case 1:
                 holder.oBinding.tvStatus.setText("주문수락");
                 holder.oBinding.tvStatus.setTextColor(Color.parseColor("#4374D9"));

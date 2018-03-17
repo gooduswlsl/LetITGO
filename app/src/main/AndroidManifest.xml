@@ -82,6 +82,8 @@
         <activity
             android:name=".customer.customer_dialog_cart"
             android:theme="@android:style/Theme.Holo.Light.Dialog" />
+        <activity android:name=".customer.customer_dialog_order"
+            android:screenOrientation="portrait"/>
         <activity android:name=".customer.customer_cart"/>
 
 
@@ -122,6 +124,7 @@
 
 
         <activity android:name=".customer.customer_store_detail"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait"></activity>
 
         <activity android:name=".customer.customer_leave"

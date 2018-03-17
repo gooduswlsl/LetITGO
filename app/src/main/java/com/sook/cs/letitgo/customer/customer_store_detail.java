@@ -60,22 +60,7 @@ public class customer_store_detail extends AppCompatActivity {
         setView();
     }
 
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-        }
-        return true;
-    }
-
     private void setView() {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
-
         binding = DataBindingUtil.setContentView(this, R.layout.fragment_menu_type);
         binding.setActivity(this);
         binding.editSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -95,7 +80,7 @@ public class customer_store_detail extends AppCompatActivity {
         });
 
         recyclerView = binding.recyclerviewMenu;
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 5);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 4);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapterMenuImg);
         listInfo();
@@ -167,6 +152,10 @@ public class customer_store_detail extends AppCompatActivity {
             });
         }
 
+    }
+
+    public void backClick(View v){
+        finish();
     }
 
 }

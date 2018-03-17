@@ -17,7 +17,7 @@
 
     <LinearLayout
         android:layout_width="300dp"
-        android:layout_height="430dp"
+        android:layout_height="450dp"
         android:background="@android:color/transparent"
         android:orientation="vertical"
         android:padding="5dp">
@@ -63,8 +63,19 @@
                 </RelativeLayout>
 
 
-                <ImageButton
+                <Button
                     android:id="@+id/btn_close"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="7dp"
+                    android:layout_weight="1"
+                    android:background="#00000000"
+                    android:onClick="clickX"
+                    android:scaleType="fitCenter" />
+
+                <ImageView
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_alignParentRight="true"
@@ -72,7 +83,6 @@
                     android:layout_marginRight="15dp"
                     android:layout_weight="1"
                     android:background="#00000000"
-                    android:onClick="clickX"
                     android:scaleType="fitCenter"
                     android:src="@drawable/cancel" />
 
@@ -107,9 +117,10 @@
 
                     <TextView
                         android:id="@+id/tv_mName"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
+                        android:layout_marginRight="35dp"
                         android:text="@{menu.getmName}"
                         android:textSize="15sp"
                         android:textStyle="bold"
@@ -161,7 +172,7 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/imageView10"
+                android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -170,12 +181,15 @@
                 android:src="@drawable/divider" />
 
             <TextView
-                android:id="@+id/textView19"
+                android:id="@+id/tv_mDetail"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:paddingBottom="15dp"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:scrollbars="vertical"
                 android:text="@{menu.getmDetail}"
                 android:textSize="11sp"
                 tools:text="디테일" />
@@ -194,7 +208,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="수량"
-                    android:textSize="15sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:layout_width="wrap_content"

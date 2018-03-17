@@ -110,7 +110,6 @@ public class PermissionActivity extends AppCompatActivity {
                 isAllGranted = false;
             }
         }
-        Log.d("dd", "dd");
         //권한이 부여되었다면
         if (isAllGranted) {
             Log.d("ok", "permission isallgranted");

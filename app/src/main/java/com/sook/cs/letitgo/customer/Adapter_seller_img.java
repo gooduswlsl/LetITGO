@@ -52,7 +52,6 @@ public class Adapter_seller_img extends RecyclerView.Adapter<MyViewHolder> {
                 Intent it = new Intent(mContext, customer_dialog_store.class);
                 it.putExtra("seller", seller);
                 (mContext).startActivity(it);
-                //((Activity) (mContext)).startActivityForResult(it, REQUEST_SELLER);
             }
         });
     }
@@ -71,5 +70,4 @@ public class Adapter_seller_img extends RecyclerView.Adapter<MyViewHolder> {
     public static void loadImg(ImageView imageView, String fileName) {
         Picasso.with(imageView.getContext()).load(RemoteService.SELLER_IMG_URL + fileName).into(imageView);
     }
-
 }

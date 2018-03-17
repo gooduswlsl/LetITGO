@@ -90,8 +90,10 @@ public class customer_maps extends Fragment implements OnMapReadyCallback, Googl
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
         latLng = GeoItem.getKnownLocation();
-        if (latLng == null)
+        if (latLng == null) {
+            Log.d("map", "onmapready latlng null");
             latLng = new LatLng(37.56, 126.97); //null이면 서울
+        }
 
         MarkerOptions markerOptions = new MarkerOptions()
                 .position(latLng)
