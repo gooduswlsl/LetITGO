@@ -8,7 +8,7 @@ router.get('/myList', function(req, res, next) {
 	var cust_seq = req.query.cust_seq;
     var period = req.query.period;
     
-    var sql =  "select * from `order` where cust_seq = ? and time_order > DATE_ADD(now(), INTERVAL "+period+")";   
+    var sql =  "select * from `order` where cust_seq = ? and time_order > DATE_ADD(now(), INTERVAL "+period+") and (permit=-1 or permit = 4)";   
   
     db.get().query(sql, cust_seq, function(err, rows) {
 

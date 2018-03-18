@@ -70,10 +70,6 @@ public class Adapter_orderList extends RecyclerView.Adapter<MyViewHolder> {
         setMenu(holder, order.getMenu_seq());
         setSeller(holder, order.getSeller_seq());
         switch (order.getPermit()) {
-            case -1:
-                holder.olBinding.tvStatus.setText("주문거절");
-                holder.olBinding.tvStatus.setTextColor(Color.parseColor("#FFA7A7"));
-                break;
             case 0:
                 holder.olBinding.tvStatus.setText("수락대기");
                 holder.olBinding.tvStatus.setTextColor(Color.parseColor("#BDBDBD"));

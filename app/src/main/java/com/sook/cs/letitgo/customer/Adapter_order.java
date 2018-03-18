@@ -53,22 +53,14 @@ public class Adapter_order extends RecyclerView.Adapter<MyViewHolder> {
         holder.oBinding.setOrder(order);
         setMenu(holder, order.getMenu_seq());
         setSeller(holder, order.getSeller_seq());
-        switch (order.getPermit()){
+        switch (order.getPermit()) {
             case -1:
-                holder.oBinding.tvStatus.setText("주문거절");
+                holder.oBinding.tvStatus.setText("거절됨");
                 holder.oBinding.tvStatus.setTextColor(Color.parseColor("#FFA7A7"));
                 break;
-            case 0:
-                holder.oBinding.tvStatus.setText("수락대기");
-                holder.oBinding.tvStatus.setTextColor(Color.parseColor("#BDBDBD"));
-                break;
-            case 1:
-                holder.oBinding.tvStatus.setText("주문수락");
-                holder.oBinding.tvStatus.setTextColor(Color.parseColor("#4374D9"));
-                break;
-            case 2:
+            case 4:
                 holder.oBinding.tvStatus.setText("수령완료");
-                holder.oBinding.tvStatus.setTextColor(Color.parseColor("#8C8C8C"));
+                holder.oBinding.tvStatus.setTextColor(Color.parseColor("#3162C7"));
                 break;
         }
 
