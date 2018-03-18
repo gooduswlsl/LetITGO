@@ -13,5 +13,5 @@
     <padding
         android:left="5dp"
         android:right="5dp" />
-    <solid android:color="@color/bg_default" />
+    <solid android:color="#88dedede" />
 </shape>

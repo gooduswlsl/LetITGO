@@ -83,6 +83,7 @@
             android:name=".customer.customer_dialog_cart"
             android:theme="@android:style/Theme.Holo.Light.Dialog" />
         <activity android:name=".customer.customer_dialog_order"
+            android:theme="@android:style/Theme.Holo.Light.Dialog"
             android:screenOrientation="portrait"/>
         <activity android:name=".customer.customer_cart"/>
 
