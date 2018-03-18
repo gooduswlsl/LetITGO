@@ -21,6 +21,54 @@ router.get('/myList', function(req, res, next) {
     });
 });
 
+//order/showList
+router.get('/showList', function(req, res, next) {
+	var cSeq = req.query.cSeq;
+    var sql =  "select seq, cust_seq, seller_seq, menu_seq, num, time_order, time_take, permit, count(*) as `count` from `order` where cust_seq = ? and permit!=4 and permit!=-1 group by time_order,seller_seq";   
+   
+    db.get().query(sql, cSeq, function(err, rows) {
+
+		if (err)
+			console.log(err);
+        else{
+            console.log(JSON.stringify(rows));
+            res.status(200).json(rows);
+          }
+    });
+});
+
+//order/dialog/showList
+router.get('/dialog/showList', function(req, res, next) {
+	var cSeq = req.query.cSeq;
+    var sSeq = req.query.sSeq;
+    var oTime = req.query.oTime;
+    var sql = "select * from `order` where cust_seq=? and seller_seq = ? and time_order=?";
+  
+    db.get().query(sql, [cSeq,sSeq, oTime], function(err, rows) {
+		if (err)
+			console.log(err);
+        else{
+            console.log(JSON.stringify(rows));
+            res.status(200).json(rows);
+          }
+    });
+});
+
+//order/sendCustPermit
+router.post('/sendCustPermit', function(req, res){
+    var cSeq = req.query.cSeq;
+    var sSeq = req.query.sSeq;
+    var oTime = req.query.oTime;
+    var sql = "update `order` set permit = '4' where cust_seq=? and seller_seq = ? and time_order=?";
+    
+    db.get().query(sql, [cSeq, sSeq, oTime], function(err, result){
+    	if (err) return res.sendStatus(400);
+                         
+         res.sendStatus(200);
+    });
+});
+
+
 
 //order/list
 router.get('/list', function(req, res, next) {
@@ -43,6 +91,7 @@ router.get('/list', function(req, res, next) {
 		}
 	});
 });
+
 
 
 //order/sendPermit
