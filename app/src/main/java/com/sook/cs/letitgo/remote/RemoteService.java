@@ -75,6 +75,7 @@ public interface RemoteService {
     //검색
     @GET("/menu/searchSeller")
     Call<ArrayList<Seller>> searchSeller(@Query("key") String key, @Query("type") int type);
+
     @GET("/menu/searchMenu")
     Call<ArrayList<Menu>> searchMenu(@Query("key") String key, @Query("type") int type);
 
@@ -109,6 +110,7 @@ public interface RemoteService {
     //판매자 회원정보 수정, 탈퇴
     @POST("/member/changeSellerInfo")
     Call<String> changeSellerInfo(@Body Seller seller);
+
     @POST("/member/leaveSeller")
     Call<String> leaveSeller(@Query("seq") int seq);
 
@@ -137,6 +139,9 @@ public interface RemoteService {
     Call<String> sendPermit(@Query("permit") int permit,
                             @Query("seq") int seq);
 
+    @POST("/order/sendCustPermit")
+    Call<String> sendCustPermit(@Query("cSeq") int cSeq, @Query("sSeq") int sSeq, @Query("oTime") String oTime);
+
     @POST("/order/sendTotal_price")
     Call<String> sendTotal_price(@Query("seq") int seq, @Query("total_price") int total_price);
 
@@ -146,6 +151,12 @@ public interface RemoteService {
 
     @GET("/order/myList")
     Call<ArrayList<Order>> listMyOrder(@Query("cust_seq") int cust_seq, @Query("period") String period);
+
+    @GET("/order/showList")
+    Call<ArrayList<Order>> showOrder(@Query("cSeq") int cSeq);
+
+    @GET("/order/dialog/showList")
+    Call<ArrayList<Order>> dialogOrder(@Query("cSeq") int cSeq, @Query("sSeq") int sSeq, @Query("oTime") String oTime);
 
 
 }

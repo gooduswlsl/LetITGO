@@ -15,6 +15,16 @@ public class Order implements Serializable {
     public int permit;
     public String message;
 
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public int count;
+
     public int getSeq() {
         return seq;
     }
@@ -96,14 +106,14 @@ public class Order implements Serializable {
     }
 
     public String getTimeOrder() {
-        String timeOrder = time_order.substring(0, 16);
+        String timeOrder = time_order.substring(2, 16);
         timeOrder = timeOrder.replace("-", ".");
         timeOrder = timeOrder.replace("T", "  ");
         return timeOrder;
     }
 
     public String getTimeTake() {
-        String timeTake = time_take.substring(0, 16);
+        String timeTake = time_take.substring(2, 16);
         timeTake = timeTake.replace("-", ".");
         timeTake = timeTake.replace("T", "  ");
         return timeTake;

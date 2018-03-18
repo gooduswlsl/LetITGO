@@ -27,16 +27,18 @@
         android:orientation="horizontal"
         android:padding="10dp">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_sImg"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:menuImg="@{seller.getImg}" />
+            app:sellerImg="@{seller.getImg}" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:layout_toRightOf="@id/img_sImg"
             android:orientation="vertical">
 
@@ -72,8 +74,10 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="5dp"
+                    android:text="@{order.getTimeOrder}"
                     android:textColor="#8C8C8C"
                     android:textSize="10sp"
+                    android:textStyle="bold"
                     tools:text="주문시간" />
 
 
@@ -101,16 +105,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
                     android:layout_toRightOf="@id/tv_mName"
-                    android:text="x" />
+                    android:text="외"
+                    android:textSize="12sp" />
 
                 <TextView
+                    android:id="@+id/tv_nums"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/text"
-                    android:text="@{Integer.toString(order.getNum)}"
                     android:textSize="13sp"
                     tools:text="수량" />
-
 
                 <TextView
                     android:id="@+id/tv_status"
@@ -120,6 +124,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
                     android:textSize="12sp"
+                    android:textStyle="bold"
                     tools:text="수락거절여부" />
             </RelativeLayout>
 
@@ -133,7 +138,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="수령시간"
-                    android:textSize="13sp"
+                    android:textSize="11sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -141,7 +146,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:text="@{order.getTimeTake}"
-                    android:textSize="13sp"
+                    android:textSize="11sp"
                     tools:text="수령시간" />
             </LinearLayout>
 

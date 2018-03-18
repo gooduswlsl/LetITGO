@@ -1,5 +1,6 @@
 package com.sook.cs.letitgo.customer;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -26,10 +27,11 @@ import retrofit2.Response;
 
 public class Adapter_orderList extends RecyclerView.Adapter<MyViewHolder> {
     private ViewDataBinding binding;
-    private ArrayList<Order> orderArrayList;
+    public ArrayList<Order> orderArrayList;
     private Menu menu;
     private Seller seller;
     private Context mContext;
+    private int REQUEST_ORDER = 9;
 
     public Adapter_orderList(Context mContext, ArrayList<Order> orderArrayList) {
         this.orderArrayList = orderArrayList;
@@ -46,14 +48,22 @@ public class Adapter_orderList extends RecyclerView.Adapter<MyViewHolder> {
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {          // 항목을 뷰홀더에 바인딩
         final Order order = orderArrayList.get(position);
-        holder.oBinding.setOrder(order);
+        holder.olBinding.setOrder(order);
+        if (order.getCount() == 1) {
+            holder.olBinding.text.setVisibility(View.INVISIBLE);
+            holder.olBinding.tvNums.setVisibility(View.INVISIBLE);
+        } else {
+            holder.olBinding.tvNums.setText(String.valueOf(order.getCount() - 1));
+        }
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(mContext, customer_dialog_order.class);
-                it.putExtra("menu", menu);
+                it.putExtra("order", order);
                 it.putExtra("position", position);
-                mContext.startActivity(it);
+                ((Activity) (mContext)).startActivityForResult(it, 9);
+                //mContext.startActivity(it);
             }
         });
 
@@ -90,7 +100,7 @@ public class Adapter_orderList extends RecyclerView.Adapter<MyViewHolder> {
             @Override
             public void onResponse(Call<Menu> call, Response<Menu> response) {
                 menu = response.body();
-                holder.oBinding.setMenu(menu);
+                holder.olBinding.setMenu(menu);
             }
 
             @Override
@@ -106,7 +116,7 @@ public class Adapter_orderList extends RecyclerView.Adapter<MyViewHolder> {
             @Override
             public void onResponse(Call<Seller> call, Response<Seller> response) {
                 seller = response.body();
-                holder.oBinding.setSeller(seller);
+                holder.olBinding.setSeller(seller);
             }
 
             @Override

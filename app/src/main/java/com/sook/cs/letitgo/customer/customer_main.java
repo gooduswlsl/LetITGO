@@ -31,7 +31,7 @@ public class customer_main extends AppCompatActivity {
     ActivityCustomerBinding binding;
     android.support.v4.app.Fragment fragment;
     TextView title;
-    int REQUEST_SELLER = 0, REQUEST_MENU = 1, REQUEST_PROFILE = 100;
+    int REQUEST_SELLER = 0, REQUEST_MENU = 1, REQUEST_ORDER = 9, REQUEST_PROFILE = 100;
     private final String TAG = this.getClass().getSimpleName();
     Customer current_customer;
     String compare_regId;
@@ -63,7 +63,7 @@ public class customer_main extends AppCompatActivity {
         String str = getIntent().getStringExtra("particularFragment");
         if (str != null) {
             if (str.equals("goToCustomer_my")) {
-                callFragment(5);
+                callFragment(0);
             }
         } else
             callFragment(1);
@@ -73,6 +73,9 @@ public class customer_main extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if ((requestCode == REQUEST_SELLER || requestCode == REQUEST_MENU)) {
             fragment = getSupportFragmentManager().findFragmentByTag("fragment_liked");
+            fragment.onActivityResult(requestCode, resultCode, data);
+        } else if (requestCode == REQUEST_ORDER && resultCode==RESULT_OK) {
+            fragment = getSupportFragmentManager().findFragmentByTag("fragment_order");
             fragment.onActivityResult(requestCode, resultCode, data);
         } else if (resultCode == REQUEST_PROFILE) {
             fragment = getSupportFragmentManager().findFragmentByTag("fragment_my");
@@ -101,7 +104,7 @@ public class customer_main extends AppCompatActivity {
         switch (fragment_no) {
             case 0:
                 customer_orderlist fragment = new customer_orderlist();
-                transaction.replace(R.id.fragment_container, fragment);
+                transaction.replace(R.id.fragment_container, fragment, "fragment_order");
                 transaction.addToBackStack(null);
                 transaction.commit();
                 title.setText("주문 목록");

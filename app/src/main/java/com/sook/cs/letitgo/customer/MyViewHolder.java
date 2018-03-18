@@ -8,6 +8,7 @@ import com.sook.cs.letitgo.databinding.ItemCartMenuBinding;
 import com.sook.cs.letitgo.databinding.ItemMenuBinding;
 import com.sook.cs.letitgo.databinding.ItemMenuImgBinding;
 import com.sook.cs.letitgo.databinding.ItemOrderlistBinding;
+import com.sook.cs.letitgo.databinding.ItemOrderlistDetailBinding;
 import com.sook.cs.letitgo.databinding.ItemSellerBinding;
 import com.sook.cs.letitgo.databinding.ItemSellerImgBinding;
 import com.sook.cs.letitgo.databinding.ItemSellerMapBinding;
@@ -21,6 +22,7 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
     ItemMenuImgBinding mimgBinding;
     ItemOrderBinding oBinding;
     ItemOrderlistBinding olBinding;
+    ItemOrderlistDetailBinding oldBinding;
     ItemCartBinding cBinding;
     ItemCartMenuBinding cmBinding;
 
@@ -69,8 +71,15 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
     public MyViewHolder(ItemOrderlistBinding olBinding) {
         super(olBinding.getRoot());
         this.olBinding = olBinding;
-        oBinding = DataBindingUtil.bind(itemView);
-        oBinding.executePendingBindings();
+        olBinding = DataBindingUtil.bind(itemView);
+        olBinding.executePendingBindings();
+    }
+
+    public MyViewHolder(ItemOrderlistDetailBinding oldBinding) {
+        super(oldBinding.getRoot());
+        this.oldBinding = oldBinding;
+        oldBinding = DataBindingUtil.bind(itemView);
+        oldBinding.executePendingBindings();
     }
 
     public MyViewHolder(ItemCartBinding cBinding) {

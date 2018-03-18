@@ -2,231 +2,209 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.sook.cs.letitgo.item.Seller">
+    tools:context="com.sook.cs.letitgo.item.Menu">
 
     <data>
 
         <variable
-            name="order"
-            type="com.sook.cs.letitgo.item.Order" />
-
-        <variable
-            name="menu"
-            type="com.sook.cs.letitgo.item.Menu" />
-
-        <variable
             name="seller"
             type="com.sook.cs.letitgo.item.Seller" />
+
+        <variable
+            name="order"
+            type="com.sook.cs.letitgo.item.Order" />
     </data>
 
     <LinearLayout
-        android:layout_width="250dp"
-        android:layout_height="450dp"
-        android:orientation="vertical">
+        android:layout_width="300dp"
+        android:layout_height="480dp"
+        android:background="@android:color/transparent"
+        android:orientation="vertical"
+        android:padding="5dp">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
+            android:layout_height="match_parent"
+            android:background="@drawable/dialog_round"
+            android:orientation="vertical"
             android:padding="10dp">
 
-            <ImageView
-                android:id="@+id/img_sImg"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:menuImg="@{menu.getmImgUrl}" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@id/img_sImg"
-                android:orientation="vertical">
+                android:layout_height="0dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1">
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:gravity="center_vertical">
+                    android:layout_centerInParent="true">
 
                     <TextView
                         android:id="@+id/tv_sName"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="5dp"
+                        android:gravity="center"
                         android:text="@{seller.getName}"
-                        android:textSize="11sp"
+                        android:textSize="14sp"
                         android:textStyle="bold"
                         tools:text="가게명" />
 
                     <TextView
                         android:id="@+id/tv_sSite"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/tv_sName"
+                        android:layout_below="@id/tv_sName"
+                        android:gravity="center"
                         android:text="@{seller.getSite}"
-                        android:textSize="11sp"
+                        android:textSize="12dp"
                         tools:text="지점명" />
-
-                    <TextView
-                        android:id="@+id/tv_status"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:textSize="11sp"
-                        android:layout_marginRight="5dp"
-                        tools:text="수락거절여부" />
-
-
                 </RelativeLayout>
 
+
+                <Button
+                    android:id="@+id/btn_close"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="7dp"
+                    android:layout_weight="1"
+                    android:background="#00000000"
+                    android:onClick="clickX"
+                    android:scaleType="fitCenter" />
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="1"
+                    android:background="#00000000"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/cancel" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="8"
+                android:orientation="vertical">
+
                 <LinearLayout
+                    android:id="@+id/layout1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:gravity="center_vertical">
+                    android:background="#EAEAEA"
+                    android:padding="5dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="5dp"
-                        android:text="@{menu.getmName}"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        tools:text="메뉴명" />
+                        android:layout_weight="1">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="5dp"
-                        android:text="x" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="주문시간"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:text="@{order.getTimeOrder}"
+                            android:textSize="10sp"
+                            tools:text="주문시간" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@{Integer.toString(order.getNum)}"
-                        android:textSize="13sp"
-                        tools:text="수량" />
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="수령시간  "
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:text="@{order.getTimeTake}"
+                            android:textSize="10sp"
+                            tools:text="수령시간" />
+
+                    </LinearLayout>
+
+
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layout2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/layout1"
+                    android:background="#EAEAEA"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="5dp"
 
+                    android:paddingRight="5dp">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="주문시간"
-                        android:textSize="13sp"
+                        android:text="메시지"
+                        android:textSize="10sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:text="@{order.getTimeOrder}"
-                        android:textSize="13sp"
-                        tools:text="주문시간" />
+                        android:layout_weight="5"
+                        android:textSize="10sp"
+                        tools:text="메시지" />
                 </LinearLayout>
 
 
-            </LinearLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/layout2"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"></android.support.v7.widget.RecyclerView>
+            </RelativeLayout>
 
-            <ImageButton
-                android:id="@+id/btn_more"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="35dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                android:src="@drawable/btn_down"
-                android:tag="0" />
-        </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/layout_more"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#EAEAEA"
-            android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:paddingBottom="10dp"
-            android:paddingLeft="80dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
-            android:visibility="gone">
-
-            <LinearLayout
+            <Button
+                android:id="@+id/btn_take"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="수령시간"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="@{order.getTimeTake}"
-                    android:textSize="13sp"
-                    tools:text="수령시간" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="메세지    "
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="@{order.getMessage}"
-                    android:textSize="13sp"
-                    tools:text="메세지" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="가격        "
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="@{Integer.toString(order.getNum*menu.getmPrice)}"
-                    android:textSize="13sp"
-                    tools:text="가격" />
-            </LinearLayout>
-
+                android:layout_height="0dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:background="#FFA7A7"
+                android:onClick="takeClick"
+                android:text="수령 완료"
+                android:textColor="@color/text_color_white"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
 </layout>

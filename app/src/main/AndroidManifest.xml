@@ -79,6 +79,9 @@
             android:name=".customer.customer_dialog_menu"
             android:theme="@android:style/Theme.Holo.Light.Dialog" />
         <activity
+            android:name=".customer.customer_dialog_order"
+            android:theme="@android:style/Theme.Holo.Light.Dialog" />
+        <activity
             android:name=".customer.customer_dialog_cart"
             android:theme="@android:style/Theme.Holo.Light.Dialog" />
         <activity android:name=".customer.customer_dialog_finorder"

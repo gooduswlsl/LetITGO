@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.sook.cs.letitgo.item.Seller">
+
+    <data>
+
+        <variable
+            name="order"
+            type="com.sook.cs.letitgo.item.Order" />
+
+        <variable
+            name="menu"
+            type="com.sook.cs.letitgo.item.Menu" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/img_mImg"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginRight="10dp"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            app:menuImg="@{menu.getmImgUrl}" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_mName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@{menu.getmName}"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                tools:text="메뉴 이름" />
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:text="X"
+                android:textSize="11sp"
+                android:layout_alignTop="@+id/tv_mName"
+                android:layout_toEndOf="@+id/tv_mName" />
+
+            <TextView
+                android:id="@+id/tv_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/text"
+                android:layout_marginRight="5dp"
+                android:layout_toEndOf="@+id/text"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@{Integer.toString(order.getNum)}"
+                android:textSize="11sp"
+                tools:text="수량" />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/won_green" />
+
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|start"
+                    android:text="@{Integer.toString(order.getNum*menu.getmPrice)}"
+                    android:textColor="#49a54e"
+                    android:textSize="10sp"
+                    tools:text="가격" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="원"
+                    android:textColor="#49a54e"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</layout>
