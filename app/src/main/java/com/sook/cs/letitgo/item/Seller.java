@@ -1,6 +1,7 @@
 package com.sook.cs.letitgo.item;
 
 import com.google.android.gms.maps.model.LatLng;
+
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
@@ -58,9 +59,17 @@ public class Seller implements Serializable {
         return longitude;
     }
 
-    public String getRegId() { return regId; }
+    public String getRegId() {
+        return regId;
+    }
 
-    public void setRegId(String regId) { this.regId = regId; }
+    public int getType() {
+        return type;
+    }
+
+    public void setRegId(String regId) {
+        this.regId = regId;
+    }
 
     public String getDistance() {
         LatLng latLng = GeoItem.getKnownLocation();

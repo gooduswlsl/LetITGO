@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.sook.cs.letitgo.item.Seller">
+
+    <data>
+
+        <variable
+            name="order"
+            type="com.sook.cs.letitgo.item.Order" />
+
+        <variable
+            name="menu"
+            type="com.sook.cs.letitgo.item.Menu" />
+
+        <variable
+            name="seller"
+            type="com.sook.cs.letitgo.item.Seller" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/img_sImg"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:menuImg="@{seller.getImg}" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/img_sImg"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_sName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:text="@{seller.getName}"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    tools:text="가게명" />
+
+                <TextView
+                    android:id="@+id/tv_sSite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/tv_sName"
+                    android:text="@{seller.getSite}"
+                    android:textSize="11sp"
+                    tools:text="지점명" />
+
+
+                <TextView
+                    android:id="@+id/tv_oTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="5dp"
+                    android:textColor="#8C8C8C"
+                    android:textSize="10sp"
+                    tools:text="주문시간" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_mName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:text="@{menu.getmName}"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    tools:text="메뉴명" />
+
+                <TextView
+                    android:id="@+id/text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_toRightOf="@id/tv_mName"
+                    android:text="x" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/text"
+                    android:text="@{Integer.toString(order.getNum)}"
+                    android:textSize="13sp"
+                    tools:text="수량" />
+
+
+                <TextView
+                    android:id="@+id/tv_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:textSize="12sp"
+                    tools:text="수락거절여부" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="수령시간"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="@{order.getTimeTake}"
+                    android:textSize="13sp"
+                    tools:text="수령시간" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

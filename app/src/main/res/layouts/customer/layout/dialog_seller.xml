@@ -20,12 +20,42 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imageView"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3"
-            android:src="@color/colorPrimary" />
+            android:layout_weight="3">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/pic" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:id="@+id/img_back"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_weight="1.2"
+                    android:src="@drawable/logo" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </RelativeLayout>
 
 
         <LinearLayout
@@ -33,43 +63,49 @@
             android:layout_height="0dp"
             android:layout_weight="4"
             android:orientation="vertical"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp">
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingTop="15dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp">
+                android:layout_height="80dp"
+                android:layout_marginBottom="10dp">
 
                 <ImageView
                     android:id="@+id/img_logo"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
                     app:sellerImg="@{seller.getImg}" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_toRightOf="@id/img_logo"
+                    android:gravity="center_vertical"
                     android:orientation="vertical"
-                    android:paddingLeft="10dp">
+                    android:paddingLeft="15dp">
 
                     <TextView
                         android:id="@+id/tv_name"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
                         android:gravity="center_vertical"
                         android:text="@{seller.getName}"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
                         tools:text="매장 이름" />
 
                     <TextView
                         android:id="@+id/tv_site"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:text="@{seller.getSite}"
+                        android:textSize="15sp"
                         tools:text="지점" />
                 </LinearLayout>
 
@@ -88,33 +124,40 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginBottom="5dp"
                 android:layout_weight="1">
 
                 <TextView
-                    android:layout_width="60dp"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
-                    android:text="주소" />
+                    android:text="주소"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
 
                 <TextView
                     android:id="@+id/tv_address"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:autoLink="map"
                     android:gravity="center_vertical"
                     android:text="@{seller.getAddress}"
-                    android:autoLink="map"
+                    android:textSize="14sp"
                     tools:text="매장 주소" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginBottom="5dp"
                 android:layout_weight="1">
 
                 <TextView
-                    android:layout_width="60dp"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
-                    android:text="전화" />
+                    android:text="전화"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_tel"
@@ -123,6 +166,7 @@
                     android:autoLink="phone"
                     android:gravity="center_vertical"
                     android:text="@{seller.getTel}"
+                    android:textSize="14sp"
                     tools:text="매장 전화번호" />
             </LinearLayout>
 
@@ -132,9 +176,11 @@
                 android:layout_weight="1">
 
                 <TextView
-                    android:layout_width="60dp"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
-                    android:text="홈페이지" />
+                    android:text="웹사이트"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
 
                 <TextView
@@ -144,6 +190,7 @@
                     android:autoLink="web"
                     android:gravity="center_vertical"
                     android:text="@{seller.getWebpage}"
+                    android:textSize="14sp"
                     tools:text="매장 홈페이지" />
 
             </LinearLayout>
@@ -155,15 +202,21 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="30dp"
-            android:layout_weight="5" />
+            android:layout_weight="3.5" />
 
         <Button
             android:id="@+id/btn_more"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:layout_weight="1"
+            android:background="@drawable/btn_circle"
             android:onClick="clickMore"
-            android:text="자 세 히" />
+            android:padding="5dp"
+            android:text="구 경 하 기"
+            android:textColor="#ffffff" />
 
     </LinearLayout>
 </layout>

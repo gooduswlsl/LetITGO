@@ -46,7 +46,7 @@ public class customer_my extends Fragment {
         switch (fragment_no) {
             case 1:
                 customer_my_order fragment1 = new customer_my_order();
-                transaction.replace(R.id.fragment_container2, fragment1, "fragment_order");
+                transaction.replace(R.id.fragment_container2, fragment1, "fragment_orderlist");
                 transaction.commit();
                 break;
             case 2:

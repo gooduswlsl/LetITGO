@@ -3,40 +3,24 @@ package com.sook.cs.letitgo.customer;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.sook.cs.letitgo.MyApp;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.databinding.ActivityCartBinding;
-import com.sook.cs.letitgo.databinding.ItemCartBinding;
 import com.sook.cs.letitgo.item.Menu;
 import com.sook.cs.letitgo.item.Order;
-import com.sook.cs.letitgo.item.Seller;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -64,7 +48,7 @@ public class customer_cart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        ab.setCustomView(R.layout.actionbar_center);
+        ab.setCustomView(R.layout.actionbar_back);
         ((TextView) ab.getCustomView().findViewById(R.id.ab_title)).setText("장바구니");
 
         cSeq = ((MyApp) getApplicationContext()).getCustomer().getSeq();

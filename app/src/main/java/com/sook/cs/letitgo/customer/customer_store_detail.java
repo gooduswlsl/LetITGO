@@ -10,14 +10,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sook.cs.letitgo.R;
-import com.sook.cs.letitgo.databinding.FragmentMenuBinding;
 import com.sook.cs.letitgo.databinding.FragmentMenuTypeBinding;
 import com.sook.cs.letitgo.item.Menu;
 import com.sook.cs.letitgo.item.Seller;
@@ -53,7 +50,7 @@ public class customer_store_detail extends AppCompatActivity {
 
         ab = getSupportActionBar();
         ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        ab.setCustomView(R.layout.actionbar_center);
+        ab.setCustomView(R.layout.actionbar_back);
 
         seller_seq = getIntent().getIntExtra("seller_seq", 0);
         setTitle();

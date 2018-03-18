@@ -11,18 +11,17 @@ import android.view.Window;
 import com.sook.cs.letitgo.R;
 import com.sook.cs.letitgo.databinding.DialogMenuBinding;
 
-public class customer_dialog_order extends Activity {
+public class customer_dialog_finorder extends Activity {
     DialogMenuBinding binding;
 
-    public customer_dialog_order() {
+    public customer_dialog_finorder() {
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        binding = DataBindingUtil.setContentView(this, R.layout.dialog_order);
+        binding = DataBindingUtil.setContentView(this, R.layout.dialog_finorder);
     }
 
     public void clickOK(View v) {

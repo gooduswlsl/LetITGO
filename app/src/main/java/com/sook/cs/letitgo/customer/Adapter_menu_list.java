@@ -95,10 +95,4 @@ public class Adapter_menu_list extends RecyclerView.Adapter<MyViewHolder> {
         });
     }
 
-    @BindingAdapter({"bind:menuImg"})
-    public static void loadImg(ImageView imageView, String fileName) {
-        Picasso.with(imageView.getContext()).load(RemoteService.MENU_IMG_URL + fileName).into(imageView);
-    }
-
-
 }

@@ -1,7 +1,7 @@
 package com.sook.cs.letitgo.customer;
 
 import android.content.Context;
-import android.databinding.BindingAdapter;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.graphics.Color;
@@ -9,18 +9,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.sook.cs.letitgo.R;
-import com.sook.cs.letitgo.databinding.ItemOrderBinding;
+import com.sook.cs.letitgo.databinding.ItemOrderlistBinding;
 import com.sook.cs.letitgo.item.Menu;
 import com.sook.cs.letitgo.item.Order;
 import com.sook.cs.letitgo.item.Seller;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -28,14 +24,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Adapter_order extends RecyclerView.Adapter<MyViewHolder> {
+public class Adapter_orderList extends RecyclerView.Adapter<MyViewHolder> {
     private ViewDataBinding binding;
     private ArrayList<Order> orderArrayList;
     private Menu menu;
     private Seller seller;
     private Context mContext;
 
-    public Adapter_order(Context mContext, ArrayList<Order> orderArrayList) {
+    public Adapter_orderList(Context mContext, ArrayList<Order> orderArrayList) {
         this.orderArrayList = orderArrayList;
         this.mContext = mContext;
     }
@@ -43,51 +39,48 @@ public class Adapter_order extends RecyclerView.Adapter<MyViewHolder> {
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        binding = DataBindingUtil.inflate(layoutInflater, R.layout.item_order, parent, false);
-        return new MyViewHolder((ItemOrderBinding) binding);
+        binding = DataBindingUtil.inflate(layoutInflater, R.layout.item_orderlist, parent, false);
+        return new MyViewHolder((ItemOrderlistBinding) binding);
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position) {          // 항목을 뷰홀더에 바인딩
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {          // 항목을 뷰홀더에 바인딩
         final Order order = orderArrayList.get(position);
         holder.oBinding.setOrder(order);
-        setMenu(holder, order.getMenu_seq());
-        setSeller(holder, order.getSeller_seq());
-        switch (order.getPermit()){
-            case -1:
-                holder.oBinding.tvStatus.setText("주문거절");
-                holder.oBinding.tvStatus.setTextColor(Color.parseColor("#FFA7A7"));
-                break;
-            case 0:
-                holder.oBinding.tvStatus.setText("수락대기");
-                holder.oBinding.tvStatus.setTextColor(Color.parseColor("#BDBDBD"));
-                break;
-            case 1:
-                holder.oBinding.tvStatus.setText("주문수락");
-                holder.oBinding.tvStatus.setTextColor(Color.parseColor("#4374D9"));
-                break;
-            case 2:
-                holder.oBinding.tvStatus.setText("수령완료");
-                holder.oBinding.tvStatus.setTextColor(Color.parseColor("#8C8C8C"));
-                break;
-        }
-
-        holder.oBinding.btnMore.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LinearLayout layout = holder.oBinding.layoutMore;
-                ImageButton btnMore = holder.oBinding.btnMore;
-                if (btnMore.getTag().toString().equals("0")) {
-                    layout.setVisibility(View.VISIBLE);
-                    btnMore.setImageResource(R.drawable.btn_up);
-                    btnMore.setTag("1");
-                } else {
-                    layout.setVisibility(View.GONE);
-                    btnMore.setImageResource(R.drawable.btn_down);
-                    btnMore.setTag("0");
-                }
+                Intent it = new Intent(mContext, customer_dialog_order.class);
+                it.putExtra("menu", menu);
+                it.putExtra("position", position);
+                mContext.startActivity(it);
             }
         });
+
+        setMenu(holder, order.getMenu_seq());
+        setSeller(holder, order.getSeller_seq());
+        switch (order.getPermit()) {
+            case -1:
+                holder.olBinding.tvStatus.setText("주문거절");
+                holder.olBinding.tvStatus.setTextColor(Color.parseColor("#FFA7A7"));
+                break;
+            case 0:
+                holder.olBinding.tvStatus.setText("수락대기");
+                holder.olBinding.tvStatus.setTextColor(Color.parseColor("#BDBDBD"));
+                break;
+            case 1:
+                holder.olBinding.tvStatus.setText("주문수락");
+                holder.olBinding.tvStatus.setTextColor(Color.parseColor("#89cb8c"));
+                break;
+            case 2:
+                holder.olBinding.tvStatus.setText("메뉴준비중");
+                holder.olBinding.tvStatus.setTextColor(Color.parseColor("#89cb8c"));
+                break;
+            case 3:
+                holder.olBinding.tvStatus.setText("메뉴준비완료");
+                holder.olBinding.tvStatus.setTextColor(Color.parseColor("#49a54e"));
+                break;
+        }
     }
 
     public void setMenu(final MyViewHolder holder, int mSeq) {

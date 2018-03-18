@@ -2,6 +2,7 @@ package com.sook.cs.letitgo.customer;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
 
 import com.sook.cs.letitgo.item.Menu;
 import com.sook.cs.letitgo.R;
@@ -16,6 +18,7 @@ import com.sook.cs.letitgo.databinding.DialogMenuBinding;
 import com.sook.cs.letitgo.item.Seller;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
+import com.squareup.picasso.Picasso;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -120,4 +123,5 @@ public class customer_dialog_menu extends Activity {
         startActivity(intent);
         finish();
     }
+
 }

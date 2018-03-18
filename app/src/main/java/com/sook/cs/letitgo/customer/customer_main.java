@@ -44,7 +44,7 @@ public class customer_main extends AppCompatActivity {
         //regId가 동일한지 체크
         current_customer = ((MyApp) getApplicationContext()).getCustomer();
         compare_regId = FirebaseInstanceId.getInstance().getToken();
-        if(!compare_regId.equals(current_customer.getRegId())){
+        if (!compare_regId.equals(current_customer.getRegId())) {
             sendNewCustomerRegId(current_customer.getSeq(), compare_regId);
         }
 
@@ -53,7 +53,7 @@ public class customer_main extends AppCompatActivity {
 
         ActionBar ab = getSupportActionBar();
         ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        ab.setCustomView(R.layout.actionbar_cart);
+        ab.setCustomView(R.layout.actionbar_main);
         title = ab.getCustomView().findViewById(R.id.ab_title);
 
         callFragment(1);
@@ -61,20 +61,17 @@ public class customer_main extends AppCompatActivity {
 
         //푸시 메시지를 클릭한 경우
         String str = getIntent().getStringExtra("particularFragment");
-        if(str !=null)
-        {
-            if(str.equals("goToCustomer_my"))
-            {
+        if (str != null) {
+            if (str.equals("goToCustomer_my")) {
                 callFragment(5);
             }
-        }
-        else
+        } else
             callFragment(1);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if ((requestCode == REQUEST_SELLER || requestCode == REQUEST_MENU) ) {
+        if ((requestCode == REQUEST_SELLER || requestCode == REQUEST_MENU)) {
             fragment = getSupportFragmentManager().findFragmentByTag("fragment_liked");
             fragment.onActivityResult(requestCode, resultCode, data);
         } else if (resultCode == REQUEST_PROFILE) {
@@ -88,6 +85,10 @@ public class customer_main extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void listClick(View v) {
+        callFragment(0);
+    }
+
     public void menuClick(View v) {
         int num = Integer.parseInt(v.getTag().toString());
         callFragment(num);
@@ -98,6 +99,14 @@ public class customer_main extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         switch (fragment_no) {
+            case 0:
+                customer_orderlist fragment = new customer_orderlist();
+                transaction.replace(R.id.fragment_container, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+                title.setText("주문 목록");
+                break;
+
             case 1:
                 customer_store fragment1 = new customer_store();
                 transaction.replace(R.id.fragment_container, fragment1);
@@ -148,7 +157,7 @@ public class customer_main extends AppCompatActivity {
                 break;
             case 3:
                 binding.btnMap.setImageResource(R.drawable.ic_map2);
-                title.setText("지도");
+                title.setText("주변 매장");
                 break;
             case 4:
                 binding.btnLiked.setImageResource(R.drawable.ic_liked2);
@@ -168,10 +177,9 @@ public class customer_main extends AppCompatActivity {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG,"sending new regId successful");
-                }
-                else{
-                    Log.d(TAG,"response not successful");
+                    Log.d(TAG, "sending new regId successful");
+                } else {
+                    Log.d(TAG, "response not successful");
                 }
             }
 

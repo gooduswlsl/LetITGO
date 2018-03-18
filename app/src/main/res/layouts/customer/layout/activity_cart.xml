@@ -3,13 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.sook.cs.letitgo.customer.customer_my_order">
 
-    <data>
-
-        <variable
-            name="fragment"
-            type="com.sook.cs.letitgo.customer.customer_my_order" />
-    </data>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

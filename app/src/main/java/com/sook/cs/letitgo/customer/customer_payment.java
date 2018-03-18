@@ -6,7 +6,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -17,7 +16,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.sook.cs.letitgo.MyApp;
 import com.sook.cs.letitgo.R;
-import com.sook.cs.letitgo.item.Menu;
 import com.sook.cs.letitgo.item.Order;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
@@ -48,7 +46,7 @@ public class customer_payment extends AppCompatActivity {
 
         ActionBar ab = getSupportActionBar();
         ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        ab.setCustomView(R.layout.actionbar_center);
+        ab.setCustomView(R.layout.actionbar_back);
         ((TextView) ab.getCustomView().findViewById(R.id.ab_title)).setText("장바구니");
 
         orderList = (ArrayList<Order>) getIntent().getSerializableExtra("orderList");
@@ -75,14 +73,13 @@ public class customer_payment extends AppCompatActivity {
         }
         helper.flushDB();
 
-        Intent it = new Intent(getApplicationContext(), customer_dialog_order.class);
+        Intent it = new Intent(getApplicationContext(), customer_dialog_finorder.class);
         startActivity(it);
-
     }
 
     public void upload(Order order) {
         RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
-        Call<String> call = remoteService.sendOrder(order, ((MyApp)getApplicationContext()).getCustomer().getSeq());
+        Call<String> call = remoteService.sendOrder(order, ((MyApp) getApplicationContext()).getCustomer().getSeq());
 
         call.enqueue(new Callback<String>() {
             @Override

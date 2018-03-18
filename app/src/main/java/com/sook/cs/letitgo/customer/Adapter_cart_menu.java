@@ -117,8 +117,4 @@ public class Adapter_cart_menu extends RecyclerView.Adapter<MyViewHolder> {
         return cartArrayList.size();
     }
 
-    @BindingAdapter({"bind:menuImg"})
-    public static void loadImg(ImageView imageView, String fileName) {
-        Picasso.with(imageView.getContext()).load(RemoteService.MENU_IMG_URL + fileName).into(imageView);
-    }
 }
