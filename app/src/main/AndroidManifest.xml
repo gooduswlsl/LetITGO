@@ -60,6 +60,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".shared.ProfileActivity"
+            android:label="회원가입"
             android:screenOrientation="portrait"/>
         <activity android:name=".shared.ProfileIconActivity"
             android:screenOrientation="portrait"/>
@@ -84,6 +85,8 @@
         <activity
             android:name=".customer.customer_dialog_cart"
             android:theme="@android:style/Theme.Holo.Light.Dialog" />
+        <activity android:name=".customer.customer_dialog_order"
+            android:theme="@android:style/Theme.Holo.Light.Dialog"
         <activity android:name=".customer.customer_dialog_finorder"
             android:theme="@android:style/Theme.Holo.Light.Dialog"
             android:screenOrientation="portrait"/>
@@ -118,6 +121,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Dialog" />
         <activity android:name=".shared.Login_finish"
+            android:theme="@android:style/Theme.Dialog"
             android:screenOrientation="portrait"/>
         <activity android:name=".seller.MenuPicAddActivity"
             android:screenOrientation="portrait"/>

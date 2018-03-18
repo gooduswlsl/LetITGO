@@ -20,12 +20,11 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         android:id="@+id/tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#66BB6A"
         app:tabGravity="fill"
         app:tabIndicatorColor="#66BB6A"
         app:tabMode="scrollable"
-        app:tabSelectedTextColor="#000000"
-        app:tabTextColor="#ffffff" />
+        app:tabSelectedTextColor="@color/colorPrimaryDark"
+        app:tabTextColor="#a3a3a3" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
