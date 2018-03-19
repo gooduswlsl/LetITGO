@@ -5,6 +5,7 @@ import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
+import android.icu.util.TimeZone;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.widget.TimePicker;
@@ -21,6 +22,7 @@ public class customer_dialog_time extends DialogFragment implements TimePickerDi
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Calendar c = Calendar.getInstance();
+        c.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
         int hour = c.get(Calendar.HOUR_OF_DAY);
         int min = c.get(Calendar.MINUTE)+10;
         TimePickerDialog dialog = new TimePickerDialog(

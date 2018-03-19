@@ -42,13 +42,13 @@ public class customer_menu extends Fragment {
 
         pager.setAdapter(new FragmentAdapterMenu(getFragmentManager()));
         tab.addTab(tab.newTab().setText("ALL"),0,true);
-        tab.addTab(tab.newTab().setText("KOREAN"),1);
-        tab.addTab(tab.newTab().setText("CHINESE"),2);
-        tab.addTab(tab.newTab().setText("JAPANESE"),3);
-        tab.addTab(tab.newTab().setText("AMERICAN"),4);
-        tab.addTab(tab.newTab().setText("SNACK"),5);
-        tab.addTab(tab.newTab().setText("CAFE"),6);
-        tab.addTab(tab.newTab().setText("ETC"),7);
+        tab.addTab(tab.newTab().setText("한식"),1);
+        tab.addTab(tab.newTab().setText("중식"),2);
+        tab.addTab(tab.newTab().setText("일식"),3);
+        tab.addTab(tab.newTab().setText("양식"),4);
+        tab.addTab(tab.newTab().setText("분식"),5);
+        tab.addTab(tab.newTab().setText("카페"),6);
+        tab.addTab(tab.newTab().setText("기타"),7);
         tab.addOnTabSelectedListener(listener);
         pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab));
         return binding.getRoot();

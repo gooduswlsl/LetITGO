@@ -89,9 +89,7 @@ public class Order_ListViewAdapter extends BaseAdapter {
             public void onClick(final View view) {
                 btn_accept.setVisibility(View.GONE);
                 btn_decline.setVisibility(View.GONE);
-                btn_decline.setClickable(false);
                 btn_finished.setVisibility(View.VISIBLE);
-                btn_finished.setClickable(true);
                 sendPermit(listViewItemList.get(position).getSeq(),ACCEPT_ORDER, position);
                 sendTotal_price(listViewItemList.get(position).getSeq(),m_list.get(position).getmPrice()*listViewItemList.get(position).getNum());
                 getCustomerRegId(c_list.get(position).getSeq(),ACCEPT_ORDER);
@@ -106,7 +104,6 @@ public class Order_ListViewAdapter extends BaseAdapter {
                 btn_accept.setVisibility(View.GONE);
                 btn_decline.setVisibility(View.GONE);
                 declineStr.setVisibility(View.VISIBLE);
-                btn_accept.setClickable(false);
                 sendPermit(listViewItemList.get(position).getSeq(),DECLINE_ORDER, position);
                 getCustomerRegId(c_list.get(position).getSeq(),DECLINE_ORDER);
 
