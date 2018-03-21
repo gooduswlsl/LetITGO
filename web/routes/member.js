@@ -130,23 +130,23 @@ router.post('/seller', function(req, res) {
     var latitude = req.body.latitude;
     var longitude = req.body.longitude;
     var regId = req.body.regId;
+    var type = req.body.type;
 
-
-  console.log({name,site,tel,address,webpage,phone,img,latitude,longitude, regId});
+  console.log({name,site,tel,address,webpage,phone,img,latitude,longitude, regId,type});
 
   var sql_count = "select count(*) as cnt " +
             "from seller " +
             "where phone = ?;";
 
-  var sql_insert = "insert into seller (name, site, tel, address, webpage, phone, img,latitude,longitude,regId) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-  var sql_update = "update seller set name = ?, site = ?, tel = ?, address = ?, webpage = ?, img = ?, latitude = ?, longitude = ?, regId = ? where phone = ?; ";
+  var sql_insert = "insert into seller (name, site, tel, address, webpage, phone, img, latitude, longitude, regId, type) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+  var sql_update = "update seller set name = ?, site = ?, tel = ?, address = ?, webpage = ?, img = ?, latitude = ?, longitude = ?, regId = ?, type = ? where phone = ?; ";
   var sql_select = "select seq from seller where phone = ?; ";
 
   db.get().query(sql_count, phone, function (err, rows) {
     if (rows[0].cnt > 0) {
       console.log("sql_update : " + sql_update);
 
-      db.get().query(sql_update, [name, site, tel, address, webpage, phone, img, latitude, longitude, regId], function (err, result) {
+      db.get().query(sql_update, [name, site, tel, address, webpage, phone, img, latitude, longitude, regId, type], function (err, result) {
         if (err) {
             console.log(err);
             return res.sendStatus(400);
@@ -162,7 +162,7 @@ router.post('/seller', function(req, res) {
     } else {
       console.log("sql_insert : " + sql_insert);
 
-      db.get().query(sql_insert, [name,site,tel,address,webpage,phone,img,latitude,longitude, regId], function (err, result) {
+      db.get().query(sql_insert, [name,site,tel,address,webpage,phone,img,latitude,longitude,regId,type], function (err, result) {
         if (err) return res.sendStatus(400);
 
         res.status(200).send('' + result.insertId);
@@ -262,9 +262,8 @@ router.post('/sendNewCustomerRegId', function(req, res){
   });
 
 
-
-//member/getSellerRegId/:seller_seq
-router.get('/getSellerRegId/:seller_seq', function(req, res, next){
+//member/getRegId/:seller_seq
+router.get('/getRegId/:seller_seq', function(req, res, next){
 	var seq = req.params.seller_seq;
 	var sql_select = "select regId from seller where seq = ? limit 1;";
 
@@ -279,26 +278,5 @@ router.get('/getSellerRegId/:seller_seq', function(req, res, next){
 		}
 	});
 });
-
-//member/getCustomerRegId/:customer_seq
-router.get('/getCustomerRegId/:customer_seq', function(req, res, next){
-	var seq = req.params.customer_seq;
-	var sql_select = "select regId from customer where seq = ? limit 1;";
-
-	console.log(seq);
-	console.log("sql:"+sql);
-
-	db.get().query(sql_select, seq, function(err, rows){
-		if(rows.length > 0)
-			res.status(200).json(rows[0].regId);
-		else
-			res.sendStatus(400);
-		if(err){
-			console.log(err);
-			res.sendStatus(400);
-		}
-	});
-});
-
 
 module.exports = router;
