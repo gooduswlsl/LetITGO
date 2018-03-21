@@ -13,15 +13,18 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_gravity="center"
-        android:layout_margin="@dimen/spacing_large"
+        android:layout_margin="20dp"
         android:orientation="vertical">
 
-        <ImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:src="@color/bg_default"
+            app:civ_border_color="#AAAAAA"
+            app:civ_border_width="2dp"
             android:id="@+id/img_test"
             android:layout_width="128dp"
             android:layout_height="128dp"
             android:layout_gravity="top"
-            android:src="@drawable/image_border" />
+            />
 
         <ImageView
             android:id="@+id/profile_icon_change"

@@ -17,7 +17,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center_vertical"
-            android:text="New Text"
             android:textColor="#000000"
             android:textSize="13dp" />
 
@@ -28,7 +27,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1.00"
             android:gravity="center_vertical"
-            android:text="New Text"
             android:textColor="#000000"
             android:textSize="12dp" />
 
@@ -38,7 +36,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="New Text"
             android:textColor="#ff848484"
             android:textSize="12dp" />
 
@@ -60,7 +57,7 @@
                 android:id="@+id/acceptStr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="주문 끝"
+                android:text="수령완료"
                 android:textSize="12dp"
                 android:textColor="#3eabfa"
                 android:layout_gravity="top|right"
@@ -71,6 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:visibility="gone"
                 android:focusable="false"
                 android:textSize="12dp"
                 android:minHeight="0dp"
@@ -85,6 +83,7 @@
                 android:textSize="12dp"
                 android:layout_weight="1"
                 android:focusable="false"
+                android:visibility="gone"
                 android:layout_marginTop="5dp"
                 android:minHeight="0dp"
                 android:textColor="#ffffff"
@@ -92,15 +91,41 @@
                 android:text="거절" />
 
             <Button
-                android:id="@+id/btn_finished"
+                android:id="@+id/btn_start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="메뉴 준비중"
+                android:text="준비시작"
                 android:background="@drawable/order_accepted"
                 android:textColor="#ffffff"
                 android:textSize="12dp"
                 android:visibility="gone" />
+
+
+            <Button
+                android:id="@+id/btn_ready"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="준비완료"
+                android:background="@drawable/order_accepted"
+                android:textColor="#ffffff"
+                android:textSize="12dp"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btn_ready2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="준비완료"
+                android:background="@drawable/order_ready2"
+                android:textColor="#ffffff"
+                android:clickable="false"
+                android:textSize="12dp"
+                android:visibility="gone" />
+
+
 
             <TextView
                 android:id="@+id/declineStr"

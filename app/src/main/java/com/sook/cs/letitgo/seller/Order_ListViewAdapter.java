@@ -42,10 +42,12 @@ public class Order_ListViewAdapter extends BaseAdapter {
     public ArrayList<Order> listViewItemList = new ArrayList<Order>();
     public ArrayList<Customer> c_list = new ArrayList<Customer>();
     public ArrayList<Menu> m_list = new ArrayList<Menu>();
-
+    public String clicked;
     private static final int ACCEPT_ORDER = 1;
     private static final int DECLINE_ORDER = -1;
-    private static final int ORDER_FINISHED = 2;
+    private static final int ORDER_START = 2;
+    private static final int ORDER_READY = 3;
+    private static final int ORDER_FINISHED = 4;
 
     public ImageView imgAndroid;
     RequestQueue queue;
@@ -65,7 +67,6 @@ public class Order_ListViewAdapter extends BaseAdapter {
     // position에 위치한 데이터를 화면에 출력하는데 사용될 View를 리턴. : 필수 구현
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-
         final Context context = parent.getContext();
         // "order_listview_item" Layout을 inflate하여 convertView 참조 획득.
         if (convertView == null) {
@@ -79,7 +80,9 @@ public class Order_ListViewAdapter extends BaseAdapter {
         final TextView textView3 = (TextView) convertView.findViewById(R.id.textView3);
         final Button btn_accept = (Button) convertView.findViewById(R.id.btn_accept);
         final Button btn_decline = (Button) convertView.findViewById(R.id.btn_decline);
-        final Button btn_finished = (Button) convertView.findViewById(R.id.btn_finished);
+        final Button btn_start = (Button) convertView.findViewById(R.id.btn_start);
+        final Button btn_ready = (Button) convertView.findViewById(R.id.btn_ready);
+        final Button btn_ready2 = (Button) convertView.findViewById(R.id.btn_ready2);
         final TextView acceptStr = (TextView) convertView.findViewById(R.id.acceptStr);
         final TextView declineStr = (TextView) convertView.findViewById(R.id.declineStr);
 
@@ -87,41 +90,40 @@ public class Order_ListViewAdapter extends BaseAdapter {
 
             @Override
             public void onClick(final View view) {
-                btn_accept.setVisibility(View.GONE);
-                btn_decline.setVisibility(View.GONE);
-                btn_finished.setVisibility(View.VISIBLE);
                 sendPermit(listViewItemList.get(position).getSeq(),ACCEPT_ORDER, position);
-                sendTotal_price(listViewItemList.get(position).getSeq(),m_list.get(position).getmPrice()*listViewItemList.get(position).getNum());
-                getCustomerRegId(c_list.get(position).getSeq(),ACCEPT_ORDER);
-
+                getCustomerRegId(c_list.get(position).getSeq(), ACCEPT_ORDER);
                 Toast.makeText(view.getContext(), c_list.get(position).getName()+"님의 주문을 수락하였습니다.", Toast.LENGTH_SHORT).show();
+                notifyDataSetChanged();
             }
         });
 
         btn_decline.setOnClickListener(new View.OnClickListener() { //거절
             @Override
             public void onClick(final View view) {
-                btn_accept.setVisibility(View.GONE);
-                btn_decline.setVisibility(View.GONE);
-                declineStr.setVisibility(View.VISIBLE);
                 sendPermit(listViewItemList.get(position).getSeq(),DECLINE_ORDER, position);
                 getCustomerRegId(c_list.get(position).getSeq(),DECLINE_ORDER);
-
                 Toast.makeText(view.getContext(), c_list.get(position).getName()+"님의 주문을 거절하였습니다.", Toast.LENGTH_SHORT).show();
+                notifyDataSetChanged();
             }
         });
 
-        btn_finished.setOnClickListener(new View.OnClickListener() {  //주문완료
-
+        btn_start.setOnClickListener(new View.OnClickListener() {  //준비시작
             @Override
             public void onClick(final View view) {
-                btn_finished.setVisibility(View.GONE);
-                acceptStr.setVisibility(View.VISIBLE);
-                sendPermit(listViewItemList.get(position).getSeq(),ORDER_FINISHED, position);
-                getCustomerRegId(c_list.get(position).getSeq(), ORDER_FINISHED);
+                Toast.makeText(view.getContext(), c_list.get(position).getName()+"님의 주문 준비시작", Toast.LENGTH_SHORT).show();
+                sendPermit(listViewItemList.get(position).getSeq(),ORDER_START, position);
+                notifyDataSetChanged();
+            }
+        });
 
-                Toast.makeText(view.getContext(), c_list.get(position).getName()+"님의 주문을 완료하였습니다.", Toast.LENGTH_SHORT).show();
-
+        btn_ready.setOnClickListener(new View.OnClickListener() {  //준비완료
+            @Override
+            public void onClick(final View view) {
+                Toast.makeText(view.getContext(), c_list.get(position).getName()+"님의 주문 준비완료!", Toast.LENGTH_SHORT).show();
+                sendPermit(listViewItemList.get(position).getSeq(),ORDER_READY, position);
+                getCustomerRegId(c_list.get(position).getSeq(), ORDER_READY);
+                sendTotal_price(listViewItemList.get(position).getSeq(),m_list.get(position).getmPrice()*listViewItemList.get(position).getNum());
+                notifyDataSetChanged();
             }
         });
 
@@ -149,7 +151,6 @@ public class Order_ListViewAdapter extends BaseAdapter {
                 textView2.setText(m_list.get(position).getmName()+" "+listViewItem.getNum()+"개");
                 textView3.setText("예약 일자: "+time+" ("+date+")");
 
-
                 switch(listViewItem.getPermit()){
                     case DECLINE_ORDER:
                         btn_accept.setVisibility(View.GONE);
@@ -160,7 +161,22 @@ public class Order_ListViewAdapter extends BaseAdapter {
                     case ACCEPT_ORDER:
                         btn_accept.setVisibility(View.GONE);
                         btn_decline.setVisibility(View.GONE);
-                        btn_finished.setVisibility(View.VISIBLE);
+                        btn_start.setVisibility(View.VISIBLE);
+                        break;
+
+                    case ORDER_START:
+                        btn_accept.setVisibility(View.GONE);
+                        btn_decline.setVisibility(View.GONE);
+                        btn_start.setVisibility(View.GONE);
+                        btn_ready.setVisibility(View.VISIBLE);
+                        break;
+
+                    case ORDER_READY:
+                        btn_accept.setVisibility(View.GONE);
+                        btn_decline.setVisibility(View.GONE);
+                        btn_ready.setVisibility(View.GONE);
+                        btn_start.setVisibility(View.GONE);
+                        btn_ready2.setVisibility(View.VISIBLE);
                         break;
 
                     case ORDER_FINISHED:
@@ -170,13 +186,15 @@ public class Order_ListViewAdapter extends BaseAdapter {
                         break;
 
                     default:
+                        btn_accept.setVisibility(View.VISIBLE);
+                        btn_decline.setVisibility(View.VISIBLE);
                         break;
                 }
                 imgAndroid.clearAnimation();
                 imgAndroid.setVisibility(View.GONE);
                 loading_bg.setVisibility(View.GONE);
             }
-        }, 1000);
+        }, 300);
 
         return convertView;
 
@@ -203,6 +221,8 @@ public class Order_ListViewAdapter extends BaseAdapter {
     }
 
     public void setItemList(ArrayList<Order> itemList) {
+        Log.d("seller_order","setitemlist실시");
+        this.listViewItemList.clear();
         this.listViewItemList = itemList;
         notifyDataSetChanged();
     }
@@ -247,8 +267,8 @@ public class Order_ListViewAdapter extends BaseAdapter {
         });
     }
 
-    // permit값 보내기 (기본값 0, 거절 -1, 수락 1, 주문완료 2)
-    private void sendPermit(int seq, int permit, int position) {
+    // permit값 보내기 (기본값 0, 거절 -1, 수락1, 준비시작 2, 준비완료 3, 수령완료 4)
+    private void sendPermit(int seq, final int permit, int position) {
         final int seller_seq=listViewItemList.get(position).getSeller_seq();
         Log.d(TAG,"sendPermit seller_seq: "+seller_seq);
         RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
@@ -257,7 +277,7 @@ public class Order_ListViewAdapter extends BaseAdapter {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful()) {
-                    showOrderList(seller_seq);
+                    showOrderList(seller_seq, clicked);
                     Log.d(TAG,"sendPermit successful");
                 }
                 else{
@@ -298,10 +318,10 @@ public class Order_ListViewAdapter extends BaseAdapter {
     }
 
     // DB에서 memberSeq에 해당하는 메뉴내용 가져오기
-    private void showOrderList(int memberSeq) {
+    private void showOrderList(int memberSeq, String period) {
         RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
         Call<ArrayList<Order>> call
-                = remoteService.listOrder(memberSeq);
+                = remoteService.listOrder(memberSeq, period);
         call.enqueue(new Callback<ArrayList<Order>>() {
 
             @Override
@@ -397,7 +417,7 @@ public class Order_ListViewAdapter extends BaseAdapter {
             public void onErrorResponse(VolleyError error) {
                 listener.onRequestWithError(error);
             }
-          }
+        }
         ) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
@@ -438,13 +458,12 @@ public class Order_ListViewAdapter extends BaseAdapter {
                         case ACCEPT_ORDER:
                             send("고객님의 주문이 수락되었습니다.", regId);
                             break;
+                        case ORDER_READY:
+                            send("고객님의 메뉴가 준비되었습니다.", regId);
+                            break;
                         case DECLINE_ORDER:
                             send("고객님의 주문이 거절되었습니다.", regId);
                             break;
-                        case ORDER_FINISHED:
-                            send("고객님의 주문완료! 오늘도 좋은 하루 되세요", regId);
-                            break;
-
                     }
 
                 } else {
@@ -457,5 +476,8 @@ public class Order_ListViewAdapter extends BaseAdapter {
                 Log.d(TAG,t.toString());
             }
         });
+    }
+    public void setClicked(String clicked) {
+        this.clicked = clicked;
     }
 }

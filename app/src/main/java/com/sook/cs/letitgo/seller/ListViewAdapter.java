@@ -70,7 +70,11 @@ public class ListViewAdapter extends BaseAdapter {
                     .into(iconImageView);
         }
         titleTextView.setText(listViewItem.getmName());
-        descTextView.setText(listViewItem.getmDetail()+" ("+String.valueOf(listViewItem.getmPrice())+"원)");
+        if(listViewItem.getmDetail()==null){
+            descTextView.setText(" ("+String.valueOf(listViewItem.getmPrice())+"원)");
+        }
+        else
+            descTextView.setText(listViewItem.getmDetail()+" ("+String.valueOf(listViewItem.getmPrice())+"원)");
 
         return convertView;
     }

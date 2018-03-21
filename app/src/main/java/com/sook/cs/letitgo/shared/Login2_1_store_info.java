@@ -42,6 +42,7 @@ import com.sook.cs.letitgo.lib.EtcLib;
 import com.sook.cs.letitgo.lib.RemoteLib;
 import com.sook.cs.letitgo.remote.RemoteService;
 import com.sook.cs.letitgo.remote.ServiceGenerator;
+import com.sook.cs.letitgo.seller.Seller_main;
 
 import java.io.File;
 import java.io.IOException;
@@ -162,8 +163,9 @@ public class Login2_1_store_info extends AppCompatActivity{
 
                 } else {
                     save();
-                    Intent intent = new Intent(getApplicationContext(), Login_finish.class);
+                    Intent intent = new Intent(getApplicationContext(),Seller_main.class);
                     startActivity(intent);
+                    finish();
                 }
                 break;
         }

@@ -44,7 +44,7 @@ public class seller_sales extends Fragment {
 
         initView(view);
 
-        title.setText(current_seller.getName()+" "+current_seller.getSite()+" 매출 그래프");
+        title.setText(current_seller.getName()+" "+current_seller.getSite()+" 매출 그래프"+"\n(단위: 천)");
         getMonthSales(current_seller.getSeq());
 
         WebSettings websetting = webview.getSettings();

@@ -285,6 +285,9 @@ router.get('/getCustomerRegId/:customer_seq', function(req, res, next){
 	var seq = req.params.customer_seq;
 	var sql_select = "select regId from customer where seq = ? limit 1;";
 
+	console.log(seq);
+	console.log("sql:"+sql);
+
 	db.get().query(sql_select, seq, function(err, rows){
 		if(rows.length > 0)
 			res.status(200).json(rows[0].regId);

@@ -1,6 +1,7 @@
 package com.sook.cs.letitgo.seller;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,17 +36,23 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.sook.cs.letitgo.R.id.btn1;
+import static com.sook.cs.letitgo.R.id.btn2;
+
 public class seller_order extends Fragment {
 
     Seller current_seller;
     private final String TAG = this.getClass().getSimpleName();
     Order_ListViewAdapter adapter;
     private TextView no_order, loading_bg;
+    private Button today, week, month;
     private ImageView imgAndroid;
     private Animation anim;
+    private String clicked;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        clicked="-1 day";
         return inflater.inflate(R.layout.seller_order, container, false);
     }
 
@@ -68,9 +76,58 @@ public class seller_order extends Fragment {
         loading_bg = getView().findViewById(R.id.loading_bg);
         progressDialog();
 
+        Log.d(TAG,"oncreate");
+        showOrderList(clicked);
 
         no_order = getView().findViewById(R.id.no_order);
-        showOrderList(current_seller.getSeq());
+        today = getView().findViewById(btn1);
+        week = getView().findViewById(btn2);
+        month = getView().findViewById(R.id.btn3);
+
+        //더러워서 나중에 코드 수정 예정
+        today.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                Log.d(TAG,"today");
+                today.setTextColor(Color.parseColor("#8C8C8C"));
+                week.setTextColor(Color.parseColor("#95c85b"));
+                month.setTextColor(Color.parseColor("#95c85b"));
+                adapter = new Order_ListViewAdapter();
+                adapter.queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+                listview.setAdapter(adapter);
+                clicked=today.getTag().toString();
+                showOrderList(clicked);
+            }
+        });
+        week.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                Log.d(TAG,"week");
+                week.setTextColor(Color.parseColor("#8C8C8C"));
+                today.setTextColor(Color.parseColor("#95c85b"));
+                month.setTextColor(Color.parseColor("#95c85b"));
+                adapter = new Order_ListViewAdapter();
+                adapter.queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+                listview.setAdapter(adapter);
+                clicked=week.getTag().toString();
+                showOrderList(clicked);
+            }
+        });
+        month.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                Log.d(TAG,"month");
+                month.setTextColor(Color.parseColor("#8C8C8C"));
+                week.setTextColor(Color.parseColor("#95c85b"));
+                today.setTextColor(Color.parseColor("#95c85b"));
+                adapter = new Order_ListViewAdapter();
+                adapter.queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+                listview.setAdapter(adapter);
+                clicked=month.getTag().toString();
+                showOrderList(clicked);
+            }
+        });
+
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, final int position, long id) {
@@ -80,6 +137,7 @@ public class seller_order extends Fragment {
                 // TODO : use item data.
                 LayoutInflater inflater = getLayoutInflater(null);
                 View alertLayout = inflater.inflate(R.layout.order_layout, null);
+
                 final TextView menu_name = alertLayout.findViewById(R.id.order_menu_name);
                 final TextView time_take = alertLayout.findViewById(R.id.time_take);
                 final TextView order_price = alertLayout.findViewById(R.id.order_price);
@@ -135,7 +193,10 @@ public class seller_order extends Fragment {
 
             @Override
             public void onRefresh() {
-                showOrderList(current_seller.getSeq());
+                adapter = new Order_ListViewAdapter();
+                adapter.queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+                listview.setAdapter(adapter);
+                showOrderList(clicked);
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -144,10 +205,10 @@ public class seller_order extends Fragment {
 
 
     // DB에서 memberSeq에 해당하는 메뉴내용 가져오기
-    private void showOrderList(int memberSeq) {
+    private void showOrderList(String period) {
         RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
         Call<ArrayList<Order>> call
-                = remoteService.listOrder(memberSeq);
+                = remoteService.listOrder(((MyApp) getActivity().getApplicationContext()).getSeller().getSeq(), period);
         call.enqueue(new Callback<ArrayList<Order>>() {
 
             @Override
@@ -156,6 +217,7 @@ public class seller_order extends Fragment {
                 ArrayList<Order> list = response.body();
 
                 if (list == null) {
+                    Log.d(TAG,"list가 null");
                     loading_bg.setVisibility(View.GONE);
                     imgAndroid.clearAnimation();
                     imgAndroid.setVisibility(View.GONE);
@@ -164,13 +226,12 @@ public class seller_order extends Fragment {
 
                 if (response.isSuccessful()) {
                     Log.d(TAG, "list size " + list.size());
-                    if (list.size() == 0) {
-                    } else {
-                        no_order.setVisibility(View.GONE);
-                        adapter.imgAndroid=imgAndroid;
-                        adapter. loading_bg= loading_bg;
-                        adapter.setItemList(list);
-                    }
+                    no_order.setVisibility(View.GONE);
+                    adapter.imgAndroid=imgAndroid;
+                    adapter. loading_bg= loading_bg;
+                    adapter.setItemList(list);
+                    adapter.setClicked(clicked);
+                    adapter.notifyDataSetChanged();
                 } else {
                     Log.d(TAG, "not success");
                 }
