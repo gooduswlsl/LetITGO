@@ -35,7 +35,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Order_ListViewAdapter extends BaseAdapter {
+public class Recipt_ListViewAdapter extends BaseAdapter {
 
     private final String TAG = this.getClass().getSimpleName();
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
@@ -54,9 +54,6 @@ public class Order_ListViewAdapter extends BaseAdapter {
 
     public TextView loading_bg;
 
-    // Order_ListViewAdapter의 생성자
-    public Order_ListViewAdapter() {
-    }
 
     // Adapter에 사용되는 데이터의 개수를 리턴. : 필수 구현
     @Override
@@ -71,7 +68,7 @@ public class Order_ListViewAdapter extends BaseAdapter {
         // "order_listview_item" Layout을 inflate하여 convertView 참조 획득.
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.order_listview_item, parent, false);
+            convertView = inflater.inflate(R.layout.recipt_listview_item, parent, false);
         }
 
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
@@ -80,8 +77,8 @@ public class Order_ListViewAdapter extends BaseAdapter {
         final TextView textView3 = (TextView) convertView.findViewById(R.id.textView3);
         final Button btn_accept = (Button) convertView.findViewById(R.id.btn_accept);
         final Button btn_decline = (Button) convertView.findViewById(R.id.btn_decline);
-        final TextView btn_start = (TextView) convertView.findViewById(R.id.btn_start);
-        final TextView btn_ready = (TextView) convertView.findViewById(R.id.btn_ready);
+        final Button btn_start = (Button) convertView.findViewById(R.id.btn_start);
+        final Button btn_ready = (Button) convertView.findViewById(R.id.btn_ready);
         final TextView btn_ready2 = (TextView) convertView.findViewById(R.id.btn_ready2);
         final TextView acceptStr = (TextView) convertView.findViewById(R.id.acceptStr);
         final TextView declineStr = (TextView) convertView.findViewById(R.id.declineStr);
@@ -93,6 +90,8 @@ public class Order_ListViewAdapter extends BaseAdapter {
                 sendPermit(listViewItemList.get(position).getSeq(),ACCEPT_ORDER, position);
                 getCustomerRegId(c_list.get(position).getSeq(), ACCEPT_ORDER);
                 Toast.makeText(view.getContext(), c_list.get(position).getName()+"님의 주문을 수락하였습니다.", Toast.LENGTH_SHORT).show();
+                if(clicked.equals("new_order"))
+                    deleteItem(position);
                 notifyDataSetChanged();
             }
         });
@@ -103,6 +102,8 @@ public class Order_ListViewAdapter extends BaseAdapter {
                 sendPermit(listViewItemList.get(position).getSeq(),DECLINE_ORDER, position);
                 getCustomerRegId(c_list.get(position).getSeq(),DECLINE_ORDER);
                 Toast.makeText(view.getContext(), c_list.get(position).getName()+"님의 주문을 거절하였습니다.", Toast.LENGTH_SHORT).show();
+                if(clicked.equals("new_order"))
+                    deleteItem(position);
                 notifyDataSetChanged();
             }
         });
@@ -110,7 +111,7 @@ public class Order_ListViewAdapter extends BaseAdapter {
         btn_start.setOnClickListener(new View.OnClickListener() {  //준비시작
             @Override
             public void onClick(final View view) {
-                Toast.makeText(view.getContext(), c_list.get(position).getName()+"님의 주문 준비시작", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), c_list.get(position).getName()+"님의 메뉴 조리시작", Toast.LENGTH_SHORT).show();
                 sendPermit(listViewItemList.get(position).getSeq(),ORDER_START, position);
                 notifyDataSetChanged();
             }
@@ -119,7 +120,7 @@ public class Order_ListViewAdapter extends BaseAdapter {
         btn_ready.setOnClickListener(new View.OnClickListener() {  //준비완료
             @Override
             public void onClick(final View view) {
-                Toast.makeText(view.getContext(), c_list.get(position).getName()+"님의 주문 준비완료!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), c_list.get(position).getName()+"님의 메뉴 조리완료", Toast.LENGTH_SHORT).show();
                 sendPermit(listViewItemList.get(position).getSeq(),ORDER_READY, position);
                 getCustomerRegId(c_list.get(position).getSeq(), ORDER_READY);
                 sendTotal_price(listViewItemList.get(position).getSeq(),m_list.get(position).getmPrice()*listViewItemList.get(position).getNum());
@@ -145,11 +146,13 @@ public class Order_ListViewAdapter extends BaseAdapter {
                 int here= all.indexOf("T");
                 String date = all.substring(0, here);
                 String time = all.substring(here+1,here+6);
+                String hour = time.substring(0,2);
+                String min = time.substring(3,5);
 
                 // 아이템 내 각 위젯에 데이터 반영
-                textView1.setText(c_list.get(position).getName()+" (" + c_list.get(position).getPhone()+") ");
+                textView1.setText("예약시간: "+hour+"시 "+min+"분 "+"("+date+")");
                 textView2.setText(m_list.get(position).getmName()+" "+listViewItem.getNum()+"개");
-                textView3.setText("예약 일자: "+time+" ("+date+")");
+                textView3.setText(c_list.get(position).getName()+" "+c_list.get(position).getPhone());
 
                 switch(listViewItem.getPermit()){
                     case DECLINE_ORDER:
@@ -221,7 +224,6 @@ public class Order_ListViewAdapter extends BaseAdapter {
     }
 
     public void setItemList(ArrayList<Order> itemList) {
-        Log.d(TAG,"setitemlist실시");
         this.listViewItemList.clear();
         this.listViewItemList = itemList;
         notifyDataSetChanged();
@@ -318,10 +320,10 @@ public class Order_ListViewAdapter extends BaseAdapter {
     }
 
     // DB에서 memberSeq에 해당하는 메뉴내용 가져오기
-    private void showOrderList(int memberSeq, String period) {
+    private void showOrderList(int memberSeq, String tag) {
         RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
         Call<ArrayList<Order>> call
-                = remoteService.listOrder(memberSeq, period);
+                = remoteService.getTodayOrder(memberSeq, tag);
         call.enqueue(new Callback<ArrayList<Order>>() {
 
             @Override
@@ -480,4 +482,6 @@ public class Order_ListViewAdapter extends BaseAdapter {
     public void setClicked(String clicked) {
         this.clicked = clicked;
     }
+    //아이템삭제
+    public void deleteItem(int position){ listViewItemList.remove(position); }
 }

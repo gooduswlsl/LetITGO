@@ -36,21 +36,21 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class seller_order extends Fragment {
+public class seller_recipt extends Fragment {
 
     Seller current_seller;
     private final String TAG = this.getClass().getSimpleName();
-    Order_ListViewAdapter adapter;
-    private TextView no_order, loading_bg;
-    private Button today, week, month;
+    Recipt_ListViewAdapter adapter;
+    private TextView no_order, loading_bg, tv_waiting;
+    private Button new_order, preparing, today;
     private ImageView imgAndroid;
     private Animation anim;
     private String clicked;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        clicked="-1 day";
-        return inflater.inflate(R.layout.seller_order, container, false);
+        clicked="new_order";
+        return inflater.inflate(R.layout.seller_recipt, container, false);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class seller_order extends Fragment {
 
         current_seller = ((MyApp) getActivity().getApplicationContext()).getSeller();
 
-        adapter = new Order_ListViewAdapter();
+        adapter = new Recipt_ListViewAdapter();
         adapter.queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
         // 리스트뷰 참조 및 Adapter달기
@@ -73,54 +73,54 @@ public class seller_order extends Fragment {
         loading_bg = getView().findViewById(R.id.loading_bg);
         progressDialog();
 
-        Log.d(TAG,"oncreate");
         showOrderList(clicked);
 
         no_order = getView().findViewById(R.id.no_order);
-        today = getView().findViewById(R.id.btn1);
-        week = getView().findViewById(R.id.btn2);
-        month = getView().findViewById(R.id.btn3);
+        new_order = getView().findViewById(R.id.btn1);
+        tv_waiting = getView().findViewById(R.id.waiting);
+        preparing = getView().findViewById(R.id.btn2);
+        today = getView().findViewById(R.id.btn3);
 
         //더러워서 나중에 코드 수정 예정
+        new_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                Log.d(TAG,"new_order");
+                new_order.setTextColor(Color.parseColor("#8C8C8C"));
+                preparing.setTextColor(Color.parseColor("#95c85b"));
+                today.setTextColor(Color.parseColor("#95c85b"));
+                adapter = new Recipt_ListViewAdapter();
+                adapter.queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+                listview.setAdapter(adapter);
+                clicked=new_order.getTag().toString();
+                showOrderList(clicked);
+            }
+        });
+        preparing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                Log.d(TAG,"preparing");
+                preparing.setTextColor(Color.parseColor("#8C8C8C"));
+                new_order.setTextColor(Color.parseColor("#95c85b"));
+                today.setTextColor(Color.parseColor("#95c85b"));
+                adapter = new Recipt_ListViewAdapter();
+                adapter.queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+                listview.setAdapter(adapter);
+                clicked=preparing.getTag().toString();
+                showOrderList(clicked);
+            }
+        });
         today.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
                 Log.d(TAG,"today");
                 today.setTextColor(Color.parseColor("#8C8C8C"));
-                week.setTextColor(Color.parseColor("#95c85b"));
-                month.setTextColor(Color.parseColor("#95c85b"));
-                adapter = new Order_ListViewAdapter();
+                preparing.setTextColor(Color.parseColor("#95c85b"));
+                new_order.setTextColor(Color.parseColor("#95c85b"));
+                adapter = new Recipt_ListViewAdapter();
                 adapter.queue = Volley.newRequestQueue(getActivity().getApplicationContext());
                 listview.setAdapter(adapter);
                 clicked=today.getTag().toString();
-                showOrderList(clicked);
-            }
-        });
-        week.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-                Log.d(TAG,"week");
-                week.setTextColor(Color.parseColor("#8C8C8C"));
-                today.setTextColor(Color.parseColor("#95c85b"));
-                month.setTextColor(Color.parseColor("#95c85b"));
-                adapter = new Order_ListViewAdapter();
-                adapter.queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-                listview.setAdapter(adapter);
-                clicked=week.getTag().toString();
-                showOrderList(clicked);
-            }
-        });
-        month.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-                Log.d(TAG,"month");
-                month.setTextColor(Color.parseColor("#8C8C8C"));
-                week.setTextColor(Color.parseColor("#95c85b"));
-                today.setTextColor(Color.parseColor("#95c85b"));
-                adapter = new Order_ListViewAdapter();
-                adapter.queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-                listview.setAdapter(adapter);
-                clicked=month.getTag().toString();
                 showOrderList(clicked);
             }
         });
@@ -190,7 +190,7 @@ public class seller_order extends Fragment {
 
             @Override
             public void onRefresh() {
-                adapter = new Order_ListViewAdapter();
+                adapter = new Recipt_ListViewAdapter();
                 adapter.queue = Volley.newRequestQueue(getActivity().getApplicationContext());
                 listview.setAdapter(adapter);
                 showOrderList(clicked);
@@ -202,10 +202,11 @@ public class seller_order extends Fragment {
 
 
     // DB에서 memberSeq에 해당하는 메뉴내용 가져오기
-    private void showOrderList(String period) {
+    private void showOrderList(String tag) {
+        getCustomerRegId();
         RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
         Call<ArrayList<Order>> call
-                = remoteService.listOrder(((MyApp) getActivity().getApplicationContext()).getSeller().getSeq(), period);
+                = remoteService.getTodayOrder(((MyApp) getActivity().getApplicationContext()).getSeller().getSeq(), tag);
         call.enqueue(new Callback<ArrayList<Order>>() {
 
             @Override
@@ -230,7 +231,7 @@ public class seller_order extends Fragment {
                     adapter.setClicked(clicked);
                     adapter.notifyDataSetChanged();
                 } else {
-                    Log.d(TAG, "not success");
+                    Log.d(TAG, "showOrderList unsuccessful");
                 }
             }
 
@@ -247,4 +248,27 @@ public class seller_order extends Fragment {
         anim = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.loading);
         imgAndroid.setAnimation(anim);
     }
+
+    private void getCustomerRegId() {
+        RemoteService remoteService = ServiceGenerator.createService(RemoteService.class);
+        Call<String> call = remoteService.getWaitingNumber(((MyApp) getActivity().getApplicationContext()).getSeller().getSeq());
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    String waiting=response.body();
+                    tv_waiting.setText("현재 대기중인 메뉴 : "+waiting+"개");
+
+                } else {
+                    Log.d(TAG, "getCustomerRegId unsuccessful");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.d(TAG,t.toString());
+            }
+        });
+    }
+
 }

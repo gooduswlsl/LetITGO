@@ -18,7 +18,6 @@ import java.util.ArrayList;
 
 public class ListViewAdapter extends BaseAdapter {
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
-//    private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>() ;
     private ArrayList<Menu> listViewItemList = new ArrayList<Menu>() ;
     // ListViewAdapter의 생성자
     public ListViewAdapter() {
@@ -70,7 +69,11 @@ public class ListViewAdapter extends BaseAdapter {
                     .into(iconImageView);
         }
         titleTextView.setText(listViewItem.getmName());
-        descTextView.setText(listViewItem.getmDetail()+" ("+String.valueOf(listViewItem.getmPrice())+"원)");
+        if(listViewItem.getmDetail()==null){
+            descTextView.setText("("+String.valueOf(listViewItem.getmPrice())+"원)");
+        }
+        else
+            descTextView.setText(listViewItem.getmDetail()+"\n("+String.valueOf(listViewItem.getmPrice())+"원)");
 
         return convertView;
     }
@@ -89,7 +92,5 @@ public class ListViewAdapter extends BaseAdapter {
 
 
     //아이템삭제
-    public void deleteItem(int position){
-        listViewItemList.remove(position);
-    }
+    public void deleteItem(int position){ listViewItemList.remove(position); }
 }

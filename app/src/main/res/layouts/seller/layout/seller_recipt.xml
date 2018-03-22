@@ -15,15 +15,33 @@
         android:paddingTop="10dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <LinearLayout
+            android:id="@+id/base_info"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/waiting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="현재 대기중인 메뉴"
+                android:textSize="12dp" />
+        </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/btns"
+            android:layout_below="@+id/base_info"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_marginBottom="2dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="12dp">
+            android:paddingLeft="12dp"
+            android:paddingBottom="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="0dp">
 
             <Button
                 android:id="@+id/btn1"
@@ -31,8 +49,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_order1"
                 android:gravity="center"
-                android:tag="-1 day"
-                android:text=" 당일"
+                android:tag="new_order"
+                android:text=" 새 주문"
                 android:textColor="@drawable/txt_color" />
 
             <Button
@@ -41,8 +59,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_order2"
                 android:gravity="center"
-                android:tag="-1 week"
-                android:text="1주"
+                android:tag="preparing"
+                android:text="오늘주문"
                 android:textColor="@drawable/txt_color" />
 
             <Button
@@ -51,8 +69,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_order3"
                 android:gravity="center"
-                android:tag="-1 month"
-                android:text="1개월 "
+                android:tag="total"
+                android:text="전체주문"
                 android:textColor="@drawable/txt_color" />
 
 
@@ -62,7 +80,7 @@
             android:id="@+id/swipeRefreshLo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/linearLayout">
+            android:layout_below="@+id/btns">
 
 
             <ListView
@@ -76,32 +94,33 @@
             android:id="@+id/no_order"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:gravity="center"
             android:text="아직 들어온 메뉴가 없습니다" />
 
-
         <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentStart="true">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true">
 
-            <TextView
-                android:id="@+id/loading_bg"
-                android:layout_width="348dp"
-                android:layout_height="545dp"
-                android:layout_marginBottom="5dp"
-                android:background="#FCFCFC" />
+        <TextView
+        android:id="@+id/loading_bg"
+        android:layout_width="348dp"
+        android:layout_height="545dp"
+        android:layout_marginBottom="5dp"
+        android:background="#FCFCFC" />
 
-            <ImageView
-                android:id="@+id/img_android"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/wait_icon"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+        android:id="@+id/img_android"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/wait_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
 

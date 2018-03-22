@@ -20,7 +20,7 @@
 
     </data>
 
-    <RelativeLayout
+     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp">
@@ -143,8 +143,8 @@
                     android:id="@+id/tv_price"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical|start"
                     android:text="@{Integer.toString(order.getNum*menu.getmPrice)}"

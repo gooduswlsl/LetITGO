@@ -3,34 +3,41 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_vertical"
-    android:padding="10dp">
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imageView1"
-        android:layout_width="50dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
+    android:gravity="center_vertical">
 
     <LinearLayout
-        android:orientation="vertical"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:padding="0dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageView1"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:padding="10dp"
-        android:layout_weight="4">
+        android:layout_weight="4"
+        android:orientation="vertical"
+        android:paddingLeft="10dp">
 
         <TextView
+            android:id="@+id/textView1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="bottom"
             android:text="New Text"
-            android:id="@+id/textView1"
-            android:textSize="14dp"
             android:textColor="#000000"
-            android:gravity="center_vertical"
-            android:layout_weight="2" />
+            android:textSize="14dp" />
 
         <TextView
             android:id="@+id/textView2"
+            android:layout_marginTop="2dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".7"
                 android:imeOptions="actionDone"
-                android:inputType="textEmailAddress"
+                android:inputType="textMultiLine"
                 android:textSize="14dp" />
         </LinearLayout>
 

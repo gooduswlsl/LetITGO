@@ -90,27 +90,27 @@
                 android:background="@drawable/decline"
                 android:text="거절" />
 
-            <TextView
+            <Button
                 android:id="@+id/btn_start"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="수락"
-                android:textColor="#95c85b"
+                android:layout_height="35dp"
+                android:text="조리시작"
+                android:background="@drawable/order_accepted"
+                android:textColor="#ffffff"
                 android:visibility="gone"
-                android:layout_gravity="top|right"
                 android:textSize="12dp" />
 
 
 
-            <TextView
+            <Button
                 android:id="@+id/btn_ready"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="메뉴 제조중"
-                android:textColor="#a8beff"
-                android:visibility="gone"
-                android:layout_gravity="top|right"
-                android:textSize="12dp" />
+                android:layout_height="35dp"
+                android:text="조리완료"
+                android:background="@drawable/order_accepted"
+                android:textColor="#ffffff"
+                android:textSize="12dp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/btn_ready2"

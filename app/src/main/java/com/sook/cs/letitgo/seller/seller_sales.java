@@ -1,6 +1,7 @@
 package com.sook.cs.letitgo.seller;
 
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.sook.cs.letitgo.MyApp;
@@ -32,6 +34,7 @@ public class seller_sales extends Fragment {
     private WebView webview = null;
     private TextView jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec, title;
     Seller current_seller;
+    private Button sales_list;
     ArrayList<Sales> month_sales = new ArrayList<>();
 
     private final String TAG = this.getClass().getSimpleName();
@@ -44,7 +47,7 @@ public class seller_sales extends Fragment {
 
         initView(view);
 
-        title.setText(current_seller.getName()+" "+current_seller.getSite()+" 매출 그래프");
+        title.setText(current_seller.getName()+" "+current_seller.getSite()+" 매출 그래프"+"\n(단위: 천)");
         getMonthSales(current_seller.getSeq());
 
         WebSettings websetting = webview.getSettings();
@@ -58,6 +61,15 @@ public class seller_sales extends Fragment {
         webview.setWebViewClient(new MyWebViewClient());
         webview.addJavascriptInterface(new WebAppInterface(), "android");
         webview.loadUrl("file:///android_asset/chart.html");
+
+        sales_list.setOnClickListener(new View.OnClickListener() {  //매장매출확인
+
+            @Override
+            public void onClick(final View view) {
+                Intent intent = new Intent( getContext(), SalesList.class );
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
@@ -96,11 +108,11 @@ public class seller_sales extends Fragment {
             @Override
             public void onResponse(Call<ArrayList<Sales>> call,
                                    Response<ArrayList<Sales>> response) {
-                month_sales = response.body();
+                    month_sales = response.body();
 
-                if (response.isSuccessful()) {
-                    Log.d(TAG,month_sales.toString());
-                    showMonthSales(month_sales);
+                    if (response.isSuccessful()) {
+                        Log.d(TAG,month_sales.toString());
+                        showMonthSales(month_sales);
                 } else {
                     Log.d(TAG, "not success");
                 }
@@ -130,6 +142,8 @@ public class seller_sales extends Fragment {
         nov=(TextView) view. findViewById(R.id.nov);
         dec=(TextView) view. findViewById(R.id.dec);
         title=(TextView) view.findViewById(R.id.title);
+        sales_list=(Button) view.findViewById(R.id.sales_list);
+
     }
 
     private void showMonthSales(ArrayList<Sales> month_sales){
@@ -149,7 +163,7 @@ public class seller_sales extends Fragment {
                     apr.setText("\uFFE6"+String.format("%,d",month_sales.get(i).getSales()));
                     break;
                 case 5:
-                    mar.setText("\uFFE6"+String.format("%,d",month_sales.get(i).getSales()));
+                    may.setText("\uFFE6"+String.format("%,d",month_sales.get(i).getSales()));
                     break;
                 case 6:
                     jun.setText("\uFFE6"+String.format("%,d",month_sales.get(i).getSales()));

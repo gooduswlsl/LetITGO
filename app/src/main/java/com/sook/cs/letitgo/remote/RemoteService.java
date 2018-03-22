@@ -23,7 +23,7 @@ import retrofit2.http.Query;
  * 서버에 호출할 메소드를 선언하는 인터페이스
  */
 public interface RemoteService {
-    String BASE_URL = "http://192.168.30.247:3000";  //집
+    String BASE_URL = "http://172.30.1.2:3000";  //집
 
     String CUSTOMER_IMG_URL = BASE_URL + "/customer/";
     String SELLER_IMG_URL = BASE_URL + "/seller/";
@@ -32,7 +32,6 @@ public interface RemoteService {
     //멤버
     @GET("/member/{phone}")
     Call<String> selectMemberInfo(@Path("phone") String phone);
-
 
     //소비자
     @POST("/member/customer")
@@ -133,7 +132,13 @@ public interface RemoteService {
 
     //매장 주문 리스트
     @GET("/order/list")
-    Call<ArrayList<Order>> listOrder(@Query("seller_seq") int sellerSeq);
+    Call<ArrayList<Order>> listOrder(@Query("seller_seq") int sellerSeq, @Query("period") String period);
+
+    @GET("/order/today_list")
+    Call<ArrayList<Order>> getTodayOrder(@Query("seller_seq") int sellerSeq, @Query("clicked") String clicked);
+
+    @GET("/order/getWaitingNumber/{seller_seq}")
+    Call<String> getWaitingNumber(@Path("seller_seq") int seller_seq);
 
     @POST("/order/sendPermit")
     Call<String> sendPermit(@Query("permit") int permit,

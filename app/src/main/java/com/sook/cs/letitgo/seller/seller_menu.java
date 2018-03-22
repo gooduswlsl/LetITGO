@@ -52,7 +52,7 @@ public class seller_menu extends Fragment {
     public ImageView image2;
     private String add_img_name;
     private TextView first_visit;
-
+    public ListView listview;
     private final String TAG = this.getClass().getSimpleName();
     Menu menu_item;
 
@@ -104,7 +104,6 @@ public class seller_menu extends Fragment {
 
         adapter = new ListViewAdapter();
 
-        ListView listview;
         listview = (ListView) getView().findViewById(R.id.listview);
         listview.setAdapter(adapter);
         first_visit = (TextView) getView().findViewById(R.id.first_visit);
@@ -135,7 +134,6 @@ public class seller_menu extends Fragment {
                 name.setText(titleStr);
                 details.setText(descStr);
                 price.setText(priceStr);
-
                 changeImage();
 
                 name.setFocusable(false);
@@ -216,7 +214,10 @@ public class seller_menu extends Fragment {
                             menu_item.mName = ed_name;
                             menu_item.mDetail = ed_details;
                             menu_item.mPrice = Integer.parseInt(ed_price);
-                            menu_item.mImgUrl=add_img_name;
+                            if(add_img_name == null){
+                                menu_item.mImgUrl = item.mImgUrl;
+                            }
+                            else menu_item.mImgUrl=add_img_name;
                             menu_item.action = EDIT_MENU;
 
                             insertMenuInfo();
@@ -227,12 +228,11 @@ public class seller_menu extends Fragment {
 
                             //adapter 다시 불러오기
                             adapter = new ListViewAdapter();
-                            ListView listview;
-                            listview = (ListView) getView().findViewById(R.id.listview);
                             listview.setAdapter(adapter);
                             showMenuList(memberSeq);
 
                             adapter.notifyDataSetChanged();
+                            Toast.makeText(getActivity().getApplicationContext(), "수정되었습니다", Toast.LENGTH_SHORT).show();
 
                         } else { //다이얼로그 닫지 않고 EditText 수정 가능하게
                             name.setFocusableInTouchMode(true);
@@ -316,6 +316,7 @@ public class seller_menu extends Fragment {
                         }
                         if (wantToCloseDialog) {//다이얼로그 닫기
                             Log.d(TAG,menu_item.toString());
+                            Toast.makeText(getActivity().getApplicationContext(), "메뉴가 추가되었습니다.", Toast.LENGTH_SHORT).show();
                             menu_item.mName = ed_name;
                             menu_item.mDetail = ed_details;
                             menu_item.mPrice = Integer.parseInt(ed_price);
@@ -323,7 +324,11 @@ public class seller_menu extends Fragment {
                             menu_item.mImgUrl = add_img_name;
                             menu_item.action = ADD_MENU;
                             insertMenuInfo();
+                            adapter = new ListViewAdapter();
+                            listview.setAdapter(adapter);
                             showMenuList(memberSeq);
+
+                            adapter.notifyDataSetChanged();
                             dialog.dismiss();
                         }
                     }
@@ -381,7 +386,6 @@ public class seller_menu extends Fragment {
             public void onResponse(Call<ArrayList<Menu>> call,
                                    Response<ArrayList<Menu>> response) {
                 ArrayList<Menu> list = response.body();
-
                 if (list == null) {
                     list = new ArrayList<>();
                 }
@@ -391,8 +395,9 @@ public class seller_menu extends Fragment {
                     if (list.size() == 0) {
 
                     } else {
+
                         first_visit.setVisibility(View.GONE);
-                        adapter.setItemList(list);
+                       adapter.setItemList(list);
                     }
                 } else {
                     Log.d(TAG, "not success");

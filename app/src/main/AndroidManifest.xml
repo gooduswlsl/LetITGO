@@ -169,6 +169,7 @@
         </service>
 
         <activity android:name=".seller.seller_edit_profile"></activity>
+        <activity android:name=".seller.SalesList"></activity>
     </application>
 
 </manifest>

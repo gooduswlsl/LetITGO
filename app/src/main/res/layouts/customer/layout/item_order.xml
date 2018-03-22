@@ -128,7 +128,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
-                        android:text="@{order.getTimeOrder}"
+                        android:text="@{order.getTimeServer}"
                         android:textSize="13sp"
                         tools:text="주문시간" />
                 </LinearLayout>

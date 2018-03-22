@@ -20,7 +20,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 seller_store_info tab1 = new seller_store_info();
                 return tab1;
             case 1:
-               seller_order tab2 = new seller_order();
+               seller_recipt tab2 = new seller_recipt();
                 return tab2;
             case 2:
                 seller_menu tab3 = new seller_menu();
