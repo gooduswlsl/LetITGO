@@ -134,7 +134,6 @@ public interface RemoteService {
     //매장 주문 리스트
     @GET("/order/list")
     Call<ArrayList<Order>> listOrder(@Query("seller_seq") int sellerSeq, @Query("period") String period);
-    Call<ArrayList<Order>> listOrder(@Query("seller_seq") int sellerSeq, @Query("period") String period);
 
     @GET("/order/today_list")
     Call<ArrayList<Order>> getTodayOrder(@Query("seller_seq") int sellerSeq, @Query("clicked") String clicked);
