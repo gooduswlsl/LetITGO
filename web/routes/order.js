@@ -7,9 +7,9 @@ var router = express.Router();
 router.get('/myList', function(req, res, next) {
    var cust_seq = req.query.cust_seq;
     var period = req.query.period;
-
-    var sql =  "select seq, cust_seq, seller_seq, menu_seq, num, time_order+'0000-00-00T09:00:00.000Z' as time_server, time_take+'0000-00-00T09:00:00.000Z' as time_take, time_order, message, permit from `order` where cust_seq = ? and time_order > DATE_ADD(now(), INTERVAL "+period+") and (permit=-1 or permit = 4)";
-
+    
+    var sql =  "select seq, cust_seq, seller_seq, menu_seq, num, time_order+'0000-00-00T09:00:00.000Z' as time_server, time_take+'0000-00-00T09:00:00.000Z' as time_take, time_order, message, permit from `order` where cust_seq = ? and time_order > DATE_ADD(now(), INTERVAL "+period+") and (permit=-1 or permit = 4)";   
+  
     db.get().query(sql, cust_seq, function(err, rows) {
 
       if (err)
@@ -24,8 +24,8 @@ router.get('/myList', function(req, res, next) {
 //order/showList
 router.get('/showList', function(req, res, next) {
    var cSeq = req.query.cSeq;
-    var sql =  "select seq, cust_seq, seller_seq, menu_seq, num, time_order+'0000-00-00T09:00:00.000Z' as time_order, time_take+'0000-00-00T09:00:00.000Z' as time_take, permit, count(*) as `count` from `order` where cust_seq = ? and permit!=4 and permit!=-1 group by time_order,seller_seq";
-
+    var sql =  "select seq, cust_seq, seller_seq, menu_seq, num, time_order+'0000-00-00T09:00:00.000Z' as time_order, time_take+'0000-00-00T09:00:00.000Z' as time_take, permit, count(*) as `count` from `order` where cust_seq = ? and permit!=4 and permit!=-1 group by time_order,seller_seq";   
+   
     db.get().query(sql, cSeq, function(err, rows) {
 
       if (err)
@@ -43,7 +43,7 @@ router.get('/dialog/showList', function(req, res, next) {
     var sSeq = req.query.sSeq;
     var oTime = req.query.oTime;
     var sql = "select * from `order` where cust_seq=? and seller_seq = ? and time_order=?";
-
+  
     db.get().query(sql, [cSeq,sSeq, oTime], function(err, rows) {
       if (err)
          console.log(err);
@@ -60,10 +60,10 @@ router.post('/sendCustPermit', function(req, res){
     var sSeq = req.query.sSeq;
     var oTime = req.query.oTime;
     var sql = "update `order` set permit = '4' where cust_seq=? and seller_seq = ? and time_order=?";
-
+    
     db.get().query(sql, [cSeq, sSeq, oTime], function(err, result){
        if (err) return res.sendStatus(400);
-
+                         
          res.sendStatus(200);
     });
 });
@@ -171,7 +171,7 @@ router.post('/sendTotal_price', function(req, res){
     var sql = "update `order` set total_price = ? where seq = ? limit 1; ";
 
     db.get().query(sql, [total_price, seq], function(err, result){
-       if (err) return res.sendStatus(400);
+    	if (err) return res.sendStatus(400);
          res.status(200).send('' + result.insertId);
        });
  });

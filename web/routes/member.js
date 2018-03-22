@@ -262,9 +262,8 @@ router.post('/sendNewCustomerRegId', function(req, res){
   });
 
 
-
-//member/getSellerRegId/:seller_seq
-router.get('/getSellerRegId/:seller_seq', function(req, res, next){
+//member/getRegId/:seller_seq
+router.get('/getRegId/:seller_seq', function(req, res, next){
 	var seq = req.params.seller_seq;
 	var sql_select = "select regId from seller where seq = ? limit 1;";
 
@@ -279,23 +278,5 @@ router.get('/getSellerRegId/:seller_seq', function(req, res, next){
 		}
 	});
 });
-
-//member/getCustomerRegId/:customer_seq
-router.get('/getCustomerRegId/:customer_seq', function(req, res, next){
-	var seq = req.params.customer_seq;
-	var sql_select = "select regId from customer where seq = ? limit 1;";
-
-	db.get().query(sql_select, seq, function(err, rows){
-		if(rows.length > 0)
-			res.status(200).json(rows[0].regId);
-		else
-			res.sendStatus(400);
-		if(err){
-			console.log(err);
-			res.sendStatus(400);
-		}
-	});
-});
-
 
 module.exports = router;

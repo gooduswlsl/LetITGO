@@ -165,6 +165,7 @@ public class Login2_1_store_info extends AppCompatActivity{
                     save();
                     Intent intent = new Intent(getApplicationContext(),Seller_main.class);
                     startActivity(intent);
+                    finish();
                 }
                 break;
         }
